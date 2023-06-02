@@ -190,8 +190,12 @@ public final class PlayerPacketHandler implements BedrockPacketHandler {
             ).trim();
 
             if (parsed.startsWith(this.getPlayer().getUsername())) {
-                CommandMap.invoke(this.getPlayer(), parsed.replace(
+                CommandMap.invoke(this.getPlayer(), parsed.replaceFirst(
                         this.getPlayer().getUsername(), ""
+                ).trim());
+            } else if (parsed.startsWith(",")) {
+                CommandMap.invoke(parsed.replaceFirst(
+                        ",", ""
                 ).trim());
             }
         }

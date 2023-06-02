@@ -1,5 +1,6 @@
 package moe.seikimo.altservice.command;
 
+import moe.seikimo.altservice.command.player.DisconnectCommand;
 import moe.seikimo.altservice.command.player.RequestCommand;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,6 +12,7 @@ public final class CommandMap {
     private static final Map<String, Command> commands = new HashMap<>() {{
         // Command defaults should be registered here.
         this.put("request", new RequestCommand());
+        this.put("disconnect", new DisconnectCommand());
     }};
 
     /**

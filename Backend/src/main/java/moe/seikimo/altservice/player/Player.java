@@ -57,7 +57,10 @@ import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
         if (this.session == null)
             return;
 
-        this.session.getClient().disconnect("Disconnected");
+        try {
+            this.session.getClient().disconnect("Disconnected");
+        } catch (Exception ignored) { }
+
         this.getSession().getLogger().info("Disconnected from server.");
         this.session = null;
     }

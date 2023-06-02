@@ -2,6 +2,7 @@ package moe.seikimo.altservice.player.command;
 
 import moe.seikimo.altservice.command.Command;
 import moe.seikimo.altservice.player.Player;
+import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.player.command.util.DisconnectCommand;
 import moe.seikimo.altservice.player.command.util.LocationCommand;
 import org.jetbrains.annotations.Nullable;
@@ -17,6 +18,8 @@ public final class CommandMap {
         this.put("disconnect", new DisconnectCommand());
     }};
 
+    private static long lastGlobal = System.currentTimeMillis();
+
     /**
      * Get a command by its label.
      *
@@ -26,6 +29,21 @@ public final class CommandMap {
     @Nullable
     public static Command getCommand(String label) {
         return CommandMap.commands.get(label);
+    }
+
+    /**
+     * Parses and executes a command from in-game.
+     * This executes the command on all bots.
+     *
+     * @param input The command input.
+     */
+    public static void invoke(String input) {
+        // Check if the command is global.
+        if (System.currentTimeMillis() - CommandMap.lastGlobal < 300) return;
+        CommandMap.lastGlobal = System.currentTimeMillis();
+
+        for (var player : PlayerManager.getPlayers())
+            CommandMap.invoke(player, input);
     }
 
     /**

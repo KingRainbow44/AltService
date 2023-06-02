@@ -1,5 +1,6 @@
 package moe.seikimo.altservice.player;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,6 +29,13 @@ public final class PlayerManager {
     public static Player createPlayer(String username, long lifetime) {
         return PlayerManager.players.computeIfAbsent(username,
                 k -> new Player(username, lifetime));
+    }
+
+    /**
+     * @return A list of all player instances.
+     */
+    public static List<Player> getPlayers() {
+        return List.copyOf(PlayerManager.players.values());
     }
 
     /**

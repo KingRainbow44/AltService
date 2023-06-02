@@ -6,7 +6,6 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.util.concurrent.Promise;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import moe.seikimo.altservice.AltBackend;
 import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.player.PlayerManager;
