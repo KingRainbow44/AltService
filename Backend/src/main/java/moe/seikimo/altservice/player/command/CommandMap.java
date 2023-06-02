@@ -1,5 +1,6 @@
 package moe.seikimo.altservice.player.command;
 
+import moe.seikimo.altservice.Configuration;
 import moe.seikimo.altservice.command.Command;
 import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.player.PlayerManager;
@@ -38,6 +39,8 @@ public final class CommandMap {
      * @param input The command input.
      */
     public static void invoke(String input) {
+        if (!Configuration.get().isRespondToCommands()) return;
+
         // Check if the command is global.
         if (System.currentTimeMillis() - CommandMap.lastGlobal < 300) return;
         CommandMap.lastGlobal = System.currentTimeMillis();
@@ -53,6 +56,8 @@ public final class CommandMap {
      * @param input The command input.
      */
     public static void invoke(Player player, String input) {
+        if (!Configuration.get().isRespondToCommands()) return;
+
         var split = input.split(" ");
         if (split.length < 1) return;
 
