@@ -50,4 +50,12 @@ public final class PlayerManager {
     public static void destroyPlayer(Player player) {
         PlayerManager.destroyPlayer(player.getUsername());
     }
+
+    /**
+     * Destroys all player instances.
+     */
+    public static void destroyAll() {
+        PlayerManager.players.values()
+                .forEach(PlayerManager::destroyPlayer);
+    }
 }

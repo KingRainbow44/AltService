@@ -4,6 +4,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import lombok.Getter;
 import moe.seikimo.altservice.command.CommandMap;
+import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.utils.LoggerUtils;
 import moe.seikimo.altservice.utils.objects.ThreadFactoryBuilder;
 import org.jline.reader.EndOfFileException;
@@ -44,6 +45,13 @@ public final class AltBackend {
         // Start the console.
         AltBackend.getConsole();
         new Thread(AltBackend::startConsole).start();
+
+        // Listen for a shutdown.
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            PlayerManager.destroyAll();
+            AltBackend.getEventGroup().shutdownGracefully();
+            AltBackend.getLogger().info("Stopping backend...");
+        }));
 
         AltBackend.getLogger().info("Alt Backend started.");
     }

@@ -3,8 +3,10 @@ package moe.seikimo.altservice.network;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import moe.seikimo.altservice.player.Player;
+import moe.seikimo.altservice.player.command.CommandMap;
 import moe.seikimo.altservice.utils.EncodingUtils;
 import moe.seikimo.altservice.utils.ThreadUtils;
+import moe.seikimo.altservice.utils.objects.Style;
 import moe.seikimo.altservice.utils.objects.absolute.NetworkConstants;
 import moe.seikimo.altservice.utils.objects.network.HandshakeHeader;
 import moe.seikimo.altservice.utils.objects.network.HandshakePayload;
@@ -153,6 +155,7 @@ public final class PlayerPacketHandler implements BedrockPacketHandler {
 
         // Check if the server is waiting for the client.
         if (state == RespawnPacket.State.SERVER_READY) {
+            this.getPlayer().setPosition(position);
             this.getPlayer().respawn();
         }
 
@@ -165,10 +168,41 @@ public final class PlayerPacketHandler implements BedrockPacketHandler {
 
         // Log the death.
         this.getLogger().info("Died at {} because {}.",
-                position, packet.getCauseAttackName());
+                position, Style.replaceTerminal(packet.getCauseAttackName()));
 
         // Try to respawn the player.
         this.getPlayer().respawn();
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(TextPacket packet) {
+        var message = packet.getMessage();
+
+        // Log the message.
+        this.getLogger().info(Style.replaceTerminal(message));
+
+        // Check if the message is a command.
+        if (message.contains("<") && message.contains(">")) {
+            var parsed = message.substring(
+                    message.indexOf(">") + 1
+            ).trim();
+
+            if (parsed.startsWith(this.getPlayer().getUsername())) {
+                CommandMap.invoke(this.getPlayer(), parsed.replace(
+                        this.getPlayer().getUsername(), ""
+                ).trim());
+            }
+        }
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(MovePlayerPacket packet) {
+        if (packet.getRuntimeEntityId() == this.getPlayer().getEntityId())
+            this.getPlayer().setPosition(packet.getPosition());
 
         return PacketSignal.HANDLED;
     }

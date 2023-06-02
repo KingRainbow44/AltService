@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import moe.seikimo.altservice.AltBackend;
 import moe.seikimo.altservice.player.Player;
+import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.utils.ProfileUtils;
 import moe.seikimo.altservice.utils.objects.ConnectionDetails;
 import moe.seikimo.altservice.utils.objects.absolute.NetworkConstants;
@@ -184,6 +185,9 @@ public final class PlayerNetworkSession {
     public void onDisconnect(String reason) {
         this.close(reason);
         this.getLogger().info("Disconnected from server for {}.", reason);
+
+        // Remove the player from the server.
+        PlayerManager.destroyPlayer(this.getPlayer());
     }
 
     /**

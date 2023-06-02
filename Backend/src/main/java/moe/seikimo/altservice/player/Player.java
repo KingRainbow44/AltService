@@ -7,8 +7,10 @@ import moe.seikimo.altservice.utils.ThreadUtils;
 import moe.seikimo.altservice.utils.objects.ConnectionDetails;
 import moe.seikimo.altservice.utils.objects.Location;
 import moe.seikimo.altservice.utils.objects.player.SessionData;
+import org.cloudburstmc.math.vector.Vector3f;
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket;
 import org.cloudburstmc.protocol.bedrock.packet.RespawnPacket;
+import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
 
 /** Represents a Minecraft player instance. */
 @Data public final class Player {
@@ -56,6 +58,7 @@ import org.cloudburstmc.protocol.bedrock.packet.RespawnPacket;
             return;
 
         this.session.getClient().disconnect("Disconnected");
+        this.getSession().getLogger().info("Disconnected from server.");
         this.session = null;
     }
 
@@ -78,6 +81,24 @@ import org.cloudburstmc.protocol.bedrock.packet.RespawnPacket;
     }
 
     /**
+     * @return The player's entity ID.
+     */
+    public long getEntityId() {
+        return this.getData() == null ? -1 :
+                this.getData().getRuntimeId();
+    }
+
+    /**
+     * Sets the player's position.
+     *
+     * @param position The new position.
+     */
+    public void setPosition(Vector3f position) {
+        if (this.getSession() == null) return;
+        this.getLocation().setPosition(position);
+    }
+
+    /**
      * Respawns the player.
      */
     @SuppressWarnings("DataFlowIssue")
@@ -93,5 +114,30 @@ import org.cloudburstmc.protocol.bedrock.packet.RespawnPacket;
 
         // Send the packet.
         this.sendPacket(respawnPacket);
+    }
+
+    /**
+     * Sends a message as the player.
+     *
+     * @param message The message to send.
+     */
+    public void sendMessage(String message) {
+        // Check if the player is connected.
+        if (this.getSession() == null) return;
+
+        // Replace '&' with '§'.
+        message = message.replace('&', '§');
+
+        // Prepare the text packet.
+        var textPacket = new TextPacket();
+        textPacket.setType(TextPacket.Type.CHAT);
+        textPacket.setNeedsTranslation(false);
+        textPacket.setSourceName(this.getUsername());
+        textPacket.setMessage(message);
+        textPacket.setXuid("");
+        textPacket.setPlatformChatId("");
+
+        // Send the packet.
+        this.sendPacket(textPacket);
     }
 }

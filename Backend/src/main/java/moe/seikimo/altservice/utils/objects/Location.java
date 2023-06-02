@@ -1,10 +1,12 @@
 package moe.seikimo.altservice.utils.objects;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.cloudburstmc.math.vector.Vector3f;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public final class Location {
     public static final Location ZERO
@@ -12,4 +14,9 @@ public final class Location {
 
     private int dimension;
     private Vector3f position;
+
+    @Override
+    public String toString() {
+        return this.getPosition().toString() + " in dimension " + this.getDimension();
+    }
 }
