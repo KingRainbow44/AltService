@@ -6,6 +6,8 @@ import lombok.Getter;
 import moe.seikimo.altservice.command.SimpleCommandMap;
 import moe.seikimo.altservice.command.player.DisconnectCommand;
 import moe.seikimo.altservice.command.player.RequestCommand;
+import moe.seikimo.altservice.command.util.ReloadCommand;
+import moe.seikimo.altservice.command.util.StopCommand;
 import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.player.command.PlayerCommandMap;
 import moe.seikimo.altservice.utils.LoggerUtils;
@@ -139,6 +141,8 @@ public final class AltBackend {
         // Service Commands
         consoleCommands.addCommand(new RequestCommand());
         consoleCommands.addCommand(new DisconnectCommand());
+        consoleCommands.addCommand(new StopCommand());
+        consoleCommands.addCommand(new ReloadCommand());
 
         // Player Commands
         playerCommands.addCommand(new RequestCommand());
