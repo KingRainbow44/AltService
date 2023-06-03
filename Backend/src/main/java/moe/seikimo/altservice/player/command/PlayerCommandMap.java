@@ -1,11 +1,18 @@
 package moe.seikimo.altservice.player.command;
 
+import moe.seikimo.altservice.Configuration;
 import moe.seikimo.altservice.command.SimpleCommandMap;
 import moe.seikimo.altservice.player.Player;
 
 import java.util.Arrays;
 
 public final class PlayerCommandMap extends SimpleCommandMap {
+
+    @Override
+    public void invoke(String input) {
+        if (!Configuration.get().isRespondToCommands()) return;
+        super.invoke(input);
+    }
 
     /**
      * Parses and executes a command from in-game.
@@ -14,6 +21,8 @@ public final class PlayerCommandMap extends SimpleCommandMap {
      * @param input The command input.
      */
     public void invoke(Player player, String input) {
+        if (!Configuration.get().isRespondToCommands()) return;
+
         var split = input.split(" ");
         if (split.length < 1) return;
 
