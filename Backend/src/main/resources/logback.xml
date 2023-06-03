@@ -3,7 +3,7 @@
 
     <appender name="STDOUT" class="moe.seikimo.altservice.utils.objects.JLineLogbackAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss} &lt;%highlight(%level):%gray(%class{0})&gt; %msg%n</pattern>
+            <pattern>%d{HH:mm:ss} &lt;%highlight(%level):%gray(%logger)&gt; %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -14,7 +14,7 @@
             <maxHistory>24</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss'Z'} &lt;%level:%class&gt; %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss'Z'} &lt;%level:%logger:%class&gt; %m%n</pattern>
         </encoder>
     </appender>
 
