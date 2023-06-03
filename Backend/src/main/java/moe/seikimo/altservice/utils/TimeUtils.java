@@ -1,5 +1,7 @@
 package moe.seikimo.altservice.utils;
 
+import java.util.Arrays;
+
 public interface TimeUtils {
 
     /**
@@ -11,19 +13,22 @@ public interface TimeUtils {
      * @throws IllegalArgumentException If the input is invalid.
      */
     static long parseInputTime(String input) {
-        var units = new String[]{"s", "m", "h", "d", "w", "y"};
+        var units = new Character[]{'s', 'm', 'h', 'd', 'w', 'y'};
 
         var time = 0L;
         try {
-            for (int i = 0; i < units.length; i++) {
-                var unit = units[i];
-                var index = input.indexOf(unit);
-                var indexLast = i -1 == -1 ? 0 : input.indexOf(units[i - 1]);
-                if (index == -1) continue;
-
-                var value = input.substring(indexLast, index);
-                if (value.isEmpty()) continue;
-                time += Long.parseLong(value) * getTimeUnitMultiplier(unit.charAt(0));
+            StringBuilder value = new StringBuilder("0");
+            for (int i = 0; i < input.length(); i++) {
+                var c = input.charAt(i);
+                if (Character.isDigit(c)) {
+                    value.append(c);
+                } else {
+                    if (Arrays.stream(units).anyMatch(character -> character == c)) {
+                        time += Long.parseLong(value.toString()) *
+                                TimeUtils.getTimeUnitMultiplier(c);
+                        value = new StringBuilder("0");
+                    } else throw new IllegalArgumentException("Invalid time format.");
+                }
             }
         } catch (NumberFormatException ignored) {
             throw new IllegalArgumentException("Invalid time format.");
