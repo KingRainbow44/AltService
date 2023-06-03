@@ -3,8 +3,11 @@ package moe.seikimo.altservice;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import lombok.Getter;
-import moe.seikimo.altservice.command.CommandMap;
+import moe.seikimo.altservice.command.SimpleCommandMap;
+import moe.seikimo.altservice.command.player.DisconnectCommand;
+import moe.seikimo.altservice.command.player.RequestCommand;
 import moe.seikimo.altservice.player.PlayerManager;
+import moe.seikimo.altservice.player.command.PlayerCommandMap;
 import moe.seikimo.altservice.utils.LoggerUtils;
 import moe.seikimo.altservice.utils.objects.ThreadFactoryBuilder;
 import org.jline.reader.EndOfFileException;
@@ -33,6 +36,15 @@ public final class AltBackend {
         LoggerUtils.disableLoggers();
     }
 
+    /*
+     * Command maps.
+     */
+    @Getter private static final SimpleCommandMap consoleCommands
+            = new SimpleCommandMap();
+    @Getter private static final PlayerCommandMap playerCommands
+            = new PlayerCommandMap();
+
+
     /**
      * Application entrypoint.
      *
@@ -52,6 +64,9 @@ public final class AltBackend {
             AltBackend.getEventGroup().shutdownGracefully();
             AltBackend.getLogger().info("Stopping backend...");
         }));
+
+        // Register commands.
+        registerCommands();
 
         AltBackend.getLogger().info("Alt Backend started.");
     }
@@ -113,10 +128,20 @@ public final class AltBackend {
 
             try {
                 // Invoke the command.
-                CommandMap.invoke(input);
+                consoleCommands.invoke(input);
             } catch (Exception e) {
                 logger.warn("An error occurred while trying to invoke command.", e);
             }
         }
+    }
+
+    private static void registerCommands() {
+        // Service Commands
+        consoleCommands.addCommand(new RequestCommand());
+        consoleCommands.addCommand(new DisconnectCommand());
+
+        // Player Commands
+        playerCommands.addCommand(new RequestCommand());
+        playerCommands.addCommand(new DisconnectCommand());
     }
 }

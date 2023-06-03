@@ -2,8 +2,8 @@ package moe.seikimo.altservice.network;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import moe.seikimo.altservice.AltBackend;
 import moe.seikimo.altservice.player.Player;
-import moe.seikimo.altservice.player.command.CommandMap;
 import moe.seikimo.altservice.utils.EncodingUtils;
 import moe.seikimo.altservice.utils.ThreadUtils;
 import moe.seikimo.altservice.utils.objects.Style;
@@ -190,11 +190,11 @@ public final class PlayerPacketHandler implements BedrockPacketHandler {
             ).trim();
 
             if (parsed.startsWith(this.getPlayer().getUsername())) {
-                CommandMap.invoke(this.getPlayer(), parsed.replaceFirst(
+                AltBackend.getPlayerCommands().invoke(this.getPlayer(), parsed.replaceFirst(
                         this.getPlayer().getUsername(), ""
                 ).trim());
             } else if (parsed.startsWith(",")) {
-                CommandMap.invoke(parsed.replaceFirst(
+                AltBackend.getPlayerCommands().invoke(parsed.replaceFirst(
                         ",", ""
                 ).trim());
             }

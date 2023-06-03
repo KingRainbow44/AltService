@@ -1,6 +1,7 @@
 package moe.seikimo.altservice.command.player;
 
 import moe.seikimo.altservice.command.Command;
+import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.player.PlayerManager;
 
 import java.util.List;
@@ -27,5 +28,10 @@ public final class DisconnectCommand extends Command {
 
         // Disconnect the player.
         PlayerManager.destroyPlayer(username);
+    }
+
+    @Override
+    public void execute(Player player, List<String> args) {
+        PlayerManager.destroyPlayer(player);
     }
 }
