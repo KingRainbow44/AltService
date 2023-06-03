@@ -70,7 +70,7 @@ public final class AltBackend {
         // Register commands.
         registerCommands();
 
-        AltBackend.getLogger().info("Alt Backend started.");
+        AltBackend.getLogger().info("Done! Alt Backend started.");
     }
 
     /**
