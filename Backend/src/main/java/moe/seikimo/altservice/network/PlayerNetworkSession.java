@@ -123,6 +123,7 @@ public final class PlayerNetworkSession {
     private void initialize(Promise<BedrockClientSession> promise) {
         if (!promise.isSuccess()) {
             this.getLogger().warn("Unable to connect to server.", promise.cause());
+            PlayerManager.destroyPlayer(this.getPlayer());
         } else {
             this.client = promise.getNow();
             this.onSessionInitialized();
