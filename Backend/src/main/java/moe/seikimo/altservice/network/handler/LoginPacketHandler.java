@@ -1,37 +1,18 @@
-package moe.seikimo.altservice.network;
+package moe.seikimo.altservice.network.handler;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import moe.seikimo.altservice.AltBackend;
-import moe.seikimo.altservice.player.Player;
+import moe.seikimo.altservice.network.PlayerNetworkSession;
 import moe.seikimo.altservice.utils.EncodingUtils;
 import moe.seikimo.altservice.utils.ThreadUtils;
-import moe.seikimo.altservice.utils.objects.Style;
 import moe.seikimo.altservice.utils.objects.absolute.NetworkConstants;
 import moe.seikimo.altservice.utils.objects.network.HandshakeHeader;
 import moe.seikimo.altservice.utils.objects.network.HandshakePayload;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.bedrock.util.EncryptionUtils;
 import org.cloudburstmc.protocol.common.PacketSignal;
-import org.slf4j.Logger;
 
-@Data
-@RequiredArgsConstructor
-public final class PlayerPacketHandler implements BedrockPacketHandler {
-    private final PlayerNetworkSession session;
-
-    /**
-     * @return The session's logger.
-     */
-    private Logger getLogger() {
-        return this.getSession().getLogger();
-    }
-
-    /**
-     * @return The session's player.
-     */
-    private Player getPlayer() {
-        return this.getSession().getPlayer();
+public class LoginPacketHandler extends AbstractPacketHandler {
+    public LoginPacketHandler(PlayerNetworkSession session) {
+        super(session);
     }
 
     @Override
@@ -92,6 +73,9 @@ public final class PlayerPacketHandler implements BedrockPacketHandler {
             var completePacket = new SetLocalPlayerAsInitializedPacket();
             completePacket.setRuntimeEntityId(this.session.getData().getRuntimeId());
             this.session.sendPacket(completePacket, true);
+
+            // TODO: This should be the point where packets become in-game packets
+            this.session.getClient().setPacketHandler(new InGamePacketHandler(this.session));
         }
 
         return PacketSignal.HANDLED;
@@ -158,55 +142,6 @@ public final class PlayerPacketHandler implements BedrockPacketHandler {
             this.getPlayer().setPosition(position);
             this.getPlayer().respawn();
         }
-
-        return PacketSignal.HANDLED;
-    }
-
-    @Override
-    public PacketSignal handle(DeathInfoPacket packet) {
-        var position = this.getPlayer().getLocation().getPosition();
-
-        // Log the death.
-        this.getLogger().info("Died at {} because {}.",
-                position, Style.replaceTerminal(packet.getCauseAttackName()));
-
-        // Try to respawn the player.
-        this.getPlayer().respawn();
-
-        return PacketSignal.HANDLED;
-    }
-
-    @Override
-    public PacketSignal handle(TextPacket packet) {
-        var message = packet.getMessage();
-
-        // Log the message.
-        this.getLogger().info(Style.replaceTerminal(message));
-
-        // Check if the message is a command.
-        if (message.contains("<") && message.contains(">")) {
-            var parsed = message.substring(
-                    message.indexOf(">") + 1
-            ).trim();
-
-            if (parsed.startsWith(this.getPlayer().getUsername())) {
-                AltBackend.getPlayerCommands().invoke(this.getPlayer(), parsed.replaceFirst(
-                        this.getPlayer().getUsername(), ""
-                ).trim());
-            } else if (parsed.startsWith(",")) {
-                AltBackend.getPlayerCommands().invoke(parsed.replaceFirst(
-                        ",", ""
-                ).trim());
-            }
-        }
-
-        return PacketSignal.HANDLED;
-    }
-
-    @Override
-    public PacketSignal handle(MovePlayerPacket packet) {
-        if (packet.getRuntimeEntityId() == this.getPlayer().getEntityId())
-            this.getPlayer().setPosition(packet.getPosition());
 
         return PacketSignal.HANDLED;
     }

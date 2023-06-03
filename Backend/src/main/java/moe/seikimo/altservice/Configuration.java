@@ -59,6 +59,7 @@ public final class Configuration {
     }
 
     public boolean respondToCommands = true;
+    public boolean debug = false;
     public Server server = new Server();
 
     @Getter

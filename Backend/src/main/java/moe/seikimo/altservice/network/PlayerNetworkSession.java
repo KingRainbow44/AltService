@@ -7,8 +7,10 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.util.concurrent.Promise;
 import lombok.Data;
 import moe.seikimo.altservice.AltBackend;
+import moe.seikimo.altservice.network.handler.LoginPacketHandler;
 import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.player.PlayerManager;
+import moe.seikimo.altservice.utils.LoggerUtils;
 import moe.seikimo.altservice.utils.ProfileUtils;
 import moe.seikimo.altservice.utils.objects.ConnectionDetails;
 import moe.seikimo.altservice.utils.objects.absolute.NetworkConstants;
@@ -40,6 +42,9 @@ public final class PlayerNetworkSession {
         this.player = player;
         this.logger = LoggerFactory.getLogger(
                 player.getUsername());
+
+        // Set the logger in debug mode.
+        LoggerUtils.setDebug(this.logger);
     }
 
     /**
@@ -93,7 +98,7 @@ public final class PlayerNetworkSession {
 
                         // Set session properties.
                         session.setCodec(NetworkConstants.PACKET_CODEC);
-                        session.setPacketHandler(new PlayerPacketHandler(instance));
+                        session.setPacketHandler(new LoginPacketHandler(instance));
 
                         // Fulfill the promise.
                         promise.trySuccess(session);

@@ -9,6 +9,7 @@ import moe.seikimo.altservice.utils.objects.Location;
 import moe.seikimo.altservice.utils.objects.player.SessionData;
 import org.cloudburstmc.math.vector.Vector3f;
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket;
+import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket;
 import org.cloudburstmc.protocol.bedrock.packet.RespawnPacket;
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
 
@@ -92,6 +93,13 @@ import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
     }
 
     /**
+     * @return The player's position.
+     */
+    public Vector3f getPosition() {
+        return this.getLocation().getPosition();
+    }
+
+    /**
      * Sets the player's position.
      *
      * @param position The new position.
@@ -142,5 +150,30 @@ import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
 
         // Send the packet.
         this.sendPacket(textPacket);
+    }
+
+    /**
+     * Moves the player to the specified position and rotation.
+     *
+     * @param position The position to send to the server.
+     * @param rotation The rotation to send to the server.
+     */
+    public void move(Vector3f position, Vector3f rotation) {
+        // Check if the player is connected.
+        if (this.getSession() == null) return;
+
+        // Prepare the move packet.
+        var movePacket = new MovePlayerPacket();
+        movePacket.setRuntimeEntityId(this.getEntityId());
+        movePacket.setPosition(position);
+        movePacket.setRotation(rotation);
+        movePacket.setMode(this.getPosition() == position ?
+                MovePlayerPacket.Mode.HEAD_ROTATION :
+                MovePlayerPacket.Mode.NORMAL);
+        movePacket.setOnGround(true);
+        movePacket.setRidingRuntimeEntityId(0);
+
+        // Send the packet.
+        this.sendPacket(movePacket);
     }
 }
