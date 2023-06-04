@@ -8,13 +8,14 @@ import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket;
 import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
 import org.cloudburstmc.protocol.common.PacketSignal;
 
-public class InGamePacketHandler extends AbstractPacketHandler {
+public class InGamePacketHandler extends DisconnectablePacketHandler {
     public InGamePacketHandler(PlayerNetworkSession session) {
         super(session);
     }
 
     @Override
     public PacketSignal handle(DeathInfoPacket packet) {
+        super.handle(packet);
         var position = this.getPlayer().getLocation().getPosition();
 
         // Log the death.
@@ -29,6 +30,7 @@ public class InGamePacketHandler extends AbstractPacketHandler {
 
     @Override
     public PacketSignal handle(TextPacket packet) {
+        super.handle(packet);
         var message = packet.getMessage();
 
         // Log the message.
@@ -56,6 +58,7 @@ public class InGamePacketHandler extends AbstractPacketHandler {
 
     @Override
     public PacketSignal handle(MovePlayerPacket packet) {
+        super.handle(packet);
         if (packet.getRuntimeEntityId() == this.getPlayer().getEntityId())
             this.getPlayer().setPosition(packet.getPosition());
 

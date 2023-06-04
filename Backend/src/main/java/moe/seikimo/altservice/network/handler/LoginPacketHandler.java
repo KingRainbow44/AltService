@@ -10,13 +10,14 @@ import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.bedrock.util.EncryptionUtils;
 import org.cloudburstmc.protocol.common.PacketSignal;
 
-public class LoginPacketHandler extends AbstractPacketHandler {
+public class LoginPacketHandler extends DisconnectablePacketHandler {
     public LoginPacketHandler(PlayerNetworkSession session) {
         super(session);
     }
 
     @Override
     public PacketSignal handle(NetworkSettingsPacket packet) {
+        super.handle(packet);
         // Apply network settings.
         var client = this.getSession().getClient();
         client.setCompression(packet.getCompressionAlgorithm());
@@ -30,6 +31,7 @@ public class LoginPacketHandler extends AbstractPacketHandler {
 
     @Override
     public PacketSignal handle(ServerToClientHandshakePacket packet) {
+        super.handle(packet);
         try {
             // Decode the JWT token.
             var jwt = packet.getJwt().split("\\.");
@@ -60,6 +62,7 @@ public class LoginPacketHandler extends AbstractPacketHandler {
 
     @Override
     public PacketSignal handle(PlayStatusPacket packet) {
+        super.handle(packet);
         if (packet.getStatus().equals(PlayStatusPacket.Status.PLAYER_SPAWN)) {
             // Wait for the player to initialize.
             while (!this.session.getData().isInitialized()) {
@@ -83,6 +86,7 @@ public class LoginPacketHandler extends AbstractPacketHandler {
 
     @Override
     public PacketSignal handle(ResourcePacksInfoPacket packet) {
+        super.handle(packet);
         // Send resource pack cache data.
         this.session.sendPacket(new ClientCacheStatusPacket(), true);
         // Create resource pack response.
@@ -96,6 +100,7 @@ public class LoginPacketHandler extends AbstractPacketHandler {
 
     @Override
     public PacketSignal handle(ResourcePackStackPacket packet) {
+        super.handle(packet);
         // Create resource pack response.
         var response = new ResourcePackClientResponsePacket();
         response.setStatus(ResourcePackClientResponsePacket.Status.COMPLETED);
@@ -107,6 +112,7 @@ public class LoginPacketHandler extends AbstractPacketHandler {
 
     @Override
     public PacketSignal handle(StartGamePacket packet) {
+        super.handle(packet);
         // Mark the player as initialized.
         this.session.getData().setInitialized(true);
         this.session.getData().setRuntimeId(packet.getRuntimeEntityId());
@@ -120,16 +126,8 @@ public class LoginPacketHandler extends AbstractPacketHandler {
     }
 
     @Override
-    public PacketSignal handle(DisconnectPacket packet) {
-        // Disconnect the player.
-        this.session.onDisconnect(packet.isMessageSkipped() ?
-                "No reason provided." : packet.getKickMessage());
-
-        return PacketSignal.HANDLED;
-    }
-
-    @Override
     public PacketSignal handle(RespawnPacket packet) {
+        super.handle(packet);
         var position = packet.getPosition();
         var state = packet.getState();
 

@@ -176,4 +176,12 @@ import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
         // Send the packet.
         this.sendPacket(movePacket);
     }
+
+    /**
+     * Called every "client" tick.
+     * This is used to fake a "client" tick for the server.
+     */
+    public void tick() {
+        if (!this.getSession().getData().isLoggedIn()) return;
+    }
 }

@@ -9,6 +9,7 @@ import moe.seikimo.altservice.command.player.RequestCommand;
 import moe.seikimo.altservice.command.util.ReloadCommand;
 import moe.seikimo.altservice.command.util.StopCommand;
 import moe.seikimo.altservice.player.PlayerManager;
+import moe.seikimo.altservice.player.PlayerTickThread;
 import moe.seikimo.altservice.player.command.PlayerCommandMap;
 import moe.seikimo.altservice.player.command.util.LocationCommand;
 import moe.seikimo.altservice.player.command.util.MoveCommand;
@@ -40,6 +41,9 @@ public final class AltBackend {
         LoggerUtils.disableLoggers();
     }
 
+    @Getter private static final PlayerTickThread playerTickThread
+            = new PlayerTickThread();
+
     /*
      * Command maps.
      */
@@ -67,10 +71,14 @@ public final class AltBackend {
 
         // Listen for a shutdown.
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            AltBackend.getPlayerTickThread().shutdown();
             PlayerManager.destroyAll();
             AltBackend.getEventGroup().shutdownGracefully();
             AltBackend.getLogger().info("Stopping backend...");
         }));
+
+        // Start the player tick thread.
+        AltBackend.getPlayerTickThread().start();
 
         // Register commands.
         registerCommands();
