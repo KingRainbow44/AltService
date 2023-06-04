@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 
 @Getter
 public final class Configuration {
@@ -59,8 +60,9 @@ public final class Configuration {
     }
 
     public boolean respondToCommands = true;
-    public boolean debug = false;
     public Server server = new Server();
+    public boolean debug = false;
+    public List<String> ignoredDebugPackets = List.of();
 
     @Getter
     public static class Server {
