@@ -3,6 +3,7 @@ package moe.seikimo.altservice.player.command;
 import moe.seikimo.altservice.Configuration;
 import moe.seikimo.altservice.command.SimpleCommandMap;
 import moe.seikimo.altservice.player.Player;
+import moe.seikimo.altservice.player.PlayerManager;
 
 import java.util.Arrays;
 
@@ -11,7 +12,10 @@ public final class PlayerCommandMap extends SimpleCommandMap {
     @Override
     public void invoke(String input) {
         if (!Configuration.get().isRespondToCommands()) return;
-        super.invoke(input);
+
+        for (Player player : PlayerManager.getPlayers()) {
+            this.invoke(player, input);
+        }
     }
 
     /**
