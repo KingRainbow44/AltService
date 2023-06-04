@@ -10,6 +10,7 @@ import moe.seikimo.altservice.command.util.ReloadCommand;
 import moe.seikimo.altservice.command.util.StopCommand;
 import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.player.command.PlayerCommandMap;
+import moe.seikimo.altservice.player.command.util.LocationCommand;
 import moe.seikimo.altservice.player.command.util.MoveCommand;
 import moe.seikimo.altservice.utils.LoggerUtils;
 import moe.seikimo.altservice.utils.objects.ThreadFactoryBuilder;
@@ -152,5 +153,6 @@ public final class AltBackend {
         playerCommands.addCommand(new RequestCommand());
         playerCommands.addCommand(new DisconnectCommand());
         playerCommands.addCommand(new MoveCommand());
+        playerCommands.addCommand(new LocationCommand());
     }
 }
