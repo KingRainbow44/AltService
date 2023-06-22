@@ -3,6 +3,7 @@ package moe.seikimo.altservice.script;
 import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.utils.EncodingUtils;
+import org.cloudburstmc.math.vector.Vector3i;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
 import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
@@ -64,6 +65,17 @@ public final class ScriptLib {
                 .toMap(table, Object.class);
         ScriptLoader.getLogger().info(
                 EncodingUtils.jsonEncode(map));
+    }
+
+    /**
+     * Logs a list to the console.
+     * This is used for debugging purposes.
+     *
+     * @param object The list to log.
+     */
+    public void logObject(Object object) {
+        ScriptLoader.getLogger().info(
+                EncodingUtils.jsonEncode(object));
     }
 
     /**
@@ -290,6 +302,13 @@ public final class ScriptLib {
         var y2 = pos2.get("y").tofloat();
         var z2 = pos2.get("z").tofloat();
 
+        System.out.println(
+                (float) Math.sqrt(
+                        Math.pow(x1 - x2, 2) +
+                                Math.pow(y1 - y2, 2) +
+                                Math.pow(z1 - z2, 2))
+        );
+
         // Calculate the distance.
         return (float) Math.sqrt(
                 Math.pow(x1 - x2, 2) +
@@ -369,5 +388,15 @@ public final class ScriptLib {
         }
 
         return table;
+    }
+
+    /**
+     * Converts a Vector3i to a table.
+     *
+     * @param position The position of the block.
+     * @return The block as a table.
+     */
+    public LuaTable blockToTable(Vector3i position) {
+        return EncodingUtils.blockToTable(position);
     }
 }

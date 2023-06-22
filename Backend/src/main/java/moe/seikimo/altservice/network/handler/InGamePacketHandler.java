@@ -3,14 +3,20 @@ package moe.seikimo.altservice.network.handler;
 import moe.seikimo.altservice.AltBackend;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
 import moe.seikimo.altservice.player.inventory.Inventory;
+import moe.seikimo.altservice.player.server.ServerBlock;
 import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
+import moe.seikimo.altservice.script.event.EventType;
+import moe.seikimo.altservice.script.event.ScriptArgs;
 import moe.seikimo.altservice.utils.objects.Location;
 import moe.seikimo.altservice.utils.objects.Style;
+import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerType;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.common.PacketSignal;
+
+import static moe.seikimo.altservice.utils.objects.absolute.GameConstants.IGNORE_BLOCKS;
 
 public class InGamePacketHandler extends DisconnectablePacketHandler {
     public InGamePacketHandler(PlayerNetworkSession session) {
@@ -278,31 +284,6 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
     }
 
     @Override
-    public PacketSignal handle(AddItemEntityPacket packet) {
-        return PacketSignal.HANDLED;
-    }
-
-    @Override
-    public PacketSignal handle(UpdateBlockPacket packet) {
-        return PacketSignal.HANDLED;
-    }
-
-    @Override
-    public PacketSignal handle(MobArmorEquipmentPacket packet) {
-        return PacketSignal.HANDLED;
-    }
-
-    @Override
-    public PacketSignal handle(MobEquipmentPacket packet) {
-        return PacketSignal.HANDLED;
-    }
-
-    @Override
-    public PacketSignal handle(ItemStackResponsePacket packet) {
-        return PacketSignal.HANDLED;
-    }
-
-    @Override
     public PacketSignal handle(ContainerOpenPacket packet) {
         var containerId = (int) packet.getId();
         var containerType = packet.getType();
@@ -328,6 +309,26 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
         var containerId = (int) packet.getId();
         this.getPlayer().getInventories()
                 .remove(containerId);
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(UpdateBlockPacket packet) {
+        var blocks = this.getPlayer().getBlocks();
+        var position = packet.getBlockPosition();
+
+        // Update blocks on the player.
+        var newBlock = ServerBlock.from(position,
+                (SimpleBlockDefinition) packet.getDefinition());
+        var oldBlock = blocks.put(position, newBlock);
+        this.getPlayer().getScriptBackend()
+                .invokeEvent(EventType.BLOCK_CHANGE,
+                        ScriptArgs.builder()
+                                .oldBlock(oldBlock)
+                                .block(newBlock)
+                                .build()
+        );
 
         return PacketSignal.HANDLED;
     }

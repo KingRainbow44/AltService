@@ -5,6 +5,7 @@ import moe.seikimo.altservice.Configuration;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
 import moe.seikimo.altservice.player.inventory.Inventory;
 import moe.seikimo.altservice.player.inventory.PlayerInventory;
+import moe.seikimo.altservice.player.server.ServerBlock;
 import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
 import moe.seikimo.altservice.script.ScriptManager;
@@ -41,6 +42,8 @@ import java.util.UUID;
     private final Map<UUID, ServerPlayer> peers
             = new HashMap<>();
     private final Map<Long, ServerEntity> entities
+            = new HashMap<>();
+    private final Map<Vector3i, ServerBlock> blocks
             = new HashMap<>();
     private final Map<Integer, Inventory> inventories
             = new HashMap<>();

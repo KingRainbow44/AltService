@@ -2,8 +2,11 @@ package moe.seikimo.altservice.script.event;
 
 import lombok.Data;
 import moe.seikimo.altservice.script.ScriptLoader;
+import moe.seikimo.altservice.utils.EncodingUtils;
+import org.cloudburstmc.math.vector.Vector3i;
 import org.luaj.vm2.LuaBoolean;
 import org.luaj.vm2.LuaFunction;
+import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
 import javax.script.Bindings;
@@ -16,6 +19,9 @@ import javax.script.Bindings;
     public String condition;
     public String action;
 
+    /* These are not required arguments. */
+    public LuaTable pos;
+
     private transient Bindings bindings;
 
     /**
@@ -23,6 +29,13 @@ import javax.script.Bindings;
      */
     public EventType getEvent() {
         return EventType.value(this.event);
+    }
+
+    /**
+     * @return The position of the event.
+     */
+    public Vector3i getPosition() {
+        return EncodingUtils.tableToBlock(this.pos);
     }
 
     /**
@@ -43,7 +56,8 @@ import javax.script.Bindings;
                     CoerceJavaToLua.coerce(args));
 
             return result instanceof LuaBoolean && result.toboolean();
-        } catch (Exception ignored) {
+        } catch (Exception exception) {
+            exception.printStackTrace();
             return false;
         }
     }
@@ -63,6 +77,8 @@ import javax.script.Bindings;
             function.call(
                     ScriptLoader.scriptLibValue,
                     CoerceJavaToLua.coerce(args));
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
     }
 }

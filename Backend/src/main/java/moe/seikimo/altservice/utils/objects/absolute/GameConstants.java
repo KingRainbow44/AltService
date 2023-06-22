@@ -25,6 +25,13 @@ public interface GameConstants {
     Set<String> INVULNERABLE_ENTITIES = new HashSet<>() {{
         this.add("minecraft:xp_orb");
     }};
+    /* Identifiers of blocks which should be ignored. */
+    Set<String> IGNORE_BLOCKS = new HashSet<>() {{
+        this.add("minecraft:air");
+        this.add("minecraft:redstone_wire");
+        this.add("minecraft:unpowered_repeater");
+        this.add("minecraft:powered_repeater");
+    }};
 
     /* The offset of a Bedrock position to a Java block. */
     float OFFSET = 1.62f;

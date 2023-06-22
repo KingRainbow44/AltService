@@ -183,6 +183,22 @@ public interface EncodingUtils {
     }
 
     /**
+     * Converts a Vector3i to a LuaTable.
+     *
+     * @param position The Vector3i.
+     * @return The LuaTable.
+     */
+    static LuaTable blockToTable(Vector3i position) {
+        var table = new LuaTable();
+
+        table.set("x", position.getX());
+        table.set("y", position.getY());
+        table.set("z", position.getZ());
+
+        return table;
+    }
+
+    /**
      * Converts an ItemData instance to a LuaTable.
      *
      * @param item The item.

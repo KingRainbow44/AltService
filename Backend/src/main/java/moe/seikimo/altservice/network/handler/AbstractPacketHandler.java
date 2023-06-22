@@ -286,8 +286,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(MobArmorEquipmentPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -462,8 +461,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(AddItemEntityPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -1032,8 +1030,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(ItemStackResponsePacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 

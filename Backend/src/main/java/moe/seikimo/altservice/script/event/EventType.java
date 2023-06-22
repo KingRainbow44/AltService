@@ -1,8 +1,7 @@
 package moe.seikimo.altservice.script.event;
 
 public enum EventType {
-    BREAK_BLOCK,
-    PLACE_BLOCK,
+    BLOCK_CHANGE,
     ENTITY_MOVE,
     PLAYER_MOVE,
     TAKE_DAMAGE,

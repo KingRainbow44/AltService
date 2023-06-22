@@ -39,6 +39,8 @@ import java.util.concurrent.ConcurrentHashMap;
      */
     public void initBehaviors() {
         this.scripts.clear();
+        this.events.clear();
+
         var behaviors = new ArrayList<>(
                 this.getActions().getBehaviors());
         for (var behavior : behaviors) {
