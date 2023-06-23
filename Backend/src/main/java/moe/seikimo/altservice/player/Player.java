@@ -32,6 +32,8 @@ import java.util.UUID;
             = System.currentTimeMillis();
     private final Map<UUID, ServerPlayer> peers
             = new HashMap<>();
+    private final PlayerInventory inventory
+            = new PlayerInventory();
 
     private final String username;
     private final long lifetime;
@@ -156,6 +158,20 @@ import java.util.UUID;
     public ServerPlayer getPeerByUsername(String username) {
         return this.peers.values().stream()
                 .filter(peer -> peer.getUsername().equals(username))
+                .findFirst().orElse(null);
+    }
+
+    /**
+     * Fetches a player by their entity ID.
+     * This can return null if the player is not found.
+     *
+     * @param runtimeId The entity ID to search for.
+     * @return The player, or null if not found.
+     */
+    @Nullable
+    public ServerPlayer getPeerById(long runtimeId) {
+        return this.peers.values().stream()
+                .filter(peer -> peer.getRuntimeId() == runtimeId)
                 .findFirst().orElse(null);
     }
 

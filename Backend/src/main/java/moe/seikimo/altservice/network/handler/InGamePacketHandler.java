@@ -5,6 +5,7 @@ import moe.seikimo.altservice.network.PlayerNetworkSession;
 import moe.seikimo.altservice.player.server.ServerPlayer;
 import moe.seikimo.altservice.utils.objects.Location;
 import moe.seikimo.altservice.utils.objects.Style;
+import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.common.PacketSignal;
 
@@ -70,6 +71,13 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
         if (packet.getRuntimeEntityId() == player.getEntityId()) {
             data.setGrounded(packet.isOnGround());
             player.move(packet.getPosition(), packet.getRotation());
+        } else {
+            var peer = this.getPlayer().getPeerById(packet.getRuntimeEntityId());
+            if (peer != null) {
+                var peerLocation = peer.getLocation();
+                peerLocation.setPosition(packet.getPosition());
+                peerLocation.setRotation(packet.getRotation());
+            }
         }
 
         var target = player.getTarget();
@@ -143,6 +151,52 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
             // Parse the text.
             var text = packet.getText().substring(2);
             this.getPlayer().setCanAttack(text.endsWith("§7"));
+        }
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(InventoryContentPacket packet) {
+        if (packet.getContainerId() == ContainerId.INVENTORY) {
+            // Update the player's inventory.
+            var inventory = this.getPlayer().getInventory();
+            inventory.getItems().clear();
+            inventory.getItems().addAll(packet.getContents());
+        } else {
+            this.getLogger().debug("Received inventory content packet for container {}.", packet.getContainerId());
+        }
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(InventorySlotPacket packet) {
+        if (packet.getContainerId() == ContainerId.INVENTORY) {
+            // Update the player's inventory.
+            var inventory = this.getPlayer().getInventory();
+            inventory.getItems().set(packet.getSlot(), packet.getItem());
+        } else {
+            this.getLogger().debug("Received inventory slot packet for container {}.", packet.getContainerId());
+        }
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(RespawnPacket packet) {
+        super.handle(packet);
+        var position = packet.getPosition();
+        var state = packet.getState();
+
+        // Log the respawn.
+        this.getLogger().debug("Respawning at {}. (state: {})",
+                position.toString(), state);
+
+        // Check if the server is waiting for the client.
+        if (state == RespawnPacket.State.SERVER_READY) {
+            this.getPlayer().setPosition(position);
+            this.getPlayer().respawn();
         }
 
         return PacketSignal.HANDLED;

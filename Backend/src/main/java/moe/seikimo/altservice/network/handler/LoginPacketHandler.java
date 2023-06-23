@@ -7,6 +7,7 @@ import moe.seikimo.altservice.utils.objects.absolute.NetworkConstants;
 import moe.seikimo.altservice.utils.objects.network.HandshakeHeader;
 import moe.seikimo.altservice.utils.objects.network.HandshakePayload;
 import org.cloudburstmc.protocol.bedrock.data.AuthoritativeMovementMode;
+import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.bedrock.util.EncryptionUtils;
 import org.cloudburstmc.protocol.common.PacketSignal;
@@ -67,8 +68,10 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
         if (packet.getStatus().equals(PlayStatusPacket.Status.PLAYER_SPAWN)) {
             // Wait for the player to initialize.
             while (!this.session.getData().isInitialized()) {
-                ThreadUtils.sleep(3000L);
+                ThreadUtils.sleep(100L);
             }
+
+            this.session.getClient().setPacketHandler(new InGamePacketHandler(this.session));
 
             // Complete server-side initialization.
             var tickPacket = new TickSyncPacket();
@@ -78,8 +81,11 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
             completePacket.setRuntimeEntityId(this.session.getData().getRuntimeId());
             this.session.sendPacket(completePacket, true);
 
-            // TODO: This should be the point where packets become in-game packets
-            this.session.getClient().setPacketHandler(new InGamePacketHandler(this.session));
+            // Request the inventory.
+            var invPacket = new ContainerClosePacket();
+            invPacket.setId((byte) ContainerId.INVENTORY);
+            invPacket.setServerInitiated(false);
+            this.session.sendPacket(invPacket);
         }
 
         return PacketSignal.HANDLED;
@@ -119,7 +125,6 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
         this.session.getData().setServerMovement(
                 packet.getAuthoritativeMovementMode() !=
                         AuthoritativeMovementMode.CLIENT);
-        System.out.println(packet.getAuthoritativeMovementMode().name());
 
         // Mark the player as initialized.
         this.session.getData().setInitialized(true);
