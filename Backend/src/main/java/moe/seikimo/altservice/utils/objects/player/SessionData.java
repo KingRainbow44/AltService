@@ -17,4 +17,8 @@ public final class SessionData {
     /* Login flags. */
     private boolean loggedIn = false;
     private boolean initialized = false;
+
+    /* Player properties. */
+    private boolean grounded = true;
+    private boolean serverMovement = false;
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import moe.seikimo.altservice.AltBackend;
 import moe.seikimo.altservice.player.Player;
+import moe.seikimo.altservice.player.server.ServerPlayer;
 
 import java.util.List;
 
@@ -23,9 +24,10 @@ public abstract class Command {
      * Invoked when the command is executed.
      *
      * @param player The player which should execute the command.
-     * @param args The command arguments.
+     * @param sender The player which sent the command.
+     * @param args   The command arguments.
      */
-    public void execute(Player player, List<String> args) { }
+    public void execute(Player player, ServerPlayer sender, List<String> args) { }
 
     /**
      * Sends a message to the console.

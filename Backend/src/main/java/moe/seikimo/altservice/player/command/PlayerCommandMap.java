@@ -8,13 +8,12 @@ import moe.seikimo.altservice.player.PlayerManager;
 import java.util.Arrays;
 
 public final class PlayerCommandMap extends SimpleCommandMap {
-
     @Override
     public void invoke(String input) {
         if (!Configuration.get().isRespondToCommands()) return;
 
-        for (Player player : PlayerManager.getPlayers()) {
-            this.invoke(player, input);
+        for (var player : PlayerManager.getPlayers()) {
+            this.invoke(player, null, input);
         }
     }
 
@@ -22,9 +21,10 @@ public final class PlayerCommandMap extends SimpleCommandMap {
      * Parses and executes a command from in-game.
      *
      * @param player The player which should execute the command.
+     * @param username The username of the player which sent the command.
      * @param input The command input.
      */
-    public void invoke(Player player, String input) {
+    public void invoke(Player player, String username, String input) {
         if (!Configuration.get().isRespondToCommands()) return;
 
         var split = input.split(" ");
@@ -40,6 +40,6 @@ public final class PlayerCommandMap extends SimpleCommandMap {
         if (command == null) return;
 
         // Execute the command.
-        command.execute(player, arguments);
+        command.execute(player, player.getPeerByUsername(username), arguments);
     }
 }

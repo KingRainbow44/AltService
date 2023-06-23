@@ -3,26 +3,39 @@ package moe.seikimo.altservice.player;
 import lombok.Data;
 import moe.seikimo.altservice.Configuration;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
+import moe.seikimo.altservice.player.server.ServerPlayer;
 import moe.seikimo.altservice.utils.ThreadUtils;
+import moe.seikimo.altservice.utils.enums.TargetAction;
 import moe.seikimo.altservice.utils.objects.ConnectionDetails;
 import moe.seikimo.altservice.utils.objects.Location;
 import moe.seikimo.altservice.utils.objects.player.SessionData;
+import org.cloudburstmc.math.vector.Vector2f;
 import org.cloudburstmc.math.vector.Vector3f;
-import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket;
-import org.cloudburstmc.protocol.bedrock.packet.MovePlayerPacket;
-import org.cloudburstmc.protocol.bedrock.packet.RespawnPacket;
-import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
+import org.cloudburstmc.protocol.bedrock.data.ClientPlayMode;
+import org.cloudburstmc.protocol.bedrock.data.InputMode;
+import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData;
+import org.cloudburstmc.protocol.bedrock.packet.*;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /** Represents a Minecraft player instance. */
 @Data public final class Player {
     private final long creationTime
             = System.currentTimeMillis();
+    private final Map<UUID, ServerPlayer> peers
+            = new HashMap<>();
 
     private final String username;
     private final long lifetime;
 
     private PlayerNetworkSession session = null;
     private Location location = Location.ZERO;
+
+    private ServerPlayer target = null;
+    private TargetAction targetAction = TargetAction.NONE;
 
     /**
      * Attempts to log in to the configured server.
@@ -100,6 +113,13 @@ import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
     }
 
     /**
+     * @return The player's rotation.
+     */
+    public Vector3f getRotation() {
+        return this.getLocation().getRotation();
+    }
+
+    /**
      * Sets the player's position.
      *
      * @param position The new position.
@@ -107,6 +127,16 @@ import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
     public void setPosition(Vector3f position) {
         if (this.getSession() == null) return;
         this.getLocation().setPosition(position);
+    }
+
+    /**
+     * Sets the player's rotation.
+     *
+     * @param rotation The new rotation.
+     */
+    public void setRotation(Vector3f rotation) {
+        if (this.getSession() == null) return;
+        this.getLocation().setRotation(rotation);
     }
 
     /**
@@ -162,19 +192,54 @@ import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
         // Check if the player is connected.
         if (this.getSession() == null) return;
 
-        // Prepare the move packet.
-        var movePacket = new MovePlayerPacket();
-        movePacket.setRuntimeEntityId(this.getEntityId());
-        movePacket.setPosition(position);
-        movePacket.setRotation(rotation);
-        movePacket.setMode(this.getPosition() == position ?
-                MovePlayerPacket.Mode.HEAD_ROTATION :
-                MovePlayerPacket.Mode.NORMAL);
-        movePacket.setOnGround(true);
-        movePacket.setRidingRuntimeEntityId(0);
+        if (this.getSession().getData().isServerMovement()) {
+            // Prepare the server move packet.
+            var movePacket = new PlayerAuthInputPacket();
+            movePacket.setPosition(position);
+            movePacket.setRotation(rotation);
+            movePacket.setMotion(Vector2f.ZERO);
+            movePacket.getInputData().add(
+                    PlayerAuthInputData.JUMPING
+            );
+            movePacket.setInputMode(InputMode.MOUSE);
+            movePacket.setPlayMode(ClientPlayMode.NORMAL);
+            movePacket.setTick(0);
+            movePacket.setDelta(Vector3f.ZERO);
 
-        // Send the packet.
-        this.sendPacket(movePacket);
+            // Send the packet.
+            this.sendPacket(movePacket);
+        } else {
+            // Prepare the move packet.
+            var movePacket = new MovePlayerPacket();
+            movePacket.setRuntimeEntityId(this.getEntityId());
+            movePacket.setPosition(position);
+            movePacket.setRotation(rotation);
+            movePacket.setMode(MovePlayerPacket.Mode.NORMAL);
+            movePacket.setOnGround(true);
+            movePacket.setRidingRuntimeEntityId(0);
+            movePacket.setTick(0);
+
+            // Send the packet.
+            this.sendPacket(movePacket);
+        }
+
+        // Update the client's position.
+        this.setPosition(position);
+        this.setRotation(rotation);
+    }
+
+    /**
+     * Fetches a player by their username.
+     * This can return null if the player is not found.
+     *
+     * @param username The username to search for.
+     * @return The player, or null if not found.
+     */
+    @Nullable
+    public ServerPlayer getPeerByUsername(String username) {
+        return this.peers.values().stream()
+                .filter(peer -> peer.getUsername().equals(username))
+                .findFirst().orElse(null);
     }
 
     /**
@@ -182,6 +247,7 @@ import org.cloudburstmc.protocol.bedrock.packet.TextPacket;
      * This is used to fake a "client" tick for the server.
      */
     public void tick() {
+        if (this.getSession() == null) return;
         if (!this.getSession().getData().isLoggedIn()) return;
     }
 }

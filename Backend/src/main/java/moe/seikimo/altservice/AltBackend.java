@@ -11,8 +11,10 @@ import moe.seikimo.altservice.command.util.StopCommand;
 import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.player.PlayerTickThread;
 import moe.seikimo.altservice.player.command.PlayerCommandMap;
+import moe.seikimo.altservice.player.command.action.FollowCommand;
 import moe.seikimo.altservice.player.command.util.LocationCommand;
 import moe.seikimo.altservice.player.command.util.MoveCommand;
+import moe.seikimo.altservice.player.command.util.RotateCommand;
 import moe.seikimo.altservice.utils.LoggerUtils;
 import moe.seikimo.altservice.utils.objects.ThreadFactoryBuilder;
 import org.jline.reader.EndOfFileException;
@@ -162,5 +164,7 @@ public final class AltBackend {
         playerCommands.addCommand(new DisconnectCommand());
         playerCommands.addCommand(new MoveCommand());
         playerCommands.addCommand(new LocationCommand());
+        playerCommands.addCommand(new RotateCommand());
+        playerCommands.addCommand(new FollowCommand());
     }
 }

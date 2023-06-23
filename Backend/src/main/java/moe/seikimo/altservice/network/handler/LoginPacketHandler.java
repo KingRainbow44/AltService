@@ -6,6 +6,7 @@ import moe.seikimo.altservice.utils.ThreadUtils;
 import moe.seikimo.altservice.utils.objects.absolute.NetworkConstants;
 import moe.seikimo.altservice.utils.objects.network.HandshakeHeader;
 import moe.seikimo.altservice.utils.objects.network.HandshakePayload;
+import org.cloudburstmc.protocol.bedrock.data.AuthoritativeMovementMode;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.bedrock.util.EncryptionUtils;
 import org.cloudburstmc.protocol.common.PacketSignal;
@@ -113,6 +114,13 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
     @Override
     public PacketSignal handle(StartGamePacket packet) {
         super.handle(packet);
+
+        // Set the movement type.
+        this.session.getData().setServerMovement(
+                packet.getAuthoritativeMovementMode() !=
+                        AuthoritativeMovementMode.CLIENT);
+        System.out.println(packet.getAuthoritativeMovementMode().name());
+
         // Mark the player as initialized.
         this.session.getData().setInitialized(true);
         this.session.getData().setRuntimeId(packet.getRuntimeEntityId());

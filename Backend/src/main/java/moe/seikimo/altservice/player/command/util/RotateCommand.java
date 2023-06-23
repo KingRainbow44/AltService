@@ -6,9 +6,9 @@ import moe.seikimo.altservice.player.server.ServerPlayer;
 
 import java.util.List;
 
-public final class MoveCommand extends Command {
-    public MoveCommand() {
-        super("move");
+public final class RotateCommand extends Command {
+    public RotateCommand() {
+        super("rotate");
     }
 
     @Override
@@ -18,22 +18,22 @@ public final class MoveCommand extends Command {
             return;
         }
 
-        // Get the position from the direction.
-        var current = player.getPosition();
-        var position = switch (args.get(0).toLowerCase()) {
+        // Get the rotation from the direction.
+        var current = player.getRotation();
+        var rotation = switch (args.get(0).toLowerCase()) {
             default -> null;
-            case "up" -> current.add(0, 0.2, 0);
-            case "down" -> current.sub(0, 0.2, 0);
-            case "left" -> current.add(0.2, 0, 0);
-            case "right" -> current.add(0, 0, 0.2);
+            case "up" -> current.add(0, 1, 0);
+            case "down" -> current.sub(0, 1, 0);
+            case "left" -> current.add(1, 0, 0);
+            case "right" -> current.sub(1, 0, 0);
         };
 
-        if (position == null) {
+        if (rotation == null) {
             player.sendMessage("An invalid direction was provided.");
             return;
         }
 
         // Update the player's position.
-        player.move(position, player.getRotation());
+        player.move(player.getPosition(), rotation);
     }
 }

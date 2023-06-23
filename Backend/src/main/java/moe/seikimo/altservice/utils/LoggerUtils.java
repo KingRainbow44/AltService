@@ -12,7 +12,7 @@ public interface LoggerUtils {
     static void disableLoggers() {
         // Turn off loggers.
         var logger = (Logger) LoggerFactory.getLogger("org.cloudburstmc.protocol");
-        logger.setLevel(Level.OFF);
+        logger.setLevel(Level.WARN);
 
         logger = (Logger) LoggerFactory.getLogger("io.netty.util");
         logger.setLevel(Level.OFF);

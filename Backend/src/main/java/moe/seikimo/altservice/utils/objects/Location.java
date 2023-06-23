@@ -10,10 +10,11 @@ import org.cloudburstmc.math.vector.Vector3f;
 @AllArgsConstructor
 public final class Location {
     public static final Location ZERO
-            = new Location(0, Vector3f.from(0, 0, 0));
+            = new Location(0, Vector3f.ZERO, Vector3f.ZERO);
 
     private int dimension;
     private Vector3f position;
+    private Vector3f rotation;
 
     @Override
     public String toString() {

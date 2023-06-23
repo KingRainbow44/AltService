@@ -48,8 +48,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(AnimatePacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -62,8 +61,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(AvailableEntityIdentifiersPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -167,8 +165,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(EntityEventPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -258,15 +255,13 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(LevelSoundEvent1Packet packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
     @Override
     public PacketSignal handle(LevelSoundEventPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -293,8 +288,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(MobEquipmentPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -307,8 +301,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(MoveEntityAbsolutePacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -356,8 +349,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(PlayerHotbarPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -454,8 +446,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(AddEntityPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -489,8 +480,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(AvailableCommandsPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -559,8 +549,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(CraftingDataPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -580,15 +569,13 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(LevelChunkPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
     @Override
     public PacketSignal handle(GameRulesChangedPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -615,8 +602,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(LevelEventPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -678,8 +664,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(PlaySoundPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -692,8 +677,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(RemoveEntityPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -769,36 +753,31 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(SetDifficultyPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
     @Override
     public PacketSignal handle(SetDisplayObjectivePacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
     @Override
     public PacketSignal handle(SetEntityDataPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
     @Override
     public PacketSignal handle(SetEntityLinkPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
     @Override
     public PacketSignal handle(SetEntityMotionPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -825,8 +804,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(SetScorePacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -839,8 +817,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(SetTimePacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -965,8 +942,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(UpdateAttributesPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -1014,15 +990,13 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(BiomeDefinitionListPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
     @Override
     public PacketSignal handle(LevelSoundEvent2Packet packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -1084,8 +1058,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(CreativeContentPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -1162,7 +1135,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
     @Override
     public PacketSignal handle(ItemComponentPacket packet) {
         logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -1329,15 +1302,13 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(UpdateAbilitiesPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
     @Override
     public PacketSignal handle(UpdateAdventureSettingsPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -1434,8 +1405,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(TrimDataPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
