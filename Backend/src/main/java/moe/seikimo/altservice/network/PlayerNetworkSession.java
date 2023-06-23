@@ -224,4 +224,9 @@ public final class PlayerNetworkSession {
     public void close(String reason) {
         this.getClient().close(reason);
     }
+
+    @Override
+    public String toString() {
+        return this.getUsername();
+    }
 }

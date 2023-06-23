@@ -8,13 +8,18 @@ import moe.seikimo.altservice.utils.ThreadUtils;
 import moe.seikimo.altservice.utils.enums.TargetAction;
 import moe.seikimo.altservice.utils.objects.ConnectionDetails;
 import moe.seikimo.altservice.utils.objects.Location;
+import moe.seikimo.altservice.utils.objects.absolute.GameConstants;
 import moe.seikimo.altservice.utils.objects.player.SessionData;
 import org.cloudburstmc.math.vector.Vector2f;
 import org.cloudburstmc.math.vector.Vector3f;
 import org.cloudburstmc.math.vector.Vector3i;
+import org.cloudburstmc.nbt.NbtMap;
 import org.cloudburstmc.protocol.bedrock.data.ClientPlayMode;
 import org.cloudburstmc.protocol.bedrock.data.InputMode;
+import org.cloudburstmc.protocol.bedrock.data.PlayerActionType;
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData;
+import org.cloudburstmc.protocol.bedrock.data.definitions.BlockDefinition;
+import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryActionData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventorySource;
@@ -270,7 +275,7 @@ import java.util.UUID;
     public void attack(ServerPlayer target) {
         if (this.getSession() == null) return;
 
-        // Create the attack action.
+        // Create the inventory action.
         var action = new InventoryActionData(
                 InventorySource.fromGlobalInventory(), 0,
                 ItemData.AIR, ItemData.AIR
@@ -287,7 +292,6 @@ import java.util.UUID;
             invPacket.setTransactionType(InventoryTransactionType.ITEM_USE_ON_ENTITY);
             invPacket.setBlockPosition(Vector3i.ZERO);
             invPacket.setBlockFace(0);
-            invPacket.setClickPosition(Vector3f.ZERO);
             invPacket.setPlayerPosition(this.getPosition());
             invPacket.setClickPosition(target.getLocation().getPosition());
             invPacket.setHeadPosition(target.getLocation().getPosition());
@@ -310,6 +314,86 @@ import java.util.UUID;
     }
 
     /**
+     * Breaks the block at the specified position.
+     *
+     * @param block The position of the block to break.
+     */
+    public void _break(Vector3i block) {
+        if (this.getSession() == null) return;
+
+        {
+            // Create the start action packet.
+            var startPacket = new PlayerActionPacket();
+            startPacket.setRuntimeEntityId(this.getEntityId());
+            startPacket.setAction(PlayerActionType.START_BREAK);
+            startPacket.setBlockPosition(block);
+            startPacket.setResultPosition(block);
+            startPacket.setFace(0); // 0 = down
+
+            this.sendPacket(startPacket);
+        }
+
+        {
+            // Create the inventory action.
+            var action = new InventoryActionData(
+                    InventorySource.fromGlobalInventory(), 0,
+                    ItemData.AIR, ItemData.AIR
+            );
+
+            // Prepare the transaction packet.
+            var invPacket = new InventoryTransactionPacket();
+            invPacket.getActions().add(action);
+            invPacket.setLegacyRequestId(0);
+            invPacket.setHotbarSlot(0);
+            invPacket.setItemInHand(ItemData.AIR);
+            invPacket.setRuntimeEntityId(this.getEntityId());
+            invPacket.setTransactionType(InventoryTransactionType.ITEM_USE);
+            invPacket.setBlockDefinition(GameConstants.AIR_BLOCK);
+            invPacket.setBlockPosition(block);
+            invPacket.setBlockFace(0); // 0 = down
+            invPacket.setPlayerPosition(this.getPosition());
+            invPacket.setClickPosition(block.toFloat());
+            invPacket.setHeadPosition(Vector3f.ZERO);
+            invPacket.setActionType(2); // 2 = break block
+
+            this.sendPacket(invPacket);
+        }
+    }
+
+    /**
+     * Places a block at the specified position.
+     *
+     * @param block The position of the block to place.
+     */
+    public void place(Vector3i block) {
+        if (this.getSession() == null) return;
+
+        // Create the inventory action.
+        var action = new InventoryActionData(
+                InventorySource.fromGlobalInventory(), 0,
+                ItemData.AIR, ItemData.AIR
+        );
+
+        // Prepare the transaction packet.
+        var invPacket = new InventoryTransactionPacket();
+        invPacket.getActions().add(action);
+        invPacket.setLegacyRequestId(0);
+        invPacket.setHotbarSlot(0);
+        invPacket.setItemInHand(ItemData.AIR);
+        invPacket.setRuntimeEntityId(this.getEntityId());
+        invPacket.setTransactionType(InventoryTransactionType.ITEM_USE);
+        invPacket.setBlockDefinition(GameConstants.AIR_BLOCK);
+        invPacket.setBlockPosition(block);
+        invPacket.setBlockFace(0); // 0 = down
+        invPacket.setPlayerPosition(this.getPosition());
+        invPacket.setClickPosition(block.toFloat());
+        invPacket.setHeadPosition(Vector3f.ZERO);
+        invPacket.setActionType(0); // 0 = place block
+
+        this.sendPacket(invPacket);
+    }
+
+    /**
      * Called every "client" tick.
      * This is used to fake a "client" tick for the server.
      */
@@ -325,5 +409,10 @@ import java.util.UUID;
                 }
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.getSession().getData().toString();
     }
 }

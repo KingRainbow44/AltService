@@ -12,7 +12,9 @@ import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.player.PlayerTickThread;
 import moe.seikimo.altservice.player.command.PlayerCommandMap;
 import moe.seikimo.altservice.player.command.action.AttackCommand;
+import moe.seikimo.altservice.player.command.action.BreakCommand;
 import moe.seikimo.altservice.player.command.action.FollowCommand;
+import moe.seikimo.altservice.player.command.action.PlaceCommand;
 import moe.seikimo.altservice.player.command.util.InventoryCommand;
 import moe.seikimo.altservice.player.command.util.LocationCommand;
 import moe.seikimo.altservice.player.command.util.MoveCommand;
@@ -171,5 +173,7 @@ public final class AltBackend {
         playerCommands.addCommand(new FollowCommand());
         playerCommands.addCommand(new AttackCommand());
         playerCommands.addCommand(new InventoryCommand());
+        playerCommands.addCommand(new BreakCommand());
+        playerCommands.addCommand(new PlaceCommand());
     }
 }
