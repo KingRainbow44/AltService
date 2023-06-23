@@ -1,18 +1,18 @@
 Manifest-Version: 1.0
 Main-Class: moe.seikimo.altservice.AltBackend
-Class-Path: nbt-3.0.0.Final.jar aircompressor-0.21.jar jcip-annotations-
- 1.0-1.jar bedrock-connection-3.0.0.Beta1-20230522.135008-83.jar netty-b
- uffer-4.1.84.Final.jar immutable-2.0-20220327.162752-1.jar expiringmap-
- 0.5.10.jar fastutil-int-object-maps-8.5.3.jar gson-2.10.1.jar jline-3.2
- 1.0.jar logback-core-1.4.7.jar fastutil-object-int-maps-8.5.3.jar fastu
- til-long-object-maps-8.5.3.jar netty-codec-4.1.89.Final.jar jline-termi
- nal-3.21.0.jar fastutil-int-sets-8.5.3.jar nimbus-jose-jwt-9.10.1.jar n
- etty-transport-raknet-1.0.0.CR1-20230430.211932-7.jar natives-1.0.3.jar
-  fastutil-object-sets-8.5.3.jar common-3.0.0.Beta1-20230507.200054-77.j
- ar netty-common-4.1.84.Final.jar fastutil-object-common-8.5.3.jar fastu
- til-long-common-8.5.3.jar annotations-24.0.1.jar bedrock-codec-3.0.0.Be
- ta1-20230507.200054-78.jar fastutil-long-sets-8.5.3.jar fastutil-common
- -8.5.3.jar slf4j-api-2.0.4.jar netty-resolver-4.1.89.Final.jar netty-tr
- ansport-4.1.89.Final.jar fastutil-int-common-8.5.3.jar logback-classic-
- 1.4.7.jar jline-terminal-jna-3.21.0.jar jna-5.10.0.jar
+Class-Path: logback-classic-1.4.7.jar nbt-3.0.0.Final.jar gson-2.10.1.ja
+ r netty-buffer-4.1.84.Final.jar fastutil-common-8.5.3.jar common-3.0.0.
+ Beta1-20230616.192131-95.jar bedrock-codec-3.0.0.Beta1-20230616.192131-
+ 96.jar fastutil-object-sets-8.5.3.jar immutable-2.0-20220327.162752-1.j
+ ar jcip-annotations-1.0-1.jar slf4j-api-2.0.4.jar annotations-24.0.1.ja
+ r netty-codec-4.1.89.Final.jar fastutil-long-common-8.5.3.jar bedrock-c
+ onnection-3.0.0.Beta1-20230616.192131-95.jar jline-terminal-3.21.0.jar 
+ fastutil-int-common-8.5.3.jar nimbus-jose-jwt-9.10.1.jar fastutil-objec
+ t-common-8.5.3.jar jline-3.21.0.jar fastutil-int-sets-8.5.3.jar fastuti
+ l-long-sets-8.5.3.jar aircompressor-0.21.jar logback-core-1.4.7.jar fas
+ tutil-int-object-maps-8.5.3.jar jna-5.10.0.jar natives-1.0.3.jar fastut
+ il-object-int-maps-8.5.3.jar netty-transport-4.1.89.Final.jar fastutil-
+ long-object-maps-8.5.3.jar expiringmap-0.5.10.jar netty-common-4.1.84.F
+ inal.jar netty-transport-raknet-1.0.0.CR1-20230609.174844-8.jar netty-r
+ esolver-4.1.89.Final.jar jline-terminal-jna-3.21.0.jar
 

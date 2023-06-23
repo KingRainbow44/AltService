@@ -21,14 +21,14 @@
         <dependency>
             <groupId>org.cloudburstmc.protocol</groupId>
             <artifactId>common</artifactId>
-            <version>3.0.0.Beta1-20230507.200054-77</version>
+            <version>3.0.0.Beta1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.cloudburstmc.protocol</groupId>
             <artifactId>bedrock-codec</artifactId>
-            <version>3.0.0.Beta1-20230507.200054-78</version>
+            <version>3.0.0.Beta1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
