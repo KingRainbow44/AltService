@@ -362,8 +362,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(PlayerSkinPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -376,8 +375,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(RequestChunkRadiusPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -486,8 +484,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(BlockEventPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 

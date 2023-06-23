@@ -11,9 +11,14 @@ import moe.seikimo.altservice.utils.objects.Location;
 import moe.seikimo.altservice.utils.objects.player.SessionData;
 import org.cloudburstmc.math.vector.Vector2f;
 import org.cloudburstmc.math.vector.Vector3f;
+import org.cloudburstmc.math.vector.Vector3i;
 import org.cloudburstmc.protocol.bedrock.data.ClientPlayMode;
 import org.cloudburstmc.protocol.bedrock.data.InputMode;
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData;
+import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
+import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryActionData;
+import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventorySource;
+import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryTransactionType;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,6 +38,7 @@ import java.util.UUID;
 
     private PlayerNetworkSession session = null;
     private Location location = Location.ZERO;
+    private boolean canAttack = true;
 
     private ServerPlayer target = null;
     private TargetAction targetAction = TargetAction.NONE;
@@ -140,6 +146,20 @@ import java.util.UUID;
     }
 
     /**
+     * Fetches a player by their username.
+     * This can return null if the player is not found.
+     *
+     * @param username The username to search for.
+     * @return The player, or null if not found.
+     */
+    @Nullable
+    public ServerPlayer getPeerByUsername(String username) {
+        return this.peers.values().stream()
+                .filter(peer -> peer.getUsername().equals(username))
+                .findFirst().orElse(null);
+    }
+
+    /**
      * Respawns the player.
      */
     @SuppressWarnings("DataFlowIssue")
@@ -229,17 +249,48 @@ import java.util.UUID;
     }
 
     /**
-     * Fetches a player by their username.
-     * This can return null if the player is not found.
-     *
-     * @param username The username to search for.
-     * @return The player, or null if not found.
+     * Attacks the specified player.
      */
-    @Nullable
-    public ServerPlayer getPeerByUsername(String username) {
-        return this.peers.values().stream()
-                .filter(peer -> peer.getUsername().equals(username))
-                .findFirst().orElse(null);
+    public void attack(ServerPlayer target) {
+        if (this.getSession() == null) return;
+
+        // Create the attack action.
+        var action = new InventoryActionData(
+                InventorySource.fromGlobalInventory(), 0,
+                ItemData.AIR, ItemData.AIR
+        );
+
+        {
+            // Prepare the transaction packet.
+            var invPacket = new InventoryTransactionPacket();
+            invPacket.getActions().add(action);
+            invPacket.setLegacyRequestId(0);
+            invPacket.setHotbarSlot(0);
+            invPacket.setItemInHand(ItemData.AIR);
+            invPacket.setRuntimeEntityId(target.getRuntimeId());
+            invPacket.setTransactionType(InventoryTransactionType.ITEM_USE_ON_ENTITY);
+            invPacket.setBlockPosition(Vector3i.ZERO);
+            invPacket.setBlockFace(0);
+            invPacket.setClickPosition(Vector3f.ZERO);
+            invPacket.setPlayerPosition(this.getPosition());
+            invPacket.setClickPosition(target.getLocation().getPosition());
+            invPacket.setHeadPosition(target.getLocation().getPosition());
+            invPacket.setActionType(1); // 1 = attack
+
+            this.sendPacket(invPacket);
+        }
+
+        {
+            // Prepare the arm swing packet.
+            var armPacket = new AnimatePacket();
+            armPacket.setRuntimeEntityId(this.getEntityId());
+            armPacket.setAction(AnimatePacket.Action.SWING_ARM);
+            armPacket.setRowingTime(0);
+
+            this.sendPacket(armPacket);
+        }
+
+        this.setCanAttack(false); // Wait for the cooldown to expire.
     }
 
     /**
@@ -249,5 +300,14 @@ import java.util.UUID;
     public void tick() {
         if (this.getSession() == null) return;
         if (!this.getSession().getData().isLoggedIn()) return;
+
+        if (this.getTarget() != null) {
+            switch (this.getTargetAction()) {
+                case ATTACK -> {
+                    if (this.isCanAttack())
+                        this.attack(this.getTarget());
+                }
+            }
+        }
     }
 }

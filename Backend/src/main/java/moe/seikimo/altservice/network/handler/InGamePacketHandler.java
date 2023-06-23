@@ -136,4 +136,15 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
 
         return PacketSignal.HANDLED;
     }
+
+    @Override
+    public PacketSignal handle(SetTitlePacket packet) {
+        if (packet.getType() == SetTitlePacket.Type.SUBTITLE) {
+            // Parse the text.
+            var text = packet.getText().substring(2);
+            this.getPlayer().setCanAttack(text.endsWith("§7"));
+        }
+
+        return PacketSignal.HANDLED;
+    }
 }
