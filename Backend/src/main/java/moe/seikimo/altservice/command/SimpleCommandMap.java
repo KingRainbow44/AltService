@@ -25,6 +25,11 @@ public class SimpleCommandMap implements CommandMap {
         return SimpleCommandMap.commands.get(label);
     }
 
+    /**
+     * Parses and executes a command from the console.
+     *
+     * @param input The command input.
+     */
     public void invoke(String input) {
         var split = input.split(" ");
         if (split.length < 1) return;

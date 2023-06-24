@@ -8,12 +8,18 @@ import moe.seikimo.altservice.player.PlayerManager;
 import java.util.Arrays;
 
 public final class PlayerCommandMap extends SimpleCommandMap {
-    @Override
-    public void invoke(String input) {
+    /**
+     * Parses and executes a command from in-game.
+     * Invoked when a player executes an "all" command.
+     *
+     * @param username The username of the player which sent the command.
+     * @param input The command input.
+     */
+    public void invoke(String username, String input) {
         if (!Configuration.get().isRespondToCommands()) return;
 
         for (var player : PlayerManager.getPlayers()) {
-            this.invoke(player, null, input);
+            this.invoke(player, username, input);
         }
     }
 

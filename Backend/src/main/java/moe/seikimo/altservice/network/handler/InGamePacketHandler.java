@@ -17,7 +17,6 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(DeathInfoPacket packet) {
-        super.handle(packet);
         var position = this.getPlayer().getLocation().getPosition();
 
         // Log the death.
@@ -32,7 +31,6 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(TextPacket packet) {
-        super.handle(packet);
         var message = packet.getMessage();
 
         // Log the message.
@@ -56,8 +54,8 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
                 var command = parsed.replaceFirst(username, "").trim();
                 AltBackend.getPlayerCommands().invoke(this.getPlayer(), sender, command);
             } else if (parsed.startsWith(",")) {
-                AltBackend.getPlayerCommands().invoke(
-                        parsed.replaceFirst(",", "").trim());
+                var command = parsed.replaceFirst(",", "").trim();
+                AltBackend.getPlayerCommands().invoke(sender, command);
             }
         }
 
@@ -213,7 +211,6 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(RespawnPacket packet) {
-        super.handle(packet);
         var position = packet.getPosition();
         var state = packet.getState();
 
