@@ -173,21 +173,20 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
     public PacketSignal handle(InventoryContentPacket packet) {
         var inventory = this.getPlayer().getInventory();
         switch (packet.getContainerId()) {
-//            case ContainerId.INVENTORY -> {
-//                // Update the player's inventory.
-//                inventory.getItems().clear();
-//                inventory.getItems().addAll(packet.getContents());
-//            }
-//            case ContainerId.OFFHAND -> // Update the player's offhand.
-//                    inventory.setOffhand(packet.getContents().get(0));
-//            case ContainerId.ARMOR -> {
-//                // Update the player's armor.
-//                inventory.getArmor().clear();
-//                inventory.getArmor().addAll(packet.getContents());
-//            }
+            case ContainerId.INVENTORY -> {
+                // Update the player's inventory.
+                inventory.getItems().clear();
+                inventory.getItems().addAll(packet.getContents());
+            }
+            case ContainerId.OFFHAND -> // Update the player's offhand.
+                    inventory.setOffhand(packet.getContents().get(0));
+            case ContainerId.ARMOR -> {
+                // Update the player's armor.
+                inventory.getArmor().clear();
+                inventory.getArmor().addAll(packet.getContents());
+            }
             default -> {
                 this.getLogger().debug("Received inventory content packet for container {}.", packet.getContainerId());
-                System.out.println(packet);
             }
         }
 
@@ -203,8 +202,6 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
         } else {
             this.getLogger().debug("Received inventory slot packet for container {}.", packet.getContainerId());
         }
-
-        System.out.println(packet);
 
         return PacketSignal.HANDLED;
     }
@@ -255,10 +252,24 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(PlayerHotbarPacket packet) {
-        System.out.println(packet);
         var inventory = this.getPlayer().getInventory();
         inventory.setHotbarSlot(packet.getSelectedHotbarSlot());
 
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(UpdateBlockPacket packet) {
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(MobArmorEquipmentPacket packet) {
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(MobEquipmentPacket packet) {
         return PacketSignal.HANDLED;
     }
 }

@@ -1,5 +1,6 @@
 package moe.seikimo.altservice.network.handler;
 
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
 import moe.seikimo.altservice.utils.EncodingUtils;
 import moe.seikimo.altservice.utils.ThreadUtils;
@@ -7,10 +8,12 @@ import moe.seikimo.altservice.utils.objects.absolute.NetworkConstants;
 import moe.seikimo.altservice.utils.objects.network.HandshakeHeader;
 import moe.seikimo.altservice.utils.objects.network.HandshakePayload;
 import org.cloudburstmc.protocol.bedrock.data.AuthoritativeMovementMode;
-import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId;
+import org.cloudburstmc.protocol.bedrock.data.definitions.BlockDefinition;
+import org.cloudburstmc.protocol.bedrock.data.definitions.ItemDefinition;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.bedrock.util.EncryptionUtils;
 import org.cloudburstmc.protocol.common.PacketSignal;
+import org.cloudburstmc.protocol.common.SimpleDefinitionRegistry;
 
 public class LoginPacketHandler extends DisconnectablePacketHandler {
     public LoginPacketHandler(PlayerNetworkSession session) {
@@ -72,12 +75,6 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
 
             this.session.getClient().setPacketHandler(new InGamePacketHandler(this.session));
 
-            // Request the inventory.
-            var invPacket = new InteractPacket();
-            invPacket.setAction(InteractPacket.Action.OPEN_INVENTORY);
-            invPacket.setRuntimeEntityId(this.session.getData().getRuntimeId());
-            this.session.sendPacket(invPacket, true);
-
             // Complete server-side initialization.
             var tickPacket = new TickSyncPacket();
             this.session.sendPacket(tickPacket, true);
@@ -117,8 +114,6 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(StartGamePacket packet) {
-        super.handle(packet);
-
         // Set the movement type.
         this.session.getData().setServerMovement(
                 packet.getAuthoritativeMovementMode() !=
@@ -132,6 +127,28 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
         var distancePacket = new RequestChunkRadiusPacket();
         distancePacket.setRadius(64);
         this.session.sendPacket(distancePacket, true);
+
+        // Perform client setup.
+        var codecHelper = this.session.getClient()
+                .getPeer().getCodecHelper();
+
+        // Set up the item registry.
+        SimpleDefinitionRegistry.Builder<ItemDefinition> itemRegistry =
+                SimpleDefinitionRegistry.builder();
+        var runtimeIds = new IntOpenHashSet();
+        for (var definition : packet.getItemDefinitions()) {
+            if (runtimeIds.add(definition.getRuntimeId()))
+                itemRegistry.add(definition);
+            else
+                this.getLogger().warn("Duplicate item entry {}.",
+                        definition.getIdentifier());
+        }
+        codecHelper.setItemDefinitions(itemRegistry.build());
+
+        // Set up the block registry.
+        SimpleDefinitionRegistry.Builder<BlockDefinition> blockRegistry
+                = SimpleDefinitionRegistry.builder();
+        codecHelper.setBlockDefinitions(blockRegistry.build());
 
         return PacketSignal.HANDLED;
     }

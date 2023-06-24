@@ -1,5 +1,7 @@
 package moe.seikimo.altservice.player;
 
+import moe.seikimo.altservice.utils.ThreadUtils;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -7,7 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * This is used to fake a "client" tick for the server.
  * Some packets need to be sent ever x ticks.
  */
-public class PlayerTickThread extends Thread {
+public final class PlayerTickThread extends Thread {
 
     /**
      * Duration between ticks. (milliseconds)
@@ -19,15 +21,11 @@ public class PlayerTickThread extends Thread {
     @Override
     public void run() {
         while (running.get()) {
-            try {
-                // Sleep for the tick interval.
-                Thread.sleep(PlayerTickThread.TICK_INTERVAL);
+            // Sleep for the tick interval.
+            ThreadUtils.sleep(PlayerTickThread.TICK_INTERVAL);
 
-                // Tick all players.
-                PlayerManager.getPlayers().forEach(Player::tick);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            // Tick all players.
+            PlayerManager.getPlayers().forEach(Player::tick);
         }
     }
 

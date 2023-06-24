@@ -17,6 +17,7 @@ import moe.seikimo.altservice.player.command.util.*;
 import moe.seikimo.altservice.script.ScriptLoader;
 import moe.seikimo.altservice.utils.LoggerUtils;
 import moe.seikimo.altservice.utils.objects.ThreadFactoryBuilder;
+import moe.seikimo.altservice.utils.objects.absolute.NetworkConstants;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
