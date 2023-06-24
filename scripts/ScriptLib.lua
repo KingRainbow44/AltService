@@ -1,15 +1,15 @@
 ScriptLib = {
-    info = (function(message) end),
-    warn = (function(message) end),
-    error = (function(message) end),
-    logTable = (function(table) end),
-    setGlobal = (function(key, value)  end),
-    getGlobal = (function(key) end),
-    getPosition = (function(player) end),
-    sendMessage = (function(player, message) end),
-    move = (function(player, x, y, z) end),
-    rotate = (function(player, pitch, yaw) end),
-    breakBlock = (function(player, x, y, z) end),
+    info = (function(context, message) end),
+    warn = (function(context, message) end),
+    error = (function(context, message) end),
+    logTable = (function(context, table) end),
+    setGlobal = (function(context, key, value)  end),
+    getGlobal = (function(context, key) end),
+    getPosition = (function(context, player) end),
+    sendMessage = (function(context, player, message) end),
+    move = (function(context, player, x, y, z) end),
+    rotate = (function(context, player, pitch, yaw) end),
+    breakBlock = (function(context, player, x, y, z) end),
 }
 
 Options = {

@@ -34,6 +34,7 @@ public final class ScriptLoader {
 
     private static final Map<String, CompiledScript> cache
             = new ConcurrentHashMap<>();
+    private static LuaValue scriptLibValue = null;
 
     /**
      * Attempts to initialize the script engine.
@@ -42,7 +43,8 @@ public final class ScriptLoader {
         try {
             var context = ScriptLoader.getContext();
 
-            context.globals.set("ScriptLib", CoerceJavaToLua.coerce(scriptLib));
+            ScriptLoader.scriptLibValue = CoerceJavaToLua.coerce(scriptLib);
+            context.globals.set("ScriptLib", ScriptLoader.scriptLibValue);
             ScriptLoader.getLogger().info("Initialized LuaJ.");
         } catch (Exception ignored) {
             ScriptLoader.getLogger().warn("Failed to initialize LuaJ.");
@@ -156,7 +158,7 @@ public final class ScriptLoader {
             return bindings;
         } catch (Exception exception) {
             ScriptLoader.getLogger().warn("Unable to invoke script {}.", path);
-            ScriptLoader.getLogger().info("Unable to invoke script.", exception);
+            ScriptLoader.getLogger().debug("Unable to invoke script.", exception);
         }
 
         return null;
@@ -183,7 +185,7 @@ public final class ScriptLoader {
         if (!(func instanceof LuaFunction function)) return LuaValue.NIL;
 
         try {
-            return function.call(args);
+            return function.call(ScriptLoader.scriptLibValue, args);
         } catch (LuaError exception) {
             ScriptLoader.getLogger().warn("Unable to call function.", exception);
             return LuaValue.NIL;
