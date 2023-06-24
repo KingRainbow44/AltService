@@ -206,10 +206,7 @@ import java.util.UUID;
             var entityPos = entity.getPosition();
 
             // Check if the entity is within range.
-            if (
-                    entity.getLocation().isGrounded() &&
-                            entityPos.distance(selfPos) < 6
-            ) {
+            if (entityPos.distance(selfPos) < 6) {
                 if (
                         (actions.isGuardPlayers() && actions.isGuardMobs()) ||
                                 (actions.isGuardPlayers() && entity instanceof ServerPlayer) ||
