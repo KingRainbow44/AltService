@@ -1,6 +1,10 @@
 package moe.seikimo.altservice.script;
 
 import lombok.Getter;
+import moe.seikimo.altservice.AltBackend;
+import org.luaj.vm2.LuaError;
+import org.luaj.vm2.LuaFunction;
+import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.script.LuajContext;
 import org.slf4j.Logger;
@@ -72,7 +76,7 @@ public final class ScriptLoader {
      * @return The compiled script.
      */
     public static CompiledScript getScript(String path, boolean useCache) {
-        if (!useCache) ScriptLoader.cache.remove(path);
+        if (!useCache || AltBackend.debug()) ScriptLoader.cache.remove(path);
         return ScriptLoader.cache.computeIfAbsent(path, k -> {
             try (var file = Files.newBufferedReader(new File("scripts", path).toPath())) {
                 var script = ((Compilable) ScriptLoader.getEngine()).compile(file);
@@ -128,5 +132,61 @@ public final class ScriptLoader {
         }
 
         return null;
+    }
+
+    /**
+     * Invokes a Lua script.
+     *
+     * @param path The path to the script.
+     * @param useCache Whether to use the cache.
+     * @param bindings The bindings to use.
+     * @return The bindings from the script.
+     */
+    public static Bindings invokeScript(String path, boolean useCache, Bindings bindings) {
+        try {
+            // Fetch the script.
+            var script = ScriptLoader.getScript(path, useCache);
+            if (script == null) {
+                return null;
+            }
+
+            // Invoke the script.
+            script.eval(bindings);
+
+            return bindings;
+        } catch (Exception exception) {
+            ScriptLoader.getLogger().warn("Unable to invoke script {}.", path);
+            ScriptLoader.getLogger().info("Unable to invoke script.", exception);
+        }
+
+        return null;
+    }
+
+    /**
+     * Invokes a Lua function.
+     *
+     * @param func The function to invoke.
+     * @return The return value of the function.
+     */
+    public static LuaValue call(Object func) {
+        return ScriptLoader.call(func, LuaValue.NIL);
+    }
+
+    /**
+     * Invokes a Lua function.
+     *
+     * @param func The function to invoke.
+     * @param args The arguments to pass.
+     * @return The return value of the function.
+     */
+    public static LuaValue call(Object func, LuaValue args) {
+        if (!(func instanceof LuaFunction function)) return LuaValue.NIL;
+
+        try {
+            return function.call(args);
+        } catch (LuaError exception) {
+            ScriptLoader.getLogger().warn("Unable to call function.", exception);
+            return LuaValue.NIL;
+        }
     }
 }

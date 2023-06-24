@@ -45,6 +45,7 @@ import java.util.UUID;
     private final String username;
     private final long lifetime;
 
+    private long ticks = 0;
     private PlayerNetworkSession session = null;
     private Location location = Location.ZERO();
     private boolean canAttack = true;
@@ -441,12 +442,17 @@ import java.util.UUID;
         if (this.getSession() == null) return;
         if (!this.getSession().getData().isLoggedIn()) return;
 
+        this.ticks++;
+
         if (this.getTarget() != null) {
             if (this.getActions().isAttack()) {
                 if (this.isCanAttack())
                     this.attack(this.getTarget());
             }
         }
+
+        if (this.ticks % 20 == 0)
+            this.getActions().tickBehaviors();
     }
 
     @Override

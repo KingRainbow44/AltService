@@ -13,10 +13,7 @@ import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.player.PlayerTickThread;
 import moe.seikimo.altservice.player.command.PlayerCommandMap;
 import moe.seikimo.altservice.player.command.action.*;
-import moe.seikimo.altservice.player.command.util.InventoryCommand;
-import moe.seikimo.altservice.player.command.util.LocationCommand;
-import moe.seikimo.altservice.player.command.util.MoveCommand;
-import moe.seikimo.altservice.player.command.util.RotateCommand;
+import moe.seikimo.altservice.player.command.util.*;
 import moe.seikimo.altservice.script.ScriptLoader;
 import moe.seikimo.altservice.utils.LoggerUtils;
 import moe.seikimo.altservice.utils.objects.ThreadFactoryBuilder;
@@ -158,6 +155,13 @@ public final class AltBackend {
         }
     }
 
+    /**
+     * @return Whether the backend is in debug mode.
+     */
+    public static boolean debug() {
+        return Configuration.get().debug;
+    }
+
     private static void registerCommands() {
         // Service Commands
         consoleCommands.addCommand(new RequestCommand());
@@ -179,5 +183,6 @@ public final class AltBackend {
         playerCommands.addCommand(new BreakCommand());
         playerCommands.addCommand(new PlaceCommand());
         playerCommands.addCommand(new GuardCommand());
+        playerCommands.addCommand(new BehaviorCommand());
     }
 }
