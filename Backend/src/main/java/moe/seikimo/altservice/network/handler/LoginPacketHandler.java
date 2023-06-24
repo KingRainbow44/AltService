@@ -64,7 +64,6 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(PlayStatusPacket packet) {
-        super.handle(packet);
         if (packet.getStatus().equals(PlayStatusPacket.Status.PLAYER_SPAWN)) {
             // Wait for the player to initialize.
             while (!this.session.getData().isInitialized()) {
@@ -73,6 +72,12 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
 
             this.session.getClient().setPacketHandler(new InGamePacketHandler(this.session));
 
+            // Request the inventory.
+            var invPacket = new InteractPacket();
+            invPacket.setAction(InteractPacket.Action.OPEN_INVENTORY);
+            invPacket.setRuntimeEntityId(this.session.getData().getRuntimeId());
+            this.session.sendPacket(invPacket, true);
+
             // Complete server-side initialization.
             var tickPacket = new TickSyncPacket();
             this.session.sendPacket(tickPacket, true);
@@ -80,12 +85,6 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
             var completePacket = new SetLocalPlayerAsInitializedPacket();
             completePacket.setRuntimeEntityId(this.session.getData().getRuntimeId());
             this.session.sendPacket(completePacket, true);
-
-            // Request the inventory.
-            var invPacket = new ContainerClosePacket();
-            invPacket.setId((byte) ContainerId.INVENTORY);
-            invPacket.setServerInitiated(false);
-            this.session.sendPacket(invPacket);
         }
 
         return PacketSignal.HANDLED;
@@ -93,7 +92,6 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(ResourcePacksInfoPacket packet) {
-        super.handle(packet);
         // Send resource pack cache data.
         this.session.sendPacket(new ClientCacheStatusPacket(), true);
         // Create resource pack response.

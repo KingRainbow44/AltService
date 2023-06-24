@@ -4,6 +4,9 @@ import moe.seikimo.altservice.command.Command;
 import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.player.server.ServerPlayer;
 import org.cloudburstmc.protocol.bedrock.data.definitions.ItemDefinition;
+import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId;
+import org.cloudburstmc.protocol.bedrock.packet.ContainerClosePacket;
+import org.cloudburstmc.protocol.bedrock.packet.InteractPacket;
 
 import java.util.List;
 
@@ -14,6 +17,34 @@ public final class InventoryCommand extends Command {
 
     @Override
     public void execute(Player player, ServerPlayer sender, List<String> args) {
+        var page = 1;
+        if (args.size() > 0) {
+            try {
+                page = Integer.parseInt(args.get(0));
+            } catch (NumberFormatException exception) {
+                switch (args.get(0)) {
+                    case "open" -> {
+                        // Request to open the inventory.
+                        var invPacket = new InteractPacket();
+                        invPacket.setAction(InteractPacket.Action.OPEN_INVENTORY);
+                        invPacket.setRuntimeEntityId(player.getEntityId());
+                        player.sendPacket(invPacket);
+                        player.sendMessage("Inventory opened.");
+                    }
+                    case "close" -> {
+                        // Close the inventory.
+                        var invPacket = new ContainerClosePacket();
+                        invPacket.setId((byte) ContainerId.INVENTORY);
+                        invPacket.setServerInitiated(false);
+                        player.sendPacket(invPacket);
+                        player.sendMessage("Inventory closed.");
+                    }
+                    default -> player.sendMessage("Invalid page number.");
+                }
+                return;
+            }
+        }
+
         var inventory = player.getInventory();
         var items = inventory.getItems().stream()
                 .filter(item -> item.getDefinition() != ItemDefinition.AIR)
@@ -23,15 +54,6 @@ public final class InventoryCommand extends Command {
             return;
         }
 
-        var page = 1;
-        if (args.size() > 0) {
-            try {
-                page = Integer.parseInt(args.get(0));
-            } catch (NumberFormatException exception) {
-                player.sendMessage("Please specify a valid page number.");
-                return;
-            }
-        }
         var maxPages = items.size() / 10;
 
         player.sendMessage("I have the following items in my inventory:");

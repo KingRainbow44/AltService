@@ -35,9 +35,17 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
     private void logPacket(BedrockPacket packet) {
         if (Configuration.get().isDebug()) {
             var name = packet.getClass().getSimpleName();
-            if (!Configuration.get().getIgnoredDebugPackets().contains(name))
-                this.getLogger().info("Received packet: " + name);
+            if (!Configuration.get().getIgnoredDebugPackets().contains(name)) {
+                this.getLogger().info(">>> Received packet: " + name);
+                // this.getLogger().debug("Packet data for " + name + ": " + packet);
+            }
         }
+    }
+
+    @Override
+    public PacketSignal handlePacket(BedrockPacket packet) {
+        this.logPacket(packet);
+        return BedrockPacketHandler.super.handlePacket(packet);
     }
 
     public PacketSignal handle(AdventureSettingsPacket packet) {
@@ -67,8 +75,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(BlockEntityDataPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -866,8 +873,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(SpawnParticleEffectPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 
@@ -908,8 +914,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(TakeItemEntityPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 

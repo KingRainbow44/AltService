@@ -2,6 +2,7 @@ package moe.seikimo.altservice.network.handler;
 
 import moe.seikimo.altservice.AltBackend;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
+import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
 import moe.seikimo.altservice.utils.objects.Location;
 import moe.seikimo.altservice.utils.objects.Style;
@@ -77,17 +78,17 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
                 var peerLocation = peer.getLocation();
                 peerLocation.setPosition(packet.getPosition());
                 peerLocation.setRotation(packet.getRotation());
+
+                this.getPlayer().onEntityMove(peer);
             }
         }
 
         var target = player.getTarget();
         if (target != null && packet.getRuntimeEntityId() == target.getRuntimeId()) {
-            switch (player.getTargetAction()) {
-                case FOLLOW -> {
-                    // Move the player to the target.
-                    data.setGrounded(packet.isOnGround());
-                    player.move(packet.getPosition(), packet.getRotation());
-                }
+            if (player.getActions().isFollow()) {
+                // Move the player to the target.
+                data.setGrounded(packet.isOnGround());
+                player.move(packet.getPosition(), packet.getRotation());
             }
         }
 
@@ -108,6 +109,12 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
             System.out.println("Server requested to update player to " + this.getPlayer().getPosition());
         }
 
+        var entity = this.getPlayer().getEntityById(packet.getRuntimeEntityId());
+        if (entity != null) {
+            entity.getLocation().update(packet);
+            this.getPlayer().onEntityMove(entity);
+        }
+
         return PacketSignal.HANDLED;
     }
 
@@ -119,6 +126,14 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
             System.out.println("Server requested to update player to " + this.getPlayer().getPosition());
         }
 
+        var entity = this.getPlayer().getEntityById(packet.getRuntimeEntityId());
+        if (entity != null) {
+            entity.setPosition(packet.getPosition());
+            entity.setRotation(packet.getRotation());
+            entity.getLocation().setGrounded(packet.isOnGround());
+            this.getPlayer().onEntityMove(entity);
+        }
+
         return PacketSignal.HANDLED;
     }
 
@@ -128,7 +143,7 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
         var player = new ServerPlayer(
                 packet.getRuntimeEntityId(), packet.getUsername(), packet.getUuid()
         );
-        player.setLocation(new Location(0, packet.getPosition(), packet.getRotation()));
+        player.setLocation(new Location(0, packet.getPosition(), packet.getRotation(), true));
         this.getPlayer().getPeers().put(packet.getUuid(), player);
 
         return PacketSignal.HANDLED;
@@ -158,13 +173,24 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(InventoryContentPacket packet) {
-        if (packet.getContainerId() == ContainerId.INVENTORY) {
-            // Update the player's inventory.
-            var inventory = this.getPlayer().getInventory();
-            inventory.getItems().clear();
-            inventory.getItems().addAll(packet.getContents());
-        } else {
-            this.getLogger().debug("Received inventory content packet for container {}.", packet.getContainerId());
+        var inventory = this.getPlayer().getInventory();
+        switch (packet.getContainerId()) {
+//            case ContainerId.INVENTORY -> {
+//                // Update the player's inventory.
+//                inventory.getItems().clear();
+//                inventory.getItems().addAll(packet.getContents());
+//            }
+//            case ContainerId.OFFHAND -> // Update the player's offhand.
+//                    inventory.setOffhand(packet.getContents().get(0));
+//            case ContainerId.ARMOR -> {
+//                // Update the player's armor.
+//                inventory.getArmor().clear();
+//                inventory.getArmor().addAll(packet.getContents());
+//            }
+            default -> {
+                this.getLogger().debug("Received inventory content packet for container {}.", packet.getContainerId());
+                System.out.println(packet);
+            }
         }
 
         return PacketSignal.HANDLED;
@@ -179,6 +205,8 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
         } else {
             this.getLogger().debug("Received inventory slot packet for container {}.", packet.getContainerId());
         }
+
+        System.out.println(packet);
 
         return PacketSignal.HANDLED;
     }
@@ -198,6 +226,41 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
             this.getPlayer().setPosition(position);
             this.getPlayer().respawn();
         }
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(AddEntityPacket packet) {
+        this.getPlayer().getEntities().put(
+                packet.getRuntimeEntityId(),
+                ServerEntity.from(packet)
+        );
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(RemoveEntityPacket packet) {
+        this.getPlayer().getEntities()
+                .remove(packet.getUniqueEntityId());
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(SetEntityDataPacket packet) {
+        var entity = this.getPlayer().getEntityById(packet.getRuntimeEntityId());
+        if (entity != null) entity.setProperties(packet.getProperties());
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(PlayerHotbarPacket packet) {
+        System.out.println(packet);
+        var inventory = this.getPlayer().getInventory();
+        inventory.setHotbarSlot(packet.getSelectedHotbarSlot());
 
         return PacketSignal.HANDLED;
     }

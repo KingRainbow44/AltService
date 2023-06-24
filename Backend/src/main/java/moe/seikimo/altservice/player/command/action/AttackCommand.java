@@ -3,7 +3,6 @@ package moe.seikimo.altservice.player.command.action;
 import moe.seikimo.altservice.command.Command;
 import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.player.server.ServerPlayer;
-import moe.seikimo.altservice.utils.enums.TargetAction;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public final class AttackCommand extends Command {
         var username = args.get(0);
         if (username.equals("noone")) {
             player.setTarget(null);
-            player.setTargetAction(TargetAction.NONE);
+            player.getActions().setAttack(false);
             player.sendMessage("No longer attacking anyone.");
             return;
         }
@@ -40,7 +39,7 @@ public final class AttackCommand extends Command {
 
         // Set the player's target.
         player.setTarget(target);
-        player.setTargetAction(TargetAction.ATTACK);
+        player.getActions().setAttack(true);
         player.sendMessage("Now attacking " + target.getUsername() + ".");
     }
 }

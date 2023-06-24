@@ -3,9 +3,9 @@ package moe.seikimo.altservice.player;
 import lombok.Data;
 import moe.seikimo.altservice.Configuration;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
+import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
 import moe.seikimo.altservice.utils.ThreadUtils;
-import moe.seikimo.altservice.utils.enums.TargetAction;
 import moe.seikimo.altservice.utils.objects.ConnectionDetails;
 import moe.seikimo.altservice.utils.objects.Location;
 import moe.seikimo.altservice.utils.objects.absolute.GameConstants;
@@ -13,13 +13,10 @@ import moe.seikimo.altservice.utils.objects.player.SessionData;
 import org.cloudburstmc.math.vector.Vector2f;
 import org.cloudburstmc.math.vector.Vector3f;
 import org.cloudburstmc.math.vector.Vector3i;
-import org.cloudburstmc.nbt.NbtMap;
 import org.cloudburstmc.protocol.bedrock.data.ClientPlayMode;
 import org.cloudburstmc.protocol.bedrock.data.InputMode;
 import org.cloudburstmc.protocol.bedrock.data.PlayerActionType;
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData;
-import org.cloudburstmc.protocol.bedrock.data.definitions.BlockDefinition;
-import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryActionData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventorySource;
@@ -35,7 +32,12 @@ import java.util.UUID;
 @Data public final class Player {
     private final long creationTime
             = System.currentTimeMillis();
+    private final PlayerActions actions
+            = new PlayerActions();
+
     private final Map<UUID, ServerPlayer> peers
+            = new HashMap<>();
+    private final Map<Long, ServerEntity> entities
             = new HashMap<>();
     private final PlayerInventory inventory
             = new PlayerInventory();
@@ -44,11 +46,10 @@ import java.util.UUID;
     private final long lifetime;
 
     private PlayerNetworkSession session = null;
-    private Location location = Location.ZERO;
+    private Location location = Location.ZERO();
     private boolean canAttack = true;
 
     private ServerPlayer target = null;
-    private TargetAction targetAction = TargetAction.NONE;
 
     /**
      * Attempts to log in to the configured server.
@@ -181,6 +182,45 @@ import java.util.UUID;
     }
 
     /**
+     * Fetches an entity by their UUID.
+     * This can return null if the entity is not found.
+     *
+     * @param runtimeId The entity ID to search for.
+     * @return The entity, or null if not found.
+     */
+    @Nullable
+    public ServerEntity getEntityById(long runtimeId) {
+        return this.entities.get(runtimeId);
+    }
+
+    /**
+     * Invoked when an entity moves.
+     *
+     * @param entity The entity that moved.
+     */
+    public void onEntityMove(ServerEntity entity) {
+        var actions = this.getActions();
+        if (actions.isGuard()) {
+            var selfPos = this.getPosition();
+            var entityPos = entity.getPosition();
+
+            // Check if the entity is within range.
+            if (
+                    entity.getLocation().isGrounded() &&
+                            entityPos.distance(selfPos) < 6
+            ) {
+                if (
+                        (actions.isGuardPlayers() && actions.isGuardMobs()) ||
+                                (actions.isGuardPlayers() && entity instanceof ServerPlayer) ||
+                                (actions.isGuardMobs() && !(entity instanceof ServerPlayer))
+                ) {
+                    this.attack(entity);
+                }
+            }
+        }
+    }
+
+    /**
      * Respawns the player.
      */
     @SuppressWarnings("DataFlowIssue")
@@ -272,7 +312,7 @@ import java.util.UUID;
     /**
      * Attacks the specified player.
      */
-    public void attack(ServerPlayer target) {
+    public void attack(ServerEntity target) {
         if (this.getSession() == null) return;
 
         // Create the inventory action.
@@ -402,11 +442,9 @@ import java.util.UUID;
         if (!this.getSession().getData().isLoggedIn()) return;
 
         if (this.getTarget() != null) {
-            switch (this.getTargetAction()) {
-                case ATTACK -> {
-                    if (this.isCanAttack())
-                        this.attack(this.getTarget());
-                }
+            if (this.getActions().isAttack()) {
+                if (this.isCanAttack())
+                    this.attack(this.getTarget());
             }
         }
     }
