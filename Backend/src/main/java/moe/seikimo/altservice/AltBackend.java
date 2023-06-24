@@ -7,18 +7,17 @@ import moe.seikimo.altservice.command.SimpleCommandMap;
 import moe.seikimo.altservice.command.player.DisconnectCommand;
 import moe.seikimo.altservice.command.player.RequestCommand;
 import moe.seikimo.altservice.command.util.ReloadCommand;
+import moe.seikimo.altservice.command.util.RunScriptCommand;
 import moe.seikimo.altservice.command.util.StopCommand;
 import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.player.PlayerTickThread;
 import moe.seikimo.altservice.player.command.PlayerCommandMap;
-import moe.seikimo.altservice.player.command.action.AttackCommand;
-import moe.seikimo.altservice.player.command.action.BreakCommand;
-import moe.seikimo.altservice.player.command.action.FollowCommand;
-import moe.seikimo.altservice.player.command.action.PlaceCommand;
+import moe.seikimo.altservice.player.command.action.*;
 import moe.seikimo.altservice.player.command.util.InventoryCommand;
 import moe.seikimo.altservice.player.command.util.LocationCommand;
 import moe.seikimo.altservice.player.command.util.MoveCommand;
 import moe.seikimo.altservice.player.command.util.RotateCommand;
+import moe.seikimo.altservice.script.ScriptLoader;
 import moe.seikimo.altservice.utils.LoggerUtils;
 import moe.seikimo.altservice.utils.objects.ThreadFactoryBuilder;
 import org.jline.reader.EndOfFileException;
@@ -88,6 +87,9 @@ public final class AltBackend {
 
         // Register commands.
         registerCommands();
+
+        // Initialize the script loader.
+        ScriptLoader.initialize();
 
         AltBackend.getLogger().info("Done! Alt Backend started.");
     }
@@ -163,6 +165,7 @@ public final class AltBackend {
         consoleCommands.addCommand(new StopCommand());
         consoleCommands.addCommand(new ReloadCommand());
         consoleCommands.addCommand(new moe.seikimo.altservice.command.player.MoveCommand());
+        consoleCommands.addCommand(new RunScriptCommand());
 
         // Player Commands
         playerCommands.addCommand(new RequestCommand());
@@ -175,5 +178,6 @@ public final class AltBackend {
         playerCommands.addCommand(new InventoryCommand());
         playerCommands.addCommand(new BreakCommand());
         playerCommands.addCommand(new PlaceCommand());
+        playerCommands.addCommand(new GuardCommand());
     }
 }
