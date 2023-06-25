@@ -186,9 +186,10 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
                 inventory.getArmor().clear();
                 inventory.getArmor().addAll(packet.getContents());
             }
-            default -> {
-                this.getLogger().debug("Received inventory content packet for container {}.", packet.getContainerId());
+            case ContainerId.UI -> {
+                // Do nothing. This is the UI container.
             }
+            default -> this.getLogger().debug("Received inventory content packet for container {}.", packet.getContainerId());
         }
 
         return PacketSignal.HANDLED;
@@ -196,12 +197,21 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(InventorySlotPacket packet) {
-        if (packet.getContainerId() == ContainerId.INVENTORY) {
-            // Update the player's inventory.
-            var inventory = this.getPlayer().getInventory();
-            inventory.getItems().set(packet.getSlot(), packet.getItem());
-        } else {
-            this.getLogger().debug("Received inventory slot packet for container {}.", packet.getContainerId());
+        var inventory = this.getPlayer().getInventory();
+        switch (packet.getContainerId()) {
+            case ContainerId.INVENTORY -> {
+                // Update the player's inventory.
+                inventory.getItems().clear();
+                inventory.getItems().set(packet.getSlot(), packet.getItem());
+            }
+            case ContainerId.OFFHAND -> // Update the player's offhand.
+                    inventory.setOffhand(packet.getItem());
+            case ContainerId.ARMOR -> {
+                // Update the player's armor.
+                inventory.getArmor().clear();
+                inventory.getArmor().set(packet.getSlot(), packet.getItem());
+            }
+            default -> this.getLogger().debug("Received inventory content packet for container {}.", packet.getContainerId());
         }
 
         return PacketSignal.HANDLED;
