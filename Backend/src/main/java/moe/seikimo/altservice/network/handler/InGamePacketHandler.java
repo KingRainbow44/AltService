@@ -259,6 +259,11 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
     }
 
     @Override
+    public PacketSignal handle(AddItemEntityPacket packet) {
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
     public PacketSignal handle(UpdateBlockPacket packet) {
         return PacketSignal.HANDLED;
     }
