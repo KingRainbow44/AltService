@@ -14,11 +14,16 @@ public final class PlaceCommand extends Command {
 
     @Override
     public void execute(Player player, ServerPlayer sender, List<String> args) {
-        if (args.size() < 1) {
-            player.sendMessage("Please specify a direction.");
+        if (args.size() == 0) {
+            player.sendMessage("Please specify a direction and item.");
+            return;
+        }
+        if (args.size() == 1) {
+            player.sendMessage("Please specify an item.");
             return;
         }
 
+        // Get the direction to place the block.
         var direction = args.get(0);
         var current = player.getPosition().toInt()
                 .sub(0, GameConstants.OFFSET, 0);
@@ -32,6 +37,16 @@ public final class PlaceCommand extends Command {
             default -> current;
         };
 
-        player._break(block);
+        // Get the item to place.
+        var item = player.getInventory().getItems().stream()
+                .filter(i -> i.getDefinition().getIdentifier()
+                        .equalsIgnoreCase(args.get(1)))
+                .findFirst().orElse(null);
+        if (item == null) {
+            player.sendMessage("Item not found.");
+            return;
+        }
+
+        player.place(item, block);
     }
 }

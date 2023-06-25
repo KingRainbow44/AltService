@@ -401,15 +401,16 @@ import java.util.UUID;
     /**
      * Places a block at the specified position.
      *
+     * @param item The item to place.
      * @param block The position of the block to place.
      */
-    public void place(Vector3i block) {
+    public void place(ItemData item, Vector3i block) {
         if (this.getSession() == null) return;
 
         // Create the inventory action.
         var action = new InventoryActionData(
                 InventorySource.fromGlobalInventory(), 0,
-                ItemData.AIR, ItemData.AIR
+                item, item
         );
 
         // Prepare the transaction packet.
@@ -417,14 +418,15 @@ import java.util.UUID;
         invPacket.getActions().add(action);
         invPacket.setLegacyRequestId(0);
         invPacket.setHotbarSlot(0);
-        invPacket.setItemInHand(ItemData.AIR);
+        invPacket.setItemInHand(item);
         invPacket.setRuntimeEntityId(this.getEntityId());
         invPacket.setTransactionType(InventoryTransactionType.ITEM_USE);
         invPacket.setBlockDefinition(GameConstants.AIR_BLOCK);
         invPacket.setBlockPosition(block);
         invPacket.setBlockFace(0); // 0 = down
-        invPacket.setPlayerPosition(this.getPosition());
-        invPacket.setClickPosition(block.toFloat());
+        invPacket.setPlayerPosition(this.getPosition()
+                .sub(0, GameConstants.OFFSET, 0));
+        invPacket.setClickPosition(Vector3f.ZERO);
         invPacket.setHeadPosition(Vector3f.ZERO);
         invPacket.setActionType(0); // 0 = place block
 

@@ -55,13 +55,17 @@ public final class InventoryCommand extends Command {
         }
 
         var maxPages = items.size() / 10;
+        var displayItems = items.subList(
+                (page * 8) - 8, Math.min(items.size(), page * 8)
+        );
 
         player.sendMessage("I have the following items in my inventory:");
-        for (var i = 0; i < 8; i++) {
-            var item = items.get((int) (i + (double) (page * 10)));
+        for (var item : displayItems) {
             player.sendMessage("- %s (qt. %s)".formatted(
                     item.getDefinition().getIdentifier(), item.getCount()));
         }
-        player.sendMessage("Page %s of %s".formatted(page, maxPages));
+        if (maxPages > 1) {
+            player.sendMessage("Page %s of %s".formatted(page, maxPages));
+        }
     }
 }
