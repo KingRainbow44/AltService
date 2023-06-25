@@ -2,6 +2,7 @@ package moe.seikimo.altservice.command.player;
 
 import moe.seikimo.altservice.command.Command;
 import moe.seikimo.altservice.player.PlayerManager;
+import moe.seikimo.altservice.utils.ThreadUtils;
 import moe.seikimo.altservice.utils.TimeUtils;
 
 import java.util.List;
@@ -19,28 +20,33 @@ public final class RequestCommand extends Command {
             return;
         }
 
-        // Check if the username is valid.
-        var username = args.get(0);
-        if (PlayerManager.isPlayerOnline(username)) {
-            this.sendMessage("That player is already online.");
-            return;
-        }
-
         // Check to see if a lifetime was specified.
         var lifetime = -1L;
+        var lifetimeS = "an indefinite time";
         if (args.size() > 1) {
             try {
-                lifetime = TimeUtils.parseInputTime(args.get(1));
-            } catch (IllegalArgumentException ignored) {
-                this.sendMessage("Invalid lifetime specified.");
-                return;
-            }
+                lifetimeS = args.get(args.size() - 1);
+                lifetime = TimeUtils.parseInputTime(lifetimeS);
+            } catch (IllegalArgumentException ignored) { }
         }
 
-        this.sendMessage("Requesting player " + username + " for " +
-                (lifetime == -1L ? "indefinite" : args.get(1) + "."));
-        // Create the player instance.
-        var player = PlayerManager.createPlayer(username, lifetime);
-        player.login();
+        // Get the players specified.
+        var players = args.subList(0, lifetime == -1L ?
+                args.size() : args.size() - 1);
+        for (var player : players) {
+            // Check if the player is online.
+            if (PlayerManager.isPlayerOnline(player)) {
+                this.sendMessage("Player " + player + " is already online.");
+                continue;
+            }
+
+            // Request the player.
+            this.sendMessage("Requesting player " + player + " for " + lifetimeS + ".");
+            // Create the player instance.
+            var instance = PlayerManager.createPlayer(player, lifetime);
+            instance.login();
+
+            ThreadUtils.sleep(5000L);
+        }
     }
 }

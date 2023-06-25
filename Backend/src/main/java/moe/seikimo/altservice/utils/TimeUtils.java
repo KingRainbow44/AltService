@@ -17,7 +17,7 @@ public interface TimeUtils {
 
         var time = 0L;
         try {
-            StringBuilder value = new StringBuilder("0");
+            var value = new StringBuilder("0");
             for (int i = 0; i < input.length(); i++) {
                 var c = input.charAt(i);
                 if (Character.isDigit(c)) {
