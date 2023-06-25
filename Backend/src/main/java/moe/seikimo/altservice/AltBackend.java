@@ -201,5 +201,6 @@ public final class AltBackend {
         playerCommands.addCommand(new PlaceCommand());
         playerCommands.addCommand(new GuardCommand());
         playerCommands.addCommand(new BehaviorCommand());
+        playerCommands.addCommand(new DropCommand());
     }
 }

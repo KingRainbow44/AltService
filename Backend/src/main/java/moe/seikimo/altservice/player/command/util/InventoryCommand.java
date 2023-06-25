@@ -24,19 +24,13 @@ public final class InventoryCommand extends Command {
             } catch (NumberFormatException exception) {
                 switch (args.get(0)) {
                     case "open" -> {
-                        // Request to open the inventory.
-                        var invPacket = new InteractPacket();
-                        invPacket.setAction(InteractPacket.Action.OPEN_INVENTORY);
-                        invPacket.setRuntimeEntityId(player.getEntityId());
-                        player.sendPacket(invPacket);
+                        // Open the inventory.
+                        player.getInventory().openInventory();
                         player.sendMessage("Inventory opened.");
                     }
                     case "close" -> {
                         // Close the inventory.
-                        var invPacket = new ContainerClosePacket();
-                        invPacket.setId((byte) ContainerId.INVENTORY);
-                        invPacket.setServerInitiated(false);
-                        player.sendPacket(invPacket);
+                        player.getInventory().closeInventory();
                         player.sendMessage("Inventory closed.");
                     }
                     default -> player.sendMessage("Invalid page number.");

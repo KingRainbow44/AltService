@@ -40,7 +40,7 @@ import java.util.UUID;
     private final Map<Long, ServerEntity> entities
             = new HashMap<>();
     private final PlayerInventory inventory
-            = new PlayerInventory();
+            = new PlayerInventory(this);
 
     private final String username;
     private final long lifetime;

@@ -7,6 +7,7 @@ import moe.seikimo.altservice.player.server.ServerPlayer;
 import moe.seikimo.altservice.utils.objects.Location;
 import moe.seikimo.altservice.utils.objects.Style;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId;
+import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.response.ItemStackResponse;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.common.PacketSignal;
 
@@ -275,6 +276,11 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(MobEquipmentPacket packet) {
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(ItemStackResponsePacket packet) {
         return PacketSignal.HANDLED;
     }
 }
