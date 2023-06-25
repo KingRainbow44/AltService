@@ -17,7 +17,7 @@ import moe.seikimo.altservice.player.command.util.*;
 import moe.seikimo.altservice.script.ScriptLoader;
 import moe.seikimo.altservice.utils.LoggerUtils;
 import moe.seikimo.altservice.utils.objects.ThreadFactoryBuilder;
-import moe.seikimo.altservice.utils.objects.absolute.NetworkConstants;
+import moe.seikimo.altservice.utils.objects.absolute.GameConstants;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOError;
+import java.io.InputStream;
 
 public final class AltBackend {
     @Getter private static final Logger logger
@@ -55,6 +56,20 @@ public final class AltBackend {
     @Getter private static final PlayerCommandMap playerCommands
             = new PlayerCommandMap();
 
+    /**
+     * Fetches a resource.
+     *
+     * @param path The path to the resource.
+     *             Prefixed '/' is unneeded.
+     * @return The resource as an input stream.
+     */
+    public static InputStream getResource(String path) {
+        try {
+            return AltBackend.class.getResourceAsStream("/" + path);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
 
     /**
      * Application entrypoint.
@@ -64,6 +79,9 @@ public final class AltBackend {
     public static void main(String[] args) {
         // Load the configuration.
         Configuration.load();
+
+        // Load the block palette.
+        GameConstants.initializeBlocks();
 
         // Set the logger in debug mode.
         LoggerUtils.setDebug(AltBackend.getLogger());
@@ -82,9 +100,8 @@ public final class AltBackend {
 
         // Start the player tick thread.
         AltBackend.getPlayerTickThread().start();
-
         // Register commands.
-        registerCommands();
+        AltBackend.registerCommands();
 
         // Initialize the script loader.
         ScriptLoader.initialize();
@@ -169,7 +186,6 @@ public final class AltBackend {
         consoleCommands.addCommand(new DisconnectCommand());
         consoleCommands.addCommand(new StopCommand());
         consoleCommands.addCommand(new ReloadCommand());
-        consoleCommands.addCommand(new moe.seikimo.altservice.command.player.MoveCommand());
         consoleCommands.addCommand(new RunScriptCommand());
 
         // Player Commands

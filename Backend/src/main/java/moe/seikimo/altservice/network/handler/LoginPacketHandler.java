@@ -4,11 +4,11 @@ import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
 import moe.seikimo.altservice.utils.EncodingUtils;
 import moe.seikimo.altservice.utils.ThreadUtils;
+import moe.seikimo.altservice.utils.objects.absolute.GameConstants;
 import moe.seikimo.altservice.utils.objects.absolute.NetworkConstants;
 import moe.seikimo.altservice.utils.objects.network.HandshakeHeader;
 import moe.seikimo.altservice.utils.objects.network.HandshakePayload;
 import org.cloudburstmc.protocol.bedrock.data.AuthoritativeMovementMode;
-import org.cloudburstmc.protocol.bedrock.data.definitions.BlockDefinition;
 import org.cloudburstmc.protocol.bedrock.data.definitions.ItemDefinition;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.bedrock.util.EncryptionUtils;
@@ -144,11 +144,7 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
                         definition.getIdentifier());
         }
         codecHelper.setItemDefinitions(itemRegistry.build());
-
-        // Set up the block registry.
-        SimpleDefinitionRegistry.Builder<BlockDefinition> blockRegistry
-                = SimpleDefinitionRegistry.builder();
-        codecHelper.setBlockDefinitions(blockRegistry.build());
+        codecHelper.setBlockDefinitions(GameConstants.BLOCKS.get());
 
         return PacketSignal.HANDLED;
     }
