@@ -189,7 +189,6 @@ public final class AltBackend {
         consoleCommands.addCommand(new RunScriptCommand());
 
         // Player Commands
-        playerCommands.addCommand(new RequestCommand());
         playerCommands.addCommand(new DisconnectCommand());
         playerCommands.addCommand(new MoveCommand());
         playerCommands.addCommand(new LocationCommand());
