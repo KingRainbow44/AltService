@@ -166,4 +166,65 @@ public final class ScriptLib {
         // Break the block.
         player._break(current.toInt());
     }
+
+    /**
+     * Places a block within a delta.
+     *
+     * @param username The username of the player.
+     * @param block The block to place.
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @param z The z coordinate.
+     */
+    public int placeBlock(String username, String block, int x, int y, int z) {
+        // Fetch the player.
+        var player = PlayerManager.createPlayer(username, -1);
+
+        // Get the block.
+        var item = player.getInventory().getItem(block);
+        if (item == null) {
+            return 1;
+        }
+
+        // Get the current position.
+        var current = player.getPosition();
+        // Add the delta.
+        current = current.add(x, y, z);
+
+        // Break the block.
+        player.place(item, current.toInt());
+        return 0;
+    }
+
+    /**
+     * Adds a behavior from a player.
+     *
+     * @param username The username of the player.
+     * @param behavior The behavior to remove.
+     */
+    public void addBehavior(String username, String behavior) {
+        // Fetch the player.
+        var player = PlayerManager.createPlayer(username, -1);
+
+        // Add the behavior.
+        var actions = player.getActions();
+        actions.getBehaviors().add(behavior);
+        actions.initBehaviors(player);
+    }
+
+    /**
+     * Removes a behavior from a player.
+     *
+     * @param username The username of the player.
+     * @param behavior The behavior to remove.
+     */
+    public void removeBehavior(String username, String behavior) {
+        // Fetch the player.
+        var player = PlayerManager.createPlayer(username, -1);
+
+        // Remove the behavior.
+        var actions = player.getActions();
+        actions.getBehaviors().remove(behavior);
+        actions.initBehaviors(player);
+    }
 }

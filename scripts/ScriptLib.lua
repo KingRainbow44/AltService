@@ -10,6 +10,9 @@ ScriptLib = {
     move = (function(context, player, x, y, z) end),
     rotate = (function(context, player, pitch, yaw) end),
     breakBlock = (function(context, player, x, y, z) end),
+    placeBlock = (function(context, player, block, x, y, z) end),
+    addBehavior = (function(context, player, behavior) end),
+    removeBehavior = (function(context, player, behavior) end),
 }
 
 Options = {
