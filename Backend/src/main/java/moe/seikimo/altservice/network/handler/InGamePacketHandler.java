@@ -199,18 +199,12 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
     public PacketSignal handle(InventorySlotPacket packet) {
         var inventory = this.getPlayer().getInventory();
         switch (packet.getContainerId()) {
-            case ContainerId.INVENTORY -> {
-                // Update the player's inventory.
-                inventory.getItems().clear();
-                inventory.getItems().set(packet.getSlot(), packet.getItem());
-            }
+            case ContainerId.INVENTORY -> // Update the player's inventory.
+                    inventory.getItems().set(packet.getSlot(), packet.getItem());
             case ContainerId.OFFHAND -> // Update the player's offhand.
                     inventory.setOffhand(packet.getItem());
-            case ContainerId.ARMOR -> {
-                // Update the player's armor.
-                inventory.getArmor().clear();
-                inventory.getArmor().set(packet.getSlot(), packet.getItem());
-            }
+            case ContainerId.ARMOR -> // Update the player's armor.
+                    inventory.getArmor().set(packet.getSlot(), packet.getItem());
             default -> this.getLogger().debug("Received inventory content packet for container {}.", packet.getContainerId());
         }
 
