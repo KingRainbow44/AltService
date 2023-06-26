@@ -207,9 +207,8 @@ public final class ScriptLib {
         var player = PlayerManager.createPlayer(username, -1);
 
         // Add the behavior.
-        var actions = player.getActions();
-        actions.getBehaviors().add(behavior);
-        actions.initBehaviors(player);
+        player.getActions().getBehaviors().add(behavior);
+        player.getScriptBackend().initBehaviors();
     }
 
     /**
@@ -223,8 +222,7 @@ public final class ScriptLib {
         var player = PlayerManager.createPlayer(username, -1);
 
         // Remove the behavior.
-        var actions = player.getActions();
-        actions.getBehaviors().remove(behavior);
-        actions.initBehaviors(player);
+        player.getActions().getBehaviors().remove(behavior);
+        player.getScriptBackend().initBehaviors();
     }
 }

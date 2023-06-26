@@ -5,6 +5,7 @@ import moe.seikimo.altservice.Configuration;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
 import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
+import moe.seikimo.altservice.script.ScriptManager;
 import moe.seikimo.altservice.utils.ThreadUtils;
 import moe.seikimo.altservice.utils.objects.ConnectionDetails;
 import moe.seikimo.altservice.utils.objects.Location;
@@ -39,8 +40,11 @@ import java.util.UUID;
             = new HashMap<>();
     private final Map<Long, ServerEntity> entities
             = new HashMap<>();
+
     private final PlayerInventory inventory
             = new PlayerInventory(this);
+    private final ScriptManager scriptBackend
+            = new ScriptManager(this);
 
     private final String username;
     private final long lifetime;
@@ -451,7 +455,7 @@ import java.util.UUID;
         }
 
         if (this.ticks % 20 == 0)
-            this.getActions().tickBehaviors();
+            this.getScriptBackend().tickBehaviors();
     }
 
     @Override

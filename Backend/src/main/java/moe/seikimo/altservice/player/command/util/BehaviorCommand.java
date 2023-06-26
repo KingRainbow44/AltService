@@ -38,7 +38,7 @@ public final class BehaviorCommand extends Command {
                 player.getActions().getBehaviors().add(behaviorName);
                 player.sendMessage("Behavior added!");
 
-                player.getActions().initBehaviors(player);
+                player.getScriptBackend().initBehaviors();
             }
             case "remove" -> {
                 if (args.size() < 2) {
@@ -50,10 +50,10 @@ public final class BehaviorCommand extends Command {
                 player.getActions().getBehaviors().remove(behaviorName);
                 player.sendMessage("Behavior removed!");
 
-                player.getActions().initBehaviors(player);
+                player.getScriptBackend().initBehaviors();
             }
             case "reinit" -> {
-                player.getActions().initBehaviors(player);
+                player.getScriptBackend().initBehaviors();
                 player.sendMessage("Re-initialized behaviors!");
             }
             case "step" -> {
@@ -66,7 +66,7 @@ public final class BehaviorCommand extends Command {
                 }
 
                 for (var i = 0; i < times; i++) {
-                    player.getActions().tickBehaviors();
+                    player.getScriptBackend().tickBehaviors();
                 }
                 player.sendMessage("Ticked each behavior by " + times + ".");
             }

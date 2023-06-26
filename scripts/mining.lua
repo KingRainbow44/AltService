@@ -1,3 +1,8 @@
+events = {
+    { event = EventType.BREAK_BLOCK, condition = "cond_blockBreak", action = "action_blockBreak" },
+    { event = EventType.INV_CHANGE, condition = "cond_invChange", action = "action_invChange" }
+}
+
 function init(context)
     ScriptLib.sendMessage(context, Player, "I'm going to begin mining!")
     ScriptLib.setGlobal(context, "mining_block", 0)
@@ -22,4 +27,44 @@ function tick(context)
     end
 
     ScriptLib.setGlobal(context, "mining_block", current + 1)
+end
+
+-- Event conditions & actions
+
+function cond_blockBreak(context, event)
+    return true
+end
+
+-- Action will always fire.
+function action_blockBreak(context, event)
+    local yLevel = 0
+    if event.getPosition().y == 0 then
+        yLevel = -1
+    end
+
+    local offset = ScriptLib.getGlobal(context, "mining_block")
+    if offset == -1 then
+        offset = -2
+    else
+        offset = -1
+    end
+
+    ScriptLib.breakBlock(context, Player, 0, yLevel, offset)
+    if offset == -2 and yLevel == -1 then
+        ScriptLib.move(context, Player, 0, 0, -1)
+    end
+end
+
+function cond_invChange(context, event)
+    return event.getInventory().isFull() ~= true
+end
+
+-- Action will fire if the inventory is full.
+function action_invChange(context, event)
+    local inventory = event.getInventory()
+    local item = inventory.getItem("cobbled_deepslate")
+
+    if item ~= nil then
+        inventory.dropItem(item, 64)
+    end
 end

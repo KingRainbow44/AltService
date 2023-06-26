@@ -2,8 +2,10 @@ package moe.seikimo.altservice.script;
 
 import lombok.Getter;
 import moe.seikimo.altservice.AltBackend;
+import moe.seikimo.altservice.script.event.EventType;
 import org.luaj.vm2.LuaError;
 import org.luaj.vm2.LuaFunction;
+import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.script.LuajContext;
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import javax.script.*;
 import java.io.File;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -34,7 +37,7 @@ public final class ScriptLoader {
 
     private static final Map<String, CompiledScript> cache
             = new ConcurrentHashMap<>();
-    private static LuaValue scriptLibValue = null;
+    public static LuaValue scriptLibValue = null;
 
     /**
      * Attempts to initialize the script engine.
@@ -43,12 +46,38 @@ public final class ScriptLoader {
         try {
             var context = ScriptLoader.getContext();
 
+            // Add the script library.
             ScriptLoader.scriptLibValue = CoerceJavaToLua.coerce(scriptLib);
             context.globals.set("ScriptLib", ScriptLoader.scriptLibValue);
+
+            // Add enums.
+            ScriptLoader.registerEnum(context,
+                    EventType.values(), "EventType");
+
             ScriptLoader.getLogger().info("Initialized LuaJ.");
         } catch (Exception ignored) {
             ScriptLoader.getLogger().warn("Failed to initialize LuaJ.");
         }
+    }
+
+    /**
+     * Registers all the values of an enum.
+     *
+     * @param context The LuaJ context.
+     * @param values The values of the enum.
+     * @param name The name of the enum.
+     */
+    public static <T extends Enum<T>> void registerEnum(
+            LuajContext context, T[] values, String name
+    ) {
+        var table = new LuaTable();
+        Arrays.stream(values)
+                .forEach(
+                        e -> {
+                            table.set(e.name(), e.ordinal());
+                            table.set(e.name().toUpperCase(), e.ordinal());
+                        });
+        context.globals.set(name, table);
     }
 
     /**

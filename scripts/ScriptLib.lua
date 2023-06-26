@@ -25,3 +25,12 @@ Options = {
     guardPlayers = true,
     guardMobs = true
 }
+
+EventType = {
+    BREAK_BLOCK = 0,
+    PLACE_BLOCK = 1,
+    ENTITY_MOVE = 2,
+    PLAYER_MOVE = 3,
+    TAKE_DAMAGE = 4,
+    INV_CHANGE = 5,
+}
