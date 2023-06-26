@@ -25,8 +25,9 @@ public final class RequestCommand extends Command {
         var lifetimeS = "an indefinite time";
         if (args.size() > 1) {
             try {
+                lifetime = TimeUtils.parseInputTime(
+                        args.get(args.size() - 1));
                 lifetimeS = args.get(args.size() - 1);
-                lifetime = TimeUtils.parseInputTime(lifetimeS);
             } catch (IllegalArgumentException ignored) { }
         }
 
@@ -46,7 +47,7 @@ public final class RequestCommand extends Command {
             var instance = PlayerManager.createPlayer(player, lifetime);
             instance.login();
 
-            ThreadUtils.sleep(5000L);
+            if (players.size() > 1) ThreadUtils.sleep(5000L);
         }
     }
 }
