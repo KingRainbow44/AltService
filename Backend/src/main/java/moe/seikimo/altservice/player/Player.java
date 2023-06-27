@@ -3,6 +3,8 @@ package moe.seikimo.altservice.player;
 import lombok.Data;
 import moe.seikimo.altservice.Configuration;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
+import moe.seikimo.altservice.player.inventory.Inventory;
+import moe.seikimo.altservice.player.inventory.PlayerInventory;
 import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
 import moe.seikimo.altservice.script.ScriptManager;
@@ -39,6 +41,8 @@ import java.util.UUID;
     private final Map<UUID, ServerPlayer> peers
             = new HashMap<>();
     private final Map<Long, ServerEntity> entities
+            = new HashMap<>();
+    private final Map<Integer, Inventory> inventories
             = new HashMap<>();
 
     private final PlayerInventory inventory
@@ -266,6 +270,15 @@ import java.util.UUID;
     }
 
     /**
+     * @return The inventory the player is looking at.
+     */
+    public Inventory getViewingInventory() {
+        var keys = this.getInventories().keySet();
+        return keys.size() == 0 ? null :
+                this.getInventories().get(keys.iterator().next());
+    }
+
+    /**
      * Moves the player to the specified position and rotation.
      *
      * @param position The position to send to the server.
@@ -403,7 +416,18 @@ import java.util.UUID;
     }
 
     /**
+     * Interacts with the block at the specified position.
+     * This can also be used to place blocks.
+     *
+     * @param block The position of the block to interact with.
+     */
+    public void interact(Vector3i block) {
+        this.place(this.getInventory().getItemInMainHand(), block);
+    }
+
+    /**
      * Places a block at the specified position.
+     * This can also be used to interact with blocks.
      *
      * @param item The item to place.
      * @param block The position of the block to place.

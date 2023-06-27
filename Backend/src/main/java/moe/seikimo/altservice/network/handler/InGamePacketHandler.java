@@ -2,12 +2,13 @@ package moe.seikimo.altservice.network.handler;
 
 import moe.seikimo.altservice.AltBackend;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
+import moe.seikimo.altservice.player.inventory.Inventory;
 import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
 import moe.seikimo.altservice.utils.objects.Location;
 import moe.seikimo.altservice.utils.objects.Style;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId;
-import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.response.ItemStackResponse;
+import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerType;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.common.PacketSignal;
 
@@ -173,7 +174,8 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
     @Override
     public PacketSignal handle(InventoryContentPacket packet) {
         var inventory = this.getPlayer().getInventory();
-        switch (packet.getContainerId()) {
+        var containerId = packet.getContainerId();
+        switch (containerId) {
             case ContainerId.INVENTORY -> {
                 // Update the player's inventory.
                 inventory.getItems().clear();
@@ -189,7 +191,17 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
             case ContainerId.UI -> {
                 // Do nothing. This is the UI container.
             }
-            default -> this.getLogger().debug("Received inventory content packet for container {}.", packet.getContainerId());
+            default -> {
+                if (containerId > ContainerId.LAST || containerId < ContainerId.FIRST) {
+                    this.getLogger().debug("Received inventory content packet for container {}.", packet.getContainerId());
+                } else {
+                    var container = this.getPlayer().getInventories().get(containerId);
+                    if (container != null) {
+                        container.getItems().clear();
+                        container.getItems().addAll(packet.getContents());
+                    }
+                }
+            }
         }
 
         return PacketSignal.HANDLED;
@@ -285,6 +297,36 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(ItemStackResponsePacket packet) {
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(ContainerOpenPacket packet) {
+        var containerId = (int) packet.getId();
+        var containerType = packet.getType();
+
+        if (
+                containerId > ContainerId.LAST ||
+                        containerId < ContainerId.FIRST ||
+                        containerType != ContainerType.CONTAINER) {
+            return PacketSignal.HANDLED;
+        }
+
+        var container = new Inventory(this.getPlayer(),
+                containerId, containerType,
+                packet.getBlockPosition());
+        this.getPlayer().getInventories()
+                .put(containerId, container);
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(ContainerClosePacket packet) {
+        var containerId = (int) packet.getId();
+        this.getPlayer().getInventories()
+                .remove(containerId);
+
         return PacketSignal.HANDLED;
     }
 }

@@ -29,9 +29,19 @@ public final class InventoryCommand extends Command {
                         player.sendMessage("Inventory opened.");
                     }
                     case "close" -> {
+                        // Close the viewing inventory.
+                        var viewing = player.getViewingInventory();
+                        if (viewing != null) viewing.closeInventory();
+
                         // Close the inventory.
                         player.getInventory().closeInventory();
                         player.sendMessage("Inventory closed.");
+                    }
+                    case "transfer" -> {
+                        var inv = player.getInventories().get(1);
+                        if (inv == null) return;
+
+                        inv.transfer(0, 0, -1);
                     }
                     default -> player.sendMessage("Invalid page number.");
                 }

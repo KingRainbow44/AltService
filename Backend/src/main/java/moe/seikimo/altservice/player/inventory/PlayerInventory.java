@@ -1,6 +1,7 @@
-package moe.seikimo.altservice.player;
+package moe.seikimo.altservice.player.inventory;
 
 import lombok.Data;
+import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.utils.RandomUtils;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerSlotType;
@@ -9,10 +10,8 @@ import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.request.ItemSt
 import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.request.ItemStackRequestSlotData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.request.action.DropAction;
 import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.request.action.ItemStackRequestAction;
-import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryTransactionType;
 import org.cloudburstmc.protocol.bedrock.packet.ContainerClosePacket;
 import org.cloudburstmc.protocol.bedrock.packet.InteractPacket;
-import org.cloudburstmc.protocol.bedrock.packet.InventoryTransactionPacket;
 import org.cloudburstmc.protocol.bedrock.packet.ItemStackRequestPacket;
 
 import java.util.LinkedList;
@@ -56,6 +55,13 @@ import java.util.List;
         invPacket.setServerInitiated(false);
 
         this.getPlayer().sendPacket(invPacket);
+    }
+
+    /**
+     * @return The item in the player's main hand.
+     */
+    public ItemData getItemInMainHand() {
+        return this.getItems().get(this.getHotbarSlot());
     }
 
     /**
