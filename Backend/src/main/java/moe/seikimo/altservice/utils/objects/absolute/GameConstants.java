@@ -10,6 +10,8 @@ import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
 import org.cloudburstmc.protocol.common.SimpleDefinitionRegistry;
 
 import java.io.DataInputStream;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPInputStream;
 
@@ -18,6 +20,11 @@ public interface GameConstants {
     BlockDefinition AIR_BLOCK = new SimpleBlockDefinition("minecraft:air", 0, NbtMap.EMPTY);
     /* The block definitions. */
     AtomicReference<SimpleDefinitionRegistry<BlockDefinition>> BLOCKS = new AtomicReference<>();
+
+    /* Identifiers of entities which cannot be attacked. */
+    Set<String> INVULNERABLE_ENTITIES = new HashSet<>() {{
+        this.add("minecraft:xp_orb");
+    }};
 
     /* The offset of a Bedrock position to a Java block. */
     float OFFSET = 1.62f;

@@ -330,6 +330,11 @@ import java.util.UUID;
     public void attack(ServerEntity target) {
         if (this.getSession() == null) return;
 
+        // Check if the target is invulnerable.
+        if (GameConstants.INVULNERABLE_ENTITIES
+                .contains(target.getIdentifier()))
+            return;
+
         // Create the inventory action.
         var action = new InventoryActionData(
                 InventorySource.fromGlobalInventory(), 0,
@@ -434,6 +439,9 @@ import java.util.UUID;
      */
     public void place(ItemData item, Vector3i block) {
         if (this.getSession() == null) return;
+        if (item == null) {
+            item = this.getInventory().getItemInMainHand();
+        }
 
         // Create the inventory action.
         var action = new InventoryActionData(
