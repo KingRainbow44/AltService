@@ -5,7 +5,9 @@ public enum EventType {
     PLACE_BLOCK,
     ENTITY_MOVE,
     PLAYER_MOVE,
-    TAKE_DAMAGE;
+    TAKE_DAMAGE,
+    INV_CHANGE,
+    MESSAGE_SENT;
 
     /**
      * @param event The event to get the type of.

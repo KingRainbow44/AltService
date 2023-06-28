@@ -2,7 +2,7 @@ package moe.seikimo.altservice.script.event;
 
 import lombok.Builder;
 import lombok.Data;
-import moe.seikimo.altservice.player.PlayerInventory;
+import moe.seikimo.altservice.player.inventory.PlayerInventory;
 import moe.seikimo.altservice.utils.objects.Location;
 
 /**
