@@ -1,5 +1,5 @@
 events = {
-    { event = EventType.BREAK_BLOCK, condition = "cond_blockBreak", action = "action_blockBreak" },
+    { event = EventType.BLOCK_CHANGE, condition = "cond_blockChange", action = "action_blockChange" },
     { event = EventType.INV_CHANGE, condition = "cond_invChange", action = "action_invChange" }
 }
 
@@ -31,12 +31,12 @@ end
 
 -- Event conditions & actions
 
-function cond_blockBreak(context, event)
+function cond_blockChange(context, event)
     return true
 end
 
 -- Action will always fire.
-function action_blockBreak(context, event)
+function action_blockChange(context, event)
     local yLevel = 0
     if event.getPosition().y == 0 then
         yLevel = -1

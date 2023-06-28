@@ -3,6 +3,7 @@ ScriptLib = {
     warn = (function(context, message) end),
     error = (function(context, message) end),
     logTable = (function(context, table) end),
+    logObject = (function(context, object) end),
     setGlobal = (function(context, key, value)  end),
     getGlobal = (function(context, key) end),
     getPosition = (function(context, player) end),
@@ -20,7 +21,8 @@ ScriptLib = {
     closeInventory = (function(context, player) end),
     getInventory = (function(context, player) end),
     takeItem = (function(context, player, source, target) end),
-    placeItem = (function(context, player, source, target) end)
+    placeItem = (function(context, player, source, target) end),
+    blockToTable = (function(context, position) end)
 }
 
 Player = "" -- This will resolve to the executing player's name.
@@ -37,11 +39,10 @@ Options = {
 }
 
 EventType = {
-    BREAK_BLOCK = 0,
-    PLACE_BLOCK = 1,
-    ENTITY_MOVE = 2,
-    PLAYER_MOVE = 3,
-    TAKE_DAMAGE = 4,
-    INV_CHANGE = 5,
-    MESSAGE_SENT = 6
+    BLOCK_CHANGE = 0,
+    ENTITY_MOVE = 1,
+    PLAYER_MOVE = 2,
+    TAKE_DAMAGE = 3,
+    INV_CHANGE = 4,
+    MESSAGE_SENT = 5
 }
