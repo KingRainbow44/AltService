@@ -15,7 +15,7 @@ import org.cloudburstmc.protocol.bedrock.packet.AddEntityPacket;
      */
     public static ServerEntity from(AddEntityPacket packet) {
         var entity = new ServerEntity(packet.getRuntimeEntityId(),
-                packet.getEntityType());
+                packet.getIdentifier());
 
         // Set the entity's location.
         entity.setPosition(packet.getPosition());
@@ -29,14 +29,14 @@ import org.cloudburstmc.protocol.bedrock.packet.AddEntityPacket;
     }
 
     private final long runtimeId;
-    private final int entityType;
+    private final String identifier;
 
     private EntityProperties properties = new EntityProperties();
     private Location location = Location.ZERO();
 
-    public ServerEntity(long runtimeId, int entityType) {
+    public ServerEntity(long runtimeId, String identifier) {
         this.runtimeId = runtimeId;
-        this.entityType = entityType;
+        this.identifier = identifier;
     }
 
     /**

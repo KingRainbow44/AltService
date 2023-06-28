@@ -17,7 +17,7 @@ public final class ServerPlayer extends ServerEntity {
     private final UUID uuid;
 
     public ServerPlayer(long runtimeId, String username, UUID uuid) {
-        super(runtimeId, -1);
+        super(runtimeId, "minecraft:player");
 
         this.username = username;
         this.uuid = uuid;
