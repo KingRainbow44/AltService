@@ -616,8 +616,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
 
     @Override
     public PacketSignal handle(MobEffectPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
+        return PacketSignal.HANDLED;
     }
 
 

@@ -190,6 +190,7 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
             }
             case ContainerId.UI -> {
                 // Do nothing. This is the UI container.
+                return PacketSignal.HANDLED;
             }
             default -> {
                 if (containerId > ContainerId.LAST || containerId < ContainerId.FIRST) {
@@ -217,7 +218,8 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
                     inventory.setOffhand(packet.getItem());
             case ContainerId.ARMOR -> // Update the player's armor.
                     inventory.getArmor().set(packet.getSlot(), packet.getItem());
-            default -> this.getLogger().debug("Received inventory content packet for container {}.", packet.getContainerId());
+            case ContainerId.UI -> { /* Do nothing. This is the UI container. */ }
+            default -> this.getLogger().debug("Received inventory slot packet for container {}.", packet.getContainerId());
         }
 
         return PacketSignal.HANDLED;
