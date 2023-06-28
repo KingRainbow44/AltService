@@ -13,7 +13,17 @@ ScriptLib = {
     placeBlock = (function(context, player, block, x, y, z) end),
     addBehavior = (function(context, player, behavior) end),
     removeBehavior = (function(context, player, behavior) end),
+    targetedAt = (function(context, message, player) end),
+    parseCommand = (function(context, message, player) end),
+    distance = (function(context, pos1, pos2) end),
+    interactBlock = (function(context, player, block) end),
+    closeInventory = (function(context, player) end),
+    getInventory = (function(context, player) end),
+    takeItem = (function(context, player, source, target) end),
+    placeItem = (function(context, player, source, target) end)
 }
+
+Player = "" -- This will resolve to the executing player's name.
 
 Options = {
     follow = false,
@@ -33,4 +43,5 @@ EventType = {
     PLAYER_MOVE = 3,
     TAKE_DAMAGE = 4,
     INV_CHANGE = 5,
+    MESSAGE_SENT = 6
 }

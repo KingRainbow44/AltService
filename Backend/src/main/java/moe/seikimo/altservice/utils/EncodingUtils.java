@@ -3,6 +3,10 @@ package moe.seikimo.altservice.utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import moe.seikimo.altservice.utils.enums.AlgorithmType;
+import org.cloudburstmc.math.vector.Vector3f;
+import org.cloudburstmc.math.vector.Vector3i;
+import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
+import org.luaj.vm2.LuaTable;
 
 import java.io.Reader;
 import java.math.BigInteger;
@@ -148,5 +152,49 @@ public interface EncodingUtils {
         System.arraycopy(signature, offset + Math.max(-sPadding, 0), joseSignature, algorithmType.ecNumberSize + Math.max(sPadding, 0), sLength + Math.min(sPadding, 0));
 
         return joseSignature;
+    }
+
+    /**
+     * Converts a LuaTable to a Vector3i.
+     *
+     * @param position The LuaTable.
+     * @return The Vector3i.
+     */
+    static Vector3i tableToBlock(LuaTable position) {
+        return Vector3i.from(
+                position.get("x").toint(),
+                position.get("y").toint(),
+                position.get("z").toint()
+        );
+    }
+
+    /**
+     * Converts a LuaTable to a Vector3f.
+     *
+     * @param position The LuaTable.
+     * @return The Vector3f.
+     */
+    static Vector3f tableToPosition(LuaTable position) {
+        return Vector3f.from(
+                position.get("x").tofloat(),
+                position.get("y").tofloat(),
+                position.get("z").tofloat()
+        );
+    }
+
+    /**
+     * Converts an ItemData instance to a LuaTable.
+     *
+     * @param item The item.
+     * @return The LuaTable.
+     */
+    static LuaTable itemToTable(ItemData item) {
+        var table = new LuaTable();
+
+        table.set("identifier", item.getDefinition().getIdentifier());
+        table.set("count", item.getCount());
+        table.set("damage", item.getDamage());
+
+        return table;
     }
 }

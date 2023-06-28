@@ -32,6 +32,14 @@ public final class PlayerManager {
     }
 
     /**
+     * @param username The username.
+     * @return The player instance.
+     */
+    public static Player getPlayer(String username) {
+        return PlayerManager.players.get(username);
+    }
+
+    /**
      * @return A list of all player instances.
      */
     public static List<Player> getPlayers() {

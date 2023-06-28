@@ -9,6 +9,7 @@ import moe.seikimo.altservice.script.event.ScriptEvent;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
 import javax.script.Bindings;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,9 @@ import java.util.concurrent.ConcurrentHashMap;
      */
     public void initBehaviors() {
         this.scripts.clear();
-        for (var behavior : this.getActions().getBehaviors()) {
+        var behaviors = new ArrayList<>(
+                this.getActions().getBehaviors());
+        for (var behavior : behaviors) {
             try {
                 var bindings = ScriptLoader.getBindings();
                 bindings.put("Options", CoerceJavaToLua.coerce(this));
