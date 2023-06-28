@@ -18,10 +18,6 @@ public final class PlaceCommand extends Command {
             player.sendMessage("Please specify a direction and item.");
             return;
         }
-        if (args.size() == 1) {
-            player.sendMessage("Please specify an item.");
-            return;
-        }
 
         // Get the direction to place the block.
         var direction = args.get(0);
@@ -42,10 +38,6 @@ public final class PlaceCommand extends Command {
                 .filter(i -> i.getDefinition().getIdentifier()
                         .equalsIgnoreCase(args.get(1)))
                 .findFirst().orElse(null);
-        if (item == null) {
-            player.sendMessage("Item not found.");
-            return;
-        }
 
         player.place(item, block);
     }
