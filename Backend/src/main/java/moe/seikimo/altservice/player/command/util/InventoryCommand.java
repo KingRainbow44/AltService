@@ -38,10 +38,16 @@ public final class InventoryCommand extends Command {
                         player.sendMessage("Inventory closed.");
                     }
                     case "transfer" -> {
-                        var inv = player.getInventories().get(1);
+                        var inv = player.getViewingInventory();
                         if (inv == null) return;
 
                         inv.transfer(0, 0, -1);
+                    }
+                    case "place" -> {
+                        var inv = player.getViewingInventory();
+                        if (inv == null) return;
+
+                        inv.place(0, -1, -1);
                     }
                     default -> player.sendMessage("Invalid page number.");
                 }

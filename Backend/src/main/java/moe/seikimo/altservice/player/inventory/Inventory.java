@@ -66,36 +66,38 @@ import java.util.List;
         // Set the count to the item's count if it's -1.
         if (count == -1) count = item.getCount();
 
-        // Create the request.
-        var items = Math.min(count, item.getCount());
-        var requestId = RandomUtils.randomInt(0, 1000);
-        var request = new ItemStackRequest(requestId, new ItemStackRequestAction[] {
-                new TakeAction(items,
-                        new ItemStackRequestSlotData(
-                                ContainerSlotType.LEVEL_ENTITY,
-                                source, 1
-                        ),
-                        new ItemStackRequestSlotData(
-                                ContainerSlotType.CURSOR,
-                                0, 1
-                        )
-                ),
-                new PlaceAction(items,
-                        new ItemStackRequestSlotData(
-                                ContainerSlotType.CURSOR,
-                                0, 1
-                        ),
-                        new ItemStackRequestSlotData(
-                                ContainerSlotType.INVENTORY,
-                                target, 1
-                        )
-                )
-        }, new String[0]);
+        {
+            // Create the request.
+            var items = Math.min(count, item.getCount());
+            var requestId = RandomUtils.randomInt(0, 1000);
+            var request = new ItemStackRequest(requestId, new ItemStackRequestAction[] {
+                    new TakeAction(items,
+                            new ItemStackRequestSlotData(
+                                    ContainerSlotType.LEVEL_ENTITY,
+                                    source, 1
+                            ),
+                            new ItemStackRequestSlotData(
+                                    ContainerSlotType.CURSOR,
+                                    0, 1
+                            )
+                    ),
+                    new PlaceAction(items,
+                            new ItemStackRequestSlotData(
+                                    ContainerSlotType.CURSOR,
+                                    0, 1
+                            ),
+                            new ItemStackRequestSlotData(
+                                    ContainerSlotType.INVENTORY,
+                                    target, 1
+                            )
+                    )
+            }, new String[0]);
 
-        // Create the item packet.
-        var itemPacket = new ItemStackRequestPacket();
-        itemPacket.getRequests().add(request);
-        this.getPlayer().sendPacket(itemPacket);
+            // Create the item packet.
+            var itemPacket = new ItemStackRequestPacket();
+            itemPacket.getRequests().add(request);
+            this.getPlayer().sendPacket(itemPacket);
+        }
 
         // Add the item to the player's inventory.
         var inventory = this.getPlayer().getInventory();
@@ -104,5 +106,69 @@ import java.util.List;
         } else {
             inventory.getItems().set(target, item);
         }
+    }
+
+    /**
+     * Places the item in the specified slot.
+     * This will remove the item from the player's inventory.
+     *
+     * @param source The source slot in the player's inventory.
+     * @param target The target slot in the inventory.
+     * @param count The amount of items to place.
+     */
+    public void place(int source, int target, int count) {
+        var playerInv = this.getPlayer().getInventory();
+
+        var item = playerInv.getItem(source);
+        if (item == null) return;
+
+        // Set the count to the item's count if it's -1.
+        if (count == -1) count = item.getCount();
+        // Get the index of the item.
+        if (target == -1) {
+            var items = this.getItems();
+            target = items.indexOf(items.stream()
+                    .filter(i -> i.getDefinition()
+                            .equals(item.getDefinition()))
+                    .filter(i -> i.getCount() < 64)
+                    .findFirst()
+                    .orElse(ItemData.AIR));
+        }
+
+        {
+            // Create the request.
+            var items = Math.min(count, item.getCount());
+            var requestId = RandomUtils.randomInt(0, 1000);
+            var request = new ItemStackRequest(requestId, new ItemStackRequestAction[] {
+                    new TakeAction(items,
+                            new ItemStackRequestSlotData(
+                                    ContainerSlotType.INVENTORY,
+                                    source, 1
+                            ),
+                            new ItemStackRequestSlotData(
+                                    ContainerSlotType.CURSOR,
+                                    0, 1
+                            )
+                    ),
+                    new PlaceAction(items,
+                            new ItemStackRequestSlotData(
+                                    ContainerSlotType.CURSOR,
+                                    0, 1
+                            ),
+                            new ItemStackRequestSlotData(
+                                    ContainerSlotType.LEVEL_ENTITY,
+                                    target, 1
+                            )
+                    )
+            }, new String[0]);
+
+            // Create the item packet.
+            var itemPacket = new ItemStackRequestPacket();
+            itemPacket.getRequests().add(request);
+            this.getPlayer().sendPacket(itemPacket);
+        }
+
+        // Remove the item from the player's inventory.
+        playerInv.getItems().remove(item);
     }
 }

@@ -67,6 +67,16 @@ import java.util.List;
     /**
      * Gets an item from the inventory.
      *
+     * @param slot The slot of the item.
+     * @return The item.
+     */
+    public ItemData getItem(int slot) {
+        return this.getItems().get(slot);
+    }
+
+    /**
+     * Gets an item from the inventory.
+     *
      * @param name The identifier of the item.
      * @return The item.
      */
