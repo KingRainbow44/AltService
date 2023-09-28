@@ -1,6 +1,5 @@
 package moe.seikimo.altservice.network;
 
-import com.nimbusds.jwt.SignedJWT;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.socket.nio.NioDatagramChannel;
@@ -171,8 +170,8 @@ public final class PlayerNetworkSession {
 
             // Set the login properties.
             loginPacket.setProtocolVersion(this.client.getCodec().getProtocolVersion());
-            loginPacket.getChain().add(SignedJWT.parse(chainData));
-            loginPacket.setExtra(SignedJWT.parse(profile));
+            loginPacket.getChain().add(chainData);
+            loginPacket.setExtra(profile);
 
             // Send the packet & update connection.
             this.sendPacket(loginPacket, true);

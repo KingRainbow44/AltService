@@ -49,7 +49,7 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
             // Create an encryption key from the payload.
             var salt = EncodingUtils.base64DecodeToBytes(payloadObject.getSalt());
             var privateKey = this.session.getAuthenticator().getPrivateKey();
-            var publicKey = EncryptionUtils.generateKey(headerObject.getPublicKey());
+            var publicKey = EncryptionUtils.parseKey(headerObject.getPublicKey());
             var secretKey = EncryptionUtils.getSecretKey(privateKey, publicKey, salt);
 
             // Set the encryption key.

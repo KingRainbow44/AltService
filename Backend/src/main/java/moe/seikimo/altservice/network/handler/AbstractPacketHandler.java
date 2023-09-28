@@ -48,12 +48,6 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
         return BedrockPacketHandler.super.handlePacket(packet);
     }
 
-    public PacketSignal handle(AdventureSettingsPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
-    }
-
-
     @Override
     public PacketSignal handle(AnimatePacket packet) {
         return PacketSignal.HANDLED;
@@ -720,14 +714,6 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
         return PacketSignal.UNHANDLED;
     }
 
-
-    @Override
-    public PacketSignal handle(ScriptCustomEventPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
-    }
-
-
     @Override
     public PacketSignal handle(ServerSettingsResponsePacket packet) {
         logPacket(packet);
@@ -1358,14 +1344,6 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
         logPacket(packet);
         return PacketSignal.UNHANDLED;
     }
-
-
-    @Override
-    public PacketSignal handle(ClientCheatAbilityPacket packet) {
-        logPacket(packet);
-        return PacketSignal.UNHANDLED;
-    }
-
 
     @Override
     public PacketSignal handle(CameraPresetsPacket packet) {
