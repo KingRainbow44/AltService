@@ -5,7 +5,7 @@ import moe.seikimo.altservice.command.Command;
 
 import java.util.List;
 
-public class ReloadCommand extends Command {
+public final class ReloadCommand extends Command {
     public ReloadCommand() {
         super("reload");
     }

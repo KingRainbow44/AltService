@@ -15,7 +15,7 @@ public final class DisconnectCommand extends Command {
     @Override
     public void execute(List<String> args) {
         // Check if a username was specified.
-        if (args.size() < 1) {
+        if (args.isEmpty()) {
             this.sendMessage("Please specify a username.");
             return;
         }

@@ -4,7 +4,7 @@ import moe.seikimo.altservice.command.Command;
 
 import java.util.List;
 
-public class StopCommand extends Command {
+public final class StopCommand extends Command {
     public StopCommand() {
         super("stop");
     }
