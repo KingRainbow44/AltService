@@ -66,6 +66,20 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
                 AltBackend.getPlayerCommands().invoke(sender, command);
             }
         }
+        if (message.contains("whispers to you: ")) {
+            // Remove color codes from the message.
+            if (message.contains("§r§7§o")) {
+                message = message.replace("§r§7§o", "");
+            }
+
+            var parts = message.split(" ");
+            // Get the sender.
+            var sender = parts[0];
+            // Get the input.
+            var input = message.substring(message.indexOf("whispers to you: ") + 17);
+            // Invoke the command.
+            AltBackend.getPlayerCommands().invoke(this.getPlayer(), sender, input);
+        }
 
         return PacketSignal.HANDLED;
     }
@@ -118,6 +132,8 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
         var entity = this.getPlayer().getEntityById(packet.getRuntimeEntityId());
         if (entity != null) {
             entity.getLocation().update(packet);
+            entity.getPassengers().forEach(
+                    passenger -> passenger.getLocation().update(packet));
             this.getPlayer().onEntityMove(entity);
         }
 
@@ -129,14 +145,13 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
         if (packet.getRuntimeEntityId() == this.getSession().getData().getRuntimeId()) {
             this.getPlayer().setPosition(packet.getPosition());
             this.getPlayer().setRotation(packet.getRotation());
-            System.out.println("Server requested to update player to " + this.getPlayer().getPosition());
         }
 
         var entity = this.getPlayer().getEntityById(packet.getRuntimeEntityId());
         if (entity != null) {
-            entity.setPosition(packet.getPosition());
-            entity.setRotation(packet.getRotation());
-            entity.getLocation().setGrounded(packet.isOnGround());
+            entity.getLocation().update(packet);
+            entity.getPassengers().forEach(
+                    passenger -> passenger.getLocation().update(packet));
             this.getPlayer().onEntityMove(entity);
         }
 
@@ -150,7 +165,9 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
                 packet.getRuntimeEntityId(), packet.getUsername(), packet.getUuid()
         );
         player.setLocation(new Location(0, packet.getPosition(), packet.getRotation(), true));
+
         this.getPlayer().getPeers().put(packet.getUuid(), player);
+        this.getPlayer().getEntities().put(packet.getRuntimeEntityId(), player);
 
         return PacketSignal.HANDLED;
     }
@@ -160,6 +177,7 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
         if (packet.getAction() == PlayerListPacket.Action.REMOVE) {
             for (var entry : packet.getEntries()) {
                 this.getPlayer().getPeers().remove(entry.getUuid());
+                this.getPlayer().getEntities().remove(entry.getEntityId());
             }
         }
 
@@ -329,6 +347,41 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
                                 .block(newBlock)
                                 .build()
         );
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(SetEntityLinkPacket packet) {
+        var data = packet.getEntityLink();
+
+        // Resolve the entities from the data.
+        var targetEntityId = data.getTo();
+        var otherEntityId = data.getFrom();
+
+        var targetEntity = this.getPlayer().getEntityById(targetEntityId);
+        var otherEntity = this.getPlayer().getEntityById(otherEntityId);
+
+        if (targetEntity == null || otherEntity == null) return PacketSignal.HANDLED;
+
+        switch (data.getType()) {
+            case REMOVE -> {
+                targetEntity.setRiding(null);
+                otherEntity.getPassengers().remove(targetEntity);
+            }
+            case RIDER -> {
+                targetEntity.setRiding(otherEntity);
+                otherEntity.getPassengers().add(targetEntity);
+
+                if (targetEntity.isRelated(this.getPlayer().getTarget())) {
+                    this.getPlayer().ride(otherEntity);
+                }
+            }
+            case PASSENGER -> {
+                targetEntity.getPassengers().add(otherEntity);
+                otherEntity.setRiding(targetEntity);
+            }
+        }
 
         return PacketSignal.HANDLED;
     }
