@@ -5,41 +5,43 @@
       <element id="archive" name="Backend.jar">
         <element id="module-output" name="Backend" />
       </element>
-      <element id="library" level="project" name="Maven: org.cloudburstmc:nbt:3.0.0.Final" />
-      <element id="library" level="project" name="Maven: io.airlift:aircompressor:0.21" />
+      <element id="library" level="project" name="Maven: io.netty:netty-common:4.1.84.Final" />
       <element id="library" level="project" name="Maven: com.github.stephenc.jcip:jcip-annotations:1.0-1" />
-      <element id="library" level="project" name="Maven: org.cloudburstmc.protocol:bedrock-connection:3.0.0.Beta1-SNAPSHOT" />
-      <element id="library" level="project" name="Maven: io.netty:netty-buffer:4.1.84.Final" />
-      <element id="library" level="project" name="Maven: org.cloudburstmc.math:immutable:2.0-SNAPSHOT" />
-      <element id="library" level="project" name="Maven: net.jodah:expiringmap:0.5.10" />
-      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-int-object-maps:8.5.3" />
-      <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.10.1" />
-      <element id="library" level="project" name="Maven: org.jline:jline:3.21.0" />
-      <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.4.7" />
-      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-object-int-maps:8.5.3" />
-      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-long-object-maps:8.5.3" />
-      <element id="library" level="project" name="Maven: io.netty:netty-codec:4.1.89.Final" />
+      <element id="library" level="project" name="Maven: io.netty:netty-transport:4.1.89.Final" />
       <element id="library" level="project" name="Maven: org.jline:jline-terminal:3.21.0" />
-      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-int-sets:8.5.3" />
+      <element id="library" level="project" name="Maven: org.jline:jline-terminal-jna:3.21.0" />
+      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-object-int-maps:8.5.3" />
+      <element id="library" level="project" name="Maven: org.jline:jline:3.21.0" />
+      <element id="library" level="project" name="Maven: org.cloudburstmc.protocol:bedrock-codec:3.0.0.Beta1-SNAPSHOT" />
+      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-common:8.5.3" />
+      <element id="library" level="project" name="Maven: org.cloudburstmc.protocol:bedrock-connection:3.0.0.Beta1-SNAPSHOT" />
+      <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:2.0.4" />
+      <element id="library" level="project" name="Maven: org.cloudburstmc.protocol:common:3.0.0.Beta1-SNAPSHOT" />
+      <element id="library" level="project" name="Maven: io.airlift:aircompressor:0.21" />
+      <element id="library" level="project" name="Maven: net.java.dev.jna:jna:5.10.0" />
+      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-object-sets:8.5.3" />
+      <element id="library" level="project" name="Maven: org.cloudburstmc:nbt:3.0.0.Final" />
+      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-int-common:8.5.3" />
+      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-int-object-maps:8.5.3" />
+      <element id="library" level="project" name="Maven: io.netty:netty-codec:4.1.89.Final" />
+      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-long-object-maps:8.5.3" />
+      <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.4.7" />
+      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-object-common:8.5.3" />
+      <element id="library" level="project" name="Maven: net.jodah:expiringmap:0.5.10" />
+      <element id="library" level="project" name="Maven: org.cloudburstmc.math:immutable:2.0-SNAPSHOT" />
       <element id="library" level="project" name="Maven: com.nimbusds:nimbus-jose-jwt:9.10.1" />
       <element id="library" level="project" name="Maven: org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR1-SNAPSHOT" />
+      <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.4.7" />
+      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-long-sets:8.5.3" />
+      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-int-sets:8.5.3" />
+      <element id="library" level="project" name="Maven: org.luaj:luaj-jse:3.0.1" />
+      <element id="library" level="project" name="Maven: com.esotericsoftware:reflectasm:1.11.9" />
+      <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.10.1" />
       <element id="library" level="project" name="Maven: com.nukkitx:natives:1.0.3" />
-      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-object-sets:8.5.3" />
-      <element id="library" level="project" name="Maven: org.cloudburstmc.protocol:common:3.0.0.Beta1-SNAPSHOT" />
-      <element id="library" level="project" name="Maven: io.netty:netty-common:4.1.84.Final" />
-      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-object-common:8.5.3" />
       <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-long-common:8.5.3" />
       <element id="library" level="project" name="Maven: org.jetbrains:annotations:24.0.1" />
-      <element id="library" level="project" name="Maven: org.cloudburstmc.protocol:bedrock-codec:3.0.0.Beta1-SNAPSHOT" />
-      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-long-sets:8.5.3" />
-      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-common:8.5.3" />
-      <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:2.0.4" />
+      <element id="library" level="project" name="Maven: io.netty:netty-buffer:4.1.84.Final" />
       <element id="library" level="project" name="Maven: io.netty:netty-resolver:4.1.89.Final" />
-      <element id="library" level="project" name="Maven: io.netty:netty-transport:4.1.89.Final" />
-      <element id="library" level="project" name="Maven: com.nukkitx.fastutil:fastutil-int-common:8.5.3" />
-      <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.4.7" />
-      <element id="library" level="project" name="Maven: org.jline:jline-terminal-jna:3.21.0" />
-      <element id="library" level="project" name="Maven: net.java.dev.jna:jna:5.10.0" />
     </root>
   </artifact>
 </component>

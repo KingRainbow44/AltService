@@ -12,7 +12,7 @@ public final class RunScriptCommand extends Command {
 
     @Override
     public void execute(List<String> args) {
-        if (args.size() < 1) {
+        if (args.isEmpty()) {
             this.sendMessage("Please specify a script name.");
             return;
         }
