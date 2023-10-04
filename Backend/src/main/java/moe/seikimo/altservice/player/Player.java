@@ -21,6 +21,7 @@ import org.cloudburstmc.protocol.bedrock.data.ClientPlayMode;
 import org.cloudburstmc.protocol.bedrock.data.InputMode;
 import org.cloudburstmc.protocol.bedrock.data.PlayerActionType;
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData;
+import org.cloudburstmc.protocol.bedrock.data.entity.EntityLinkData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryActionData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventorySource;
@@ -30,6 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /** Represents a Minecraft player instance. */
@@ -62,6 +64,7 @@ import java.util.UUID;
     private boolean canAttack = true;
 
     private ServerPlayer target = null;
+    private ServerEntity riding = null;
 
     /**
      * Attempts to log in to the configured server.
@@ -227,6 +230,17 @@ import java.util.UUID;
                 }
             }
         }
+
+        if (actions.isFollow()) {
+            var target = this.getTarget();
+            if (target == null) return;
+
+            // Check if the entity is the target.
+            if (!target.isRelated(entity)) return;
+
+            // Move to the entity.
+            this.move(target.getPosition(), target.getRotation());
+        }
     }
 
     /**
@@ -277,7 +291,7 @@ import java.util.UUID;
      */
     public Inventory getViewingInventory() {
         var keys = this.getInventories().keySet();
-        return keys.size() == 0 ? null :
+        return keys.isEmpty() ? null :
                 this.getInventories().get(keys.iterator().next());
     }
 
@@ -325,6 +339,48 @@ import java.util.UUID;
         // Update the client's position.
         this.setPosition(position);
         this.setRotation(rotation);
+    }
+
+    /**
+     * Tries to ride the specified entity.
+     *
+     * @param target The entity to ride.
+     */
+    public void ride(ServerEntity target) {
+        if (this.getSession() == null) return;
+
+        // Prepare the passenger packet.
+        var linkData = new EntityLinkData(
+                this.getEntityId(), target.getRuntimeId(),
+                EntityLinkData.Type.RIDER, true, true
+        );
+        var packet = new SetEntityLinkPacket();
+        packet.setEntityLink(linkData);
+
+        // Set the riding entity.
+        this.setRiding(target);
+
+        // Send the packet.
+        this.sendPacket(packet);
+    }
+
+    /**
+     * Dismounts the player from the entity they are riding.
+     */
+    public void dismount() {
+        if (this.getSession() == null) return;
+        if (this.getRiding() == null) return;
+
+        // Prepare the passenger packet.
+        var linkData = new EntityLinkData(
+                this.getEntityId(), this.getRiding().getRuntimeId(),
+                EntityLinkData.Type.REMOVE, true, true
+        );
+        var packet = new SetEntityLinkPacket();
+        packet.setEntityLink(linkData);
+
+        // Send the packet.
+        this.sendPacket(packet);
     }
 
     /**

@@ -5,6 +5,10 @@ import moe.seikimo.altservice.utils.objects.Location;
 import org.cloudburstmc.math.vector.Vector3f;
 import org.cloudburstmc.protocol.bedrock.data.entity.EntityProperties;
 import org.cloudburstmc.protocol.bedrock.packet.AddEntityPacket;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data public class ServerEntity {
     /**
@@ -34,9 +38,31 @@ import org.cloudburstmc.protocol.bedrock.packet.AddEntityPacket;
     private EntityProperties properties = new EntityProperties();
     private Location location = Location.ZERO();
 
+    @Nullable private ServerEntity riding;
+    private final Set<ServerEntity> passengers = new HashSet<>();
+
     public ServerEntity(long runtimeId, String identifier) {
         this.runtimeId = runtimeId;
         this.identifier = identifier;
+    }
+
+    /**
+     * Checks if two entities are equal.
+     *
+     * @param object The object to check.
+     * @return Whether the entities are equal.
+     */
+    public boolean equals(Object object) {
+        return object instanceof ServerEntity entity &&
+                entity.getRuntimeId() == this.getRuntimeId();
+    }
+
+    /**
+     * @return The hash code of the entity.
+     */
+    @Override
+    public int hashCode() {
+        return Long.hashCode(this.getRuntimeId());
     }
 
     /**
@@ -73,5 +99,22 @@ import org.cloudburstmc.protocol.bedrock.packet.AddEntityPacket;
     public ServerEntity setRotation(Vector3f rotation) {
         this.getLocation().setRotation(rotation);
         return this;
+    }
+
+    /**
+     * Checks if two entities are related.
+     *
+     * @param entity The entity to check.
+     * @return Whether the entities are related.
+     */
+    public boolean isRelated(ServerEntity entity) {
+        // Check if the entities are equal.
+        if (this.equals(entity)) return true;
+        // Check if the entity is invalid.
+        if (entity == null) return false;
+        // Check if the entity is riding this entity.
+        if (this.equals(entity.getRiding())) return true;
+        // Check if this entity is riding the entity.
+        return entity.equals(this.getRiding());
     }
 }
