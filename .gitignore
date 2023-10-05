@@ -40,4 +40,4 @@ build/
 
 ### App Data ###
 logs/
-config.json
+config*.json

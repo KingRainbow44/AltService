@@ -36,6 +36,7 @@ public final class AltBackend {
     @Getter private static final EventLoopGroup eventGroup
             = new NioEventLoopGroup(0, ThreadFactoryBuilder.base());
 
+    @Getter private static String configFile = "config.json";
     private static LineReader lineReader = null;
 
     static {
@@ -77,6 +78,10 @@ public final class AltBackend {
      * @param args Command line arguments.
      */
     public static void main(String[] args) {
+        if (args.length > 0) {
+            AltBackend.configFile = args[0];
+        }
+
         // Load the configuration.
         Configuration.load();
 

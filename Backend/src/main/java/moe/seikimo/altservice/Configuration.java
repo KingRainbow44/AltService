@@ -25,7 +25,7 @@ public final class Configuration {
      * Loads the plugin configuration.
      */
     public static void load() {
-        var configFile = new File("config.json");
+        var configFile = new File(AltBackend.getConfigFile());
 
         if (!configFile.exists()) {
             // Save this configuration.
