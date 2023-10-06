@@ -1,11 +1,16 @@
 import { getBaseUrl } from "@app/utils.ts";
-import { base64decode, base64encode } from "@protobuf-ts/runtime";
+import { base64decode, base64encode, MessageType } from "@protobuf-ts/runtime";
 import { Packet } from "@backend/Structures.ts";
-import { ChatMessageNotify, FrontendIds } from "@backend/Frontend.ts";
+import {
+    ChatMessageNotify,
+    FrontendIds,
+    UpdateSessionsScNotify
+} from "@backend/Frontend.ts";
 
 const messageQueue: string[] = [];
 const decoders: { [key: number]: (data: Uint8Array) => any } = {
-    [FrontendIds._ChatMessageNotify]: (data: Uint8Array) => ChatMessageNotify.fromBinary(data)
+    [FrontendIds._ChatMessageNotify]: (data: Uint8Array) => ChatMessageNotify.fromBinary(data),
+    [FrontendIds._UpdateSessionsScNotify]: (data: Uint8Array) => UpdateSessionsScNotify.fromBinary(data),
 };
 
 export let socket: WebSocket | null = null;
@@ -84,7 +89,7 @@ export function handshake(): void {
 export default class SocketEvent extends Event {
     constructor(
         public readonly id: number,
-        public readonly data: any
+        public readonly data: MessageType<object> | any | null
     ) {
         super(`socket:${id}`);
     }

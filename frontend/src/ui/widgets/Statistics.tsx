@@ -1,9 +1,10 @@
 import { Component } from "preact";
 
-import { Attributes, Vector3 } from "@backend/Protocol.ts";
+import { Attributes, Vector3 } from "@backend/Structures.ts";
+
+import { toArray } from "@app/utils.ts";
 
 import "@css/widgets/Statistics.scss";
-import { toArray } from "@app/utils.ts";
 
 function Heart(props: { value: number }) {
     let pointStyle: string | null = null;
@@ -131,7 +132,10 @@ class Statistics extends Component<IProps, IState> {
                     </div>
 
                     <div class={"Statistics_Experience"}>
-                        <p className={"Statistics_Levels"}>{statistics.xpLevel}</p>
+                        {
+                            statistics.xpLevel > 0 &&
+                            <p className={"Statistics_Levels"}>{statistics.xpLevel}</p>
+                        }
 
                         <div class={"Statistics_ExperienceBar"}>
                             <img

@@ -1,7 +1,7 @@
 import { Component } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
-import { Player } from "@backend/Protocol.ts";
+import { Player } from "@backend/Structures.ts";
 
 import "@css/widgets/SessionList.scss";
 

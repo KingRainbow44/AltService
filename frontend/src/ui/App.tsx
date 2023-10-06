@@ -9,6 +9,8 @@ import SessionList from "@ui/widgets/SessionList.tsx";
 
 import * as socket from "@backend/socket.ts";
 import { FrontendIds } from "@backend/Frontend.ts";
+import Sessions, { activeSession, sessions } from "@backend/sessions.ts";
+import { EmptyAttributes, EmptyInventory, EmptyPosition } from "@app/constants.ts";
 
 import "@css/App.scss";
 
@@ -16,46 +18,30 @@ interface IProps {
 
 }
 
-interface IState {
-
-}
-
-const testInventory = {
-    items: Array(27).fill({}),
-    hotbar: Array(9).fill({}),
-    helmet: {},
-    chestplate: {},
-    leggings: {},
-    boots: {},
-    shield: {},
-};
-
-const testPosition = {
-    x: 0, y: 0, z: 0,
-};
-
-const testStatistics = {
-    health: 11,
-    armor: 5,
-    hunger: 9,
-    xpLevel: 5,
-    xpProgress: 101
-};
-
-class App extends Component<IProps, IState> {
+class App extends Component<IProps, never> {
     constructor(props: IProps) {
         super(props);
-
-        this.state = {};
     }
 
     componentDidMount() {
         // Attempt to handshake with the server.
         socket.handshake();
 
+        // Add event listeners.
         window.addEventListener(`socket:${FrontendIds._FrontendJoinScRsp}`, () => {
             console.debug("Received join response from server.");
+
+            // Request all sessions from the server.
+            socket.send(FrontendIds._GetAllSessionsCsReq, null);
         });
+
+        Sessions.on("update", this.forceUpdate.bind(this));
+        Sessions.on("active", this.forceUpdate.bind(this));
+    }
+
+    componentWillUnmount() {
+        Sessions.off("update", this.forceUpdate.bind(this));
+        Sessions.off("active", this.forceUpdate.bind(this));
     }
 
     render() {
@@ -66,7 +52,7 @@ class App extends Component<IProps, IState> {
                 <div className={"App_Panel"}>
                     <div className={"App_Row items-start"}>
                         <div>
-                            <Inventory inventory={testInventory} />
+                            <Inventory inventory={activeSession?.inventory ?? EmptyInventory} />
                             <p class={"App_Header App_Inventory"}>Inventory</p>
                         </div>
 
@@ -79,7 +65,9 @@ class App extends Component<IProps, IState> {
                     <div className={"App_Row items-end"}>
                         <div>
                             <p className={"App_Header App_Statistics"}>Statistics</p>
-                            <Statistics position={testPosition} statistics={testStatistics} />
+                            <Statistics position={activeSession?.position ?? EmptyPosition}
+                                        statistics={activeSession?.attributes ?? EmptyAttributes}
+                            />
                         </div>
 
                         <div>
@@ -94,9 +82,7 @@ class App extends Component<IProps, IState> {
                     </div>
                 </div>
 
-                <SessionList sessions={[
-                    { name: "EnderMaster9274" }
-                ]} />
+                <SessionList sessions={Object.values(sessions)} />
             </div>
         );
     }
