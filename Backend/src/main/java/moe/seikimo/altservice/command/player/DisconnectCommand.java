@@ -20,8 +20,16 @@ public final class DisconnectCommand extends Command {
             return;
         }
 
-        // Check if the username is valid.
         var username = args.get(0);
+
+        // Check if all players are being targetted.
+        if (username.equals("all")) {
+            PlayerManager.getPlayers()
+                    .forEach(PlayerManager::destroyPlayer);
+            return;
+        }
+
+        // Check if the username is valid.
         if (!PlayerManager.isPlayerOnline(username)) {
             this.sendMessage("That player is not online.");
             return;
