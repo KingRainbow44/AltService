@@ -349,19 +349,16 @@ import java.util.UUID;
     public void ride(ServerEntity target) {
         if (this.getSession() == null) return;
 
-        // Prepare the passenger packet.
-        var linkData = new EntityLinkData(
-                this.getEntityId(), target.getRuntimeId(),
-                EntityLinkData.Type.RIDER, true, true
-        );
-        var packet = new SetEntityLinkPacket();
-        packet.setEntityLink(linkData);
+        // Prepare the interact packet.
+        var interactPacket = new InteractPacket();
+        interactPacket.setRuntimeEntityId(target.getRuntimeId());
+        interactPacket.setAction(InteractPacket.Action.INTERACT);
+        interactPacket.setMousePosition(Vector3f.ZERO);
 
         // Set the riding entity.
         this.setRiding(target);
-
         // Send the packet.
-        this.sendPacket(packet);
+        this.sendPacket(interactPacket);
     }
 
     /**
@@ -371,16 +368,16 @@ import java.util.UUID;
         if (this.getSession() == null) return;
         if (this.getRiding() == null) return;
 
-        // Prepare the passenger packet.
-        var linkData = new EntityLinkData(
-                this.getEntityId(), this.getRiding().getRuntimeId(),
-                EntityLinkData.Type.REMOVE, true, true
-        );
-        var packet = new SetEntityLinkPacket();
-        packet.setEntityLink(linkData);
+        // Prepare the interact packet.
+        var interactPacket = new InteractPacket();
+        interactPacket.setRuntimeEntityId(this.getRiding().getRuntimeId());
+        interactPacket.setAction(InteractPacket.Action.LEAVE_VEHICLE);
+        interactPacket.setMousePosition(Vector3f.ZERO);
 
+        // Remove the riding entity.
+        this.setRiding(null);
         // Send the packet.
-        this.sendPacket(packet);
+        this.sendPacket(interactPacket);
     }
 
     /**

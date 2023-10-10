@@ -36,8 +36,7 @@ public class AbstractPacketHandler implements BedrockPacketHandler {
         if (Configuration.get().isDebug()) {
             var name = packet.getClass().getSimpleName();
             if (!Configuration.get().getIgnoredDebugPackets().contains(name)) {
-                this.getLogger().info(">>> Received packet: " + name);
-                // this.getLogger().debug("Packet data for " + name + ": " + packet);
+                this.getSession().logPacket(packet);
             }
         }
     }

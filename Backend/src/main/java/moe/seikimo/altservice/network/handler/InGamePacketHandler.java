@@ -368,6 +368,10 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
             case REMOVE -> {
                 targetEntity.setRiding(null);
                 otherEntity.getPassengers().remove(targetEntity);
+
+                if (targetEntity.isRelated(this.getPlayer().getTarget())) {
+                    this.getPlayer().dismount();
+                }
             }
             case RIDER -> {
                 targetEntity.setRiding(otherEntity);

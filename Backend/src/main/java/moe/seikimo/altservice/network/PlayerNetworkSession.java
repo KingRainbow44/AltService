@@ -25,6 +25,9 @@ import org.cloudburstmc.protocol.bedrock.packet.RequestNetworkSettingsPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Data
 public final class PlayerNetworkSession {
     private final Player player;
@@ -36,6 +39,7 @@ public final class PlayerNetworkSession {
     private ConnectionDetails server = null;
     private BedrockClientSession client = null;
     private Authentication authenticator = null;
+    private Map<String, Integer> packets = new ConcurrentHashMap<>();
 
     public PlayerNetworkSession(Player player) {
         this.player = player;
@@ -213,6 +217,27 @@ public final class PlayerNetworkSession {
             this.client.sendPacketImmediately(packet);
         else
             this.client.sendPacket(packet);
+    }
+
+    /**
+     * Logs a packet to the console.
+     *
+     * @param packet The packet to log.
+     */
+    public void logPacket(BedrockPacket packet) {
+        var packetName = packet.getClass().getSimpleName();
+        var packetHash = packet.hashCode();
+
+        this.getPackets().compute(packetName, (k, v) -> {
+            if (v == null || v != packetHash) {
+                this.getLogger().debug("Packet received: {} > {}.",
+                        packet.getClass().getSimpleName(),
+                        packet);
+                v = packetHash;
+            }
+
+            return v;
+        });
     }
 
     /**
