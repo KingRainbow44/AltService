@@ -10,7 +10,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>Backend</module>
-        <module>Plugin</module>
     </modules>
 
     <properties>
