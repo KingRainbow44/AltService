@@ -84,7 +84,7 @@ import java.util.concurrent.ConcurrentHashMap;
         // Fetch the event bindings.
         var events = ScriptLoader.getSerializer()
                 .toList(bindings.get("events"), ScriptEvent.class);
-        if (events.size() < 1) return;
+        if (events.isEmpty()) return;
 
         // Register the events.
         for (var event : events) {
