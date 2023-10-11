@@ -1,0 +1,40 @@
+.Inventory {
+    @apply flex flex-row justify-between p-[10px];
+
+    width: 595px;
+    height: 300px;
+
+    border-radius: 10px;
+    background: var(--distinct-color);
+}
+
+.Inventory_Slot {
+    @apply flex items-center justify-center select-none;
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 5px;
+    background: var(--accent-color);
+
+    img {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+.Inventory_Equipment {
+    @apply flex flex-col gap-[5px];
+}
+
+.Inventory_General {
+    @apply flex flex-col justify-between;
+}
+
+.Inventory_Items {
+    @apply grid grid-cols-9 gap-[5px];
+}
+
+.Inventory_Hotbar {
+    @apply flex flex-row gap-[5px];
+}
