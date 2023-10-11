@@ -33,7 +33,24 @@ class App extends Component<IProps, IState> {
             <div className={"App"}>
                 <h1 className={"App_Title"}>Alt Service</h1>
 
-                <Inventory inventory={testInventory} />
+                <div className={"App_Panel"}>
+                    <div className={"App_Row"}>
+                        <div className={"App_Inventory"}>
+                            <Inventory inventory={testInventory} />
+                            <p>Inventory</p>
+                        </div>
+                    </div>
+
+                    <div className={"App_Row"}>
+                        <div className={"App_Statistics"}>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div className={"App_Sessions"}>
+
+                </div>
             </div>
         );
     }

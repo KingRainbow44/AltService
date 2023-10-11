@@ -61,7 +61,7 @@ h3 {
 }
 
 .App {
-  @apply flex flex-col w-full h-full p-[28px];
+  @apply flex flex-row w-full h-full p-[28px];
 
   background-color: var(--bg-primary);
 }
@@ -74,4 +74,22 @@ h3 {
 
     font-size: 7.5vw;
     font-family: Minecraftia, Poppins, sans-serif;
+}
+
+.App_Panel {
+    @apply flex flex-col justify-between;
+}
+
+.App_Row {
+    @apply flex flex-row;
+}
+
+.App_Inventory {
+    p {
+        @apply flex flex-col ml-[10px] mt-[10px];
+
+        line-height: 85px;
+        font-size: 48px;
+        font-family: Minecraftia, Poppins, sans-serif;
+    }
 }
