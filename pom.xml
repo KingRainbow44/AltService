@@ -61,6 +61,21 @@
             <version>5.10.0</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- Server communication. -->
+        <dependency>
+            <groupId>org.java-websocket</groupId>
+            <artifactId>Java-WebSocket</artifactId>
+            <version>1.5.4</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.23.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <repositories>

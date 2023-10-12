@@ -9,7 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "preact": "^10.16.0"
+    "preact": "^10.16.0",
+    "@protobuf-ts/runtime": "^2.9.1"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",

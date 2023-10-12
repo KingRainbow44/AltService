@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option java_package = "moe.seikimo.altservice.proto";
+option java_outer_classname = "Frontend";
+option java_generate_equals_and_hash = true;
+
+import "Structures.proto";
+
+enum FrontendIds {
+  _FrontendJoinCsReq = 0;
+  _FrontendJoinScRsp = 1;
+  _GetAllSessionsCsReq = 2;
+  _GetAllSessionsScRsp = 3;
+  _UpdateSessionsScNotify = 4;
+  _SessionActionCsNotify = 5;
+  _ChatMessageNotify = 6;
+}
+
+enum Action {
+  Reconnect = 0;
+  Disconnect = 1;
+  Move = 2;
+  Target = 3;
+}
+
+message GetAllSessionsScRsp {
+  repeated Player sessions = 1;
+}
+
+message UpdateSessionsScNotify {
+  repeated Player sessions = 1;
+}
+
+// This should be directly forwarded to the target server.
+message SessionActionCsNotify {
+  string session_id = 1;
+  Action action = 2;
+  oneof data {
+    MoveAction move = 3;
+    TargetAction target = 4;
+  }
+}
+
+message MoveAction {
+  Vector3 position = 1;
+  Vector2 direction = 2;
+}
+
+message TargetAction {
+  string new_target = 1;
+  bool guard = 2;
+  bool follow = 3;
+}
+
+// This is bi-directional.
+message ChatMessageNotify {
+  string message = 1; // This is the raw message to render. Should include color code.
+}

@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+option java_package = "moe.seikimo.altservice.proto";
+option java_outer_classname = "Structures";
+option java_generate_equals_and_hash = true;
+
+message Packet {
+  uint32 id = 1;
+  bytes data = 2;
+}
+
+message World {
+  repeated Player players = 1;
+  repeated Chunk chunks = 2;
+}
+
+message Player {
+  string id = 1;
+  string name = 2;
+  Vector3 position = 3;
+  Vector2 rotation = 4;
+  Attributes attributes = 5;
+  Inventory inventory = 6;
+}
+
+message Vector2 {
+  float x = 1;
+  float y = 2;
+}
+
+message Vector3 {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+message Attributes {
+  uint32 health = 1;
+  uint32 hunger = 2;
+  uint32 armor = 3;
+  uint32 xp_level = 4;
+  uint32 xp_progress = 5;
+}
+
+message Item {
+  string item_id = 1;
+  uint32 quantity = 2;
+  uint32 durability = 3;
+}
+
+message Inventory {
+  repeated Item items = 1;
+  repeated Item hotbar = 2;
+  Item helmet = 3;
+  Item chestplate = 4;
+  Item leggings = 5;
+  Item boots = 6;
+}
+
+message Block {
+  int32 x = 1;
+  int32 y = 2;
+  int32 z = 3;
+  string block_id = 4;
+}
+
+message Chunk {
+  int32 x = 1;
+  int32 z = 2;
+  repeated Block blocks = 3;
+}

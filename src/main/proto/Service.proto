@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option java_package = "moe.seikimo.altservice.proto";
+option java_outer_classname = "Service";
+option java_generate_equals_and_hash = true;
+
+import "Structures.proto";
+
+enum ServiceIds {
+  _ServiceJoinCsReq = 0;
+  _ServiceJoinScRsp = 1;
+  _GetAllSessionsScReq = 2;
+  _GetAllSessionsCsRsp = 3;
+  _CreateSessionCsNotify = 4;
+  _DeleteSessionCsNotify = 5;
+  _UpdateSessionsCsNotify = 6;
+}
+
+message ClientJoinCsReq {
+  string server_address = 1;
+  uint32 server_port = 2;
+}
+
+message GetAllSessionsCsRsp {
+  repeated Player sessions = 1;
+}
+
+// This should be relayed to all connected clients.
+message CreateSessionCsNotify {
+  Player session = 1;
+}
+
+// This should be relayed to all connected clients.
+message DeleteSessionCsNotify {
+  string id = 1;
+}
+
+// This should be relayed to all connected clients.
+message UpdateSessionsCsNotify {
+  repeated Player sessions = 1;
+}
