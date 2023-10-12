@@ -84,12 +84,18 @@ h3 {
     @apply flex flex-row;
 }
 
-.App_Inventory {
-    p {
-        @apply flex flex-col ml-[10px] mt-[10px];
+.App_Header {
+    @apply flex flex-col;
 
-        line-height: 85px;
-        font-size: 48px;
-        font-family: Minecraftia, Poppins, sans-serif;
-    }
+    line-height: 85px;
+    font-size: 48px;
+    font-family: Minecraftia, Poppins, sans-serif;
+}
+
+.App_Inventory {
+    @apply ml-[10px] mt-[10px];
+}
+
+.App_Statistics {
+    @apply ml-[10px] mt-[10px];
 }

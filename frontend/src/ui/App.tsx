@@ -2,6 +2,7 @@ import { Component } from "preact";
 
 import "@css/App.scss";
 import Inventory from "@ui/widgets/Inventory.tsx";
+import Statistics from "@ui/widgets/Statistics.tsx";
 
 interface IProps {
 
@@ -21,6 +22,18 @@ const testInventory = {
     shield: {},
 };
 
+const testPosition = {
+    x: 0, y: 0, z: 0,
+};
+
+const testStatistics = {
+    health: 11,
+    armor: 5,
+    hunger: 9,
+    xpLevel: 5,
+    xpProgress: 101
+};
+
 class App extends Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -35,15 +48,16 @@ class App extends Component<IProps, IState> {
 
                 <div className={"App_Panel"}>
                     <div className={"App_Row"}>
-                        <div className={"App_Inventory"}>
+                        <div>
                             <Inventory inventory={testInventory} />
-                            <p>Inventory</p>
+                            <p class={"App_Header App_Inventory"}>Inventory</p>
                         </div>
                     </div>
 
                     <div className={"App_Row"}>
-                        <div className={"App_Statistics"}>
-
+                        <div>
+                            <p className={"App_Header App_Statistics"}>Statistics</p>
+                            <Statistics position={testPosition} statistics={testStatistics} />
                         </div>
                     </div>
                 </div>

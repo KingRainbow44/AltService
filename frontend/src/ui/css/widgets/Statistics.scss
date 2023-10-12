@@ -1,0 +1,63 @@
+.Statistics {
+    @apply flex flex-col justify-between p-[10px];
+
+    width: 420px;
+    height: 155px;
+
+    border-radius: 10px;
+    background: var(--distinct-color);
+}
+
+.Statistics_Position {
+    @apply text-center;
+
+    line-height: 52px;
+    font-size: 24px;
+    font-family: Minecraftia, Poppins, sans-serif;
+}
+
+.Statistics_Container {
+    @apply flex flex-row h-[18px];
+}
+
+.Statistics_LayeredContainer {
+    :nth-child(2) {
+        // We need to overlay the second heart container on top of the first one.
+        // This is because the second heart container is the one that is filled up.
+        @apply relative top-[-18px];
+    }
+}
+
+.Statistics_Player {
+    @apply flex flex-row justify-between items-end;
+}
+
+.Statistics_Experience {
+    width: 100%;
+    height: 14px;
+}
+
+.Statistics_Levels {
+    @apply relative;
+
+    height: 0;
+    width: auto;
+
+    left: 50%;
+    bottom: 10px;
+
+    color: #7EFC20;
+    font-size: 18px;
+
+    font-family: Minecraftia, Poppins, sans-serif;
+}
+
+.Statistics_ExperienceBar {
+    width: 400px;
+    height: 10.96px;
+
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/resources/gui/sprites/hud/experience_bar_background.png");
+}
