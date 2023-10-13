@@ -1,5 +1,6 @@
 package moe.seikimo.altservice;
 
+import com.google.protobuf.GeneratedMessageV3;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import lombok.Getter;
@@ -9,15 +10,22 @@ import moe.seikimo.altservice.command.player.RequestCommand;
 import moe.seikimo.altservice.command.util.ReloadCommand;
 import moe.seikimo.altservice.command.util.RunScriptCommand;
 import moe.seikimo.altservice.command.util.StopCommand;
+import moe.seikimo.altservice.handlers.PacketHandler;
 import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.player.PlayerTickThread;
 import moe.seikimo.altservice.player.command.PlayerCommandMap;
 import moe.seikimo.altservice.player.command.action.*;
 import moe.seikimo.altservice.player.command.util.*;
+import moe.seikimo.altservice.proto.Service.ServiceIds;
+import moe.seikimo.altservice.proto.Service.ServiceJoinCsReq;
+import moe.seikimo.altservice.proto.Structures.Packet;
 import moe.seikimo.altservice.script.ScriptLoader;
+import moe.seikimo.altservice.utils.BinaryUtils;
 import moe.seikimo.altservice.utils.LoggerUtils;
 import moe.seikimo.altservice.utils.objects.ThreadFactoryBuilder;
 import moe.seikimo.altservice.utils.objects.absolute.GameConstants;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
@@ -29,14 +37,16 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOError;
 import java.io.InputStream;
+import java.net.URI;
 
-public final class AltBackend {
+public final class AltBackend extends WebSocketClient {
     @Getter private static final Logger logger
             = LoggerFactory.getLogger("Alt Backend");
     @Getter private static final EventLoopGroup eventGroup
             = new NioEventLoopGroup(0, ThreadFactoryBuilder.base());
 
     @Getter private static String configFile = "config.json";
+    @Getter private static AltBackend instance;
     private static LineReader lineReader = null;
 
     static {
@@ -110,6 +120,10 @@ public final class AltBackend {
 
         // Initialize the script loader.
         ScriptLoader.initialize();
+
+        // Create & start the backend.
+        AltBackend.instance = new AltBackend();
+        AltBackend.instance.connect();
 
         AltBackend.getLogger().info("Done! Alt Backend started.");
     }
@@ -185,6 +199,9 @@ public final class AltBackend {
         return Configuration.get().debug;
     }
 
+    /**
+     * Registers all commands, for players and the console.
+     */
     private static void registerCommands() {
         // Service Commands
         consoleCommands.addCommand(new RequestCommand());
@@ -207,5 +224,94 @@ public final class AltBackend {
         playerCommands.addCommand(new GuardCommand());
         playerCommands.addCommand(new BehaviorCommand());
         playerCommands.addCommand(new DropCommand());
+    }
+
+    @Getter private final PacketHandler packetHandler = new PacketHandler();
+
+    private AltBackend() {
+        super(URI.create("ws://" + Configuration.get().backend.pair()));
+
+        // Register all packet handlers.
+        this.getPacketHandler().register(
+                ServiceIds._ServiceJoinScRsp,
+                (packet) -> AltBackend.getLogger().info("Backend accepted connection."),
+                null
+        );
+    }
+
+    /**
+     * Sends a packet to the backend.
+     *
+     * @param packetId The packet ID.
+     * @param packet The packet to send.
+     */
+    public void send(ServiceIds packetId, GeneratedMessageV3.Builder<?> packet) {
+        // Build the packet.
+        var builder = Packet.newBuilder()
+                .setId(packetId.getNumber());
+        if (packet != null)
+            builder.setData(packet.build().toByteString());
+
+        this.send(builder.build());
+    }
+
+    /**
+     * Sends a packet to the backend.
+     *
+     * @param packet The packet to send.
+     */
+    public void send(Packet packet) {
+        this.send(BinaryUtils.base64Encode(packet.toByteArray()));
+    }
+
+    @Override
+    public void onOpen(ServerHandshake handshake) {
+        AltBackend.getLogger().info("Established a connection to the backend.");
+
+        var server = Configuration.get().getServer();
+        this.send(
+                ServiceIds._ServiceJoinCsReq,
+                ServiceJoinCsReq.newBuilder()
+                        .setServerAddress(server.getAddress())
+                        .setServerPort(server.getPort())
+        );
+    }
+
+    @Override
+    public void onMessage(String data) {
+        var bytes = BinaryUtils.base64Decode(data);
+        var packet = BinaryUtils.decodeFromProto(bytes, Packet.class);
+        if (packet == null) {
+            AltBackend.getLogger().warn("Received invalid packet from backend.");
+            return;
+        }
+
+        // Handle the packet.
+        var packetId = packet.getId();
+        var packetData = packet.getData().toByteArray();
+
+        try {
+            this.getPacketHandler().invokeHandler(packetId, packetData);
+        } catch (Exception ignored) {
+            AltBackend.getLogger().warn("Received invalid packet from backend.");
+        }
+    }
+
+    @Override
+    public void onClose(int code, String msg, boolean clean) {
+        AltBackend.getLogger().info("Disconnected from backend.");
+
+        // Wait 5s before reconnecting.
+        try {
+            Thread.sleep(5000);
+            this.reconnect();
+        } catch (InterruptedException ignored) {
+            AltBackend.getLogger().warn("Unable to reconnect.");
+        }
+    }
+
+    @Override
+    public void onError(Exception exception) {
+        AltBackend.getLogger().error("An error occurred in connection to the backend.", exception);
     }
 }

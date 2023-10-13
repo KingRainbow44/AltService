@@ -61,6 +61,7 @@ public final class Configuration {
 
     public boolean respondToCommands = true;
     public Server server = new Server();
+    public Server backend = new Server();
     public boolean debug = false;
     public List<String> ignoredDebugPackets = List.of();
 
@@ -68,5 +69,12 @@ public final class Configuration {
     public static class Server {
         public String address = "127.0.0.1";
         public int port = 19132;
+
+        /**
+         * @return The server address and port as a pair.
+         */
+        public String pair() {
+            return this.address + ":" + this.port;
+        }
     }
 }
