@@ -14,9 +14,10 @@ enum ServiceIds {
   _CreateSessionCsNotify = 4;
   _DeleteSessionCsNotify = 5;
   _UpdateSessionsCsNotify = 6;
+  _RequestSessionScNotify = 7;
 }
 
-message ClientJoinCsReq {
+message ServiceJoinCsReq {
   string server_address = 1;
   uint32 server_port = 2;
 }
@@ -38,4 +39,9 @@ message DeleteSessionCsNotify {
 // This should be relayed to all connected clients.
 message UpdateSessionsCsNotify {
   repeated Player sessions = 1;
+}
+
+message RequestSessionScNotify {
+  string username = 1;
+  int64 lifetime = 2;
 }

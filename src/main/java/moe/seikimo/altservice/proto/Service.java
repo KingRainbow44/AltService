@@ -167,8 +167,8 @@ public final class Service {
     // @@protoc_insertion_point(enum_scope:ServiceIds)
   }
 
-  public interface ClientJoinCsReqOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:ClientJoinCsReq)
+  public interface ServiceJoinCsReqOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ServiceJoinCsReq)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -190,18 +190,18 @@ public final class Service {
     int getServerPort();
   }
   /**
-   * Protobuf type {@code ClientJoinCsReq}
+   * Protobuf type {@code ServiceJoinCsReq}
    */
-  public static final class ClientJoinCsReq extends
+  public static final class ServiceJoinCsReq extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:ClientJoinCsReq)
-      ClientJoinCsReqOrBuilder {
+      // @@protoc_insertion_point(message_implements:ServiceJoinCsReq)
+      ServiceJoinCsReqOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use ClientJoinCsReq.newBuilder() to construct.
-    private ClientJoinCsReq(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use ServiceJoinCsReq.newBuilder() to construct.
+    private ServiceJoinCsReq(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private ClientJoinCsReq() {
+    private ServiceJoinCsReq() {
       serverAddress_ = "";
     }
 
@@ -209,20 +209,20 @@ public final class Service {
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
         UnusedPrivateParameter unused) {
-      return new ClientJoinCsReq();
+      return new ServiceJoinCsReq();
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return moe.seikimo.altservice.proto.Service.internal_static_ClientJoinCsReq_descriptor;
+      return moe.seikimo.altservice.proto.Service.internal_static_ServiceJoinCsReq_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return moe.seikimo.altservice.proto.Service.internal_static_ClientJoinCsReq_fieldAccessorTable
+      return moe.seikimo.altservice.proto.Service.internal_static_ServiceJoinCsReq_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              moe.seikimo.altservice.proto.Service.ClientJoinCsReq.class, moe.seikimo.altservice.proto.Service.ClientJoinCsReq.Builder.class);
+              moe.seikimo.altservice.proto.Service.ServiceJoinCsReq.class, moe.seikimo.altservice.proto.Service.ServiceJoinCsReq.Builder.class);
     }
 
     public static final int SERVER_ADDRESS_FIELD_NUMBER = 1;
@@ -321,10 +321,10 @@ public final class Service {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof moe.seikimo.altservice.proto.Service.ClientJoinCsReq)) {
+      if (!(obj instanceof moe.seikimo.altservice.proto.Service.ServiceJoinCsReq)) {
         return super.equals(obj);
       }
-      moe.seikimo.altservice.proto.Service.ClientJoinCsReq other = (moe.seikimo.altservice.proto.Service.ClientJoinCsReq) obj;
+      moe.seikimo.altservice.proto.Service.ServiceJoinCsReq other = (moe.seikimo.altservice.proto.Service.ServiceJoinCsReq) obj;
 
       if (!getServerAddress()
           .equals(other.getServerAddress())) return false;
@@ -350,44 +350,44 @@ public final class Service {
       return hash;
     }
 
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseFrom(
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseFrom(
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseFrom(
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseFrom(
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseFrom(byte[] data)
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseFrom(
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseFrom(java.io.InputStream input)
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseFrom(
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -395,26 +395,26 @@ public final class Service {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseDelimitedFrom(java.io.InputStream input)
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseDelimitedFrom(
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseFrom(
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq parseFrom(
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -427,7 +427,7 @@ public final class Service {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(moe.seikimo.altservice.proto.Service.ClientJoinCsReq prototype) {
+    public static Builder newBuilder(moe.seikimo.altservice.proto.Service.ServiceJoinCsReq prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -443,26 +443,26 @@ public final class Service {
       return builder;
     }
     /**
-     * Protobuf type {@code ClientJoinCsReq}
+     * Protobuf type {@code ServiceJoinCsReq}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:ClientJoinCsReq)
-        moe.seikimo.altservice.proto.Service.ClientJoinCsReqOrBuilder {
+        // @@protoc_insertion_point(builder_implements:ServiceJoinCsReq)
+        moe.seikimo.altservice.proto.Service.ServiceJoinCsReqOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return moe.seikimo.altservice.proto.Service.internal_static_ClientJoinCsReq_descriptor;
+        return moe.seikimo.altservice.proto.Service.internal_static_ServiceJoinCsReq_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return moe.seikimo.altservice.proto.Service.internal_static_ClientJoinCsReq_fieldAccessorTable
+        return moe.seikimo.altservice.proto.Service.internal_static_ServiceJoinCsReq_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                moe.seikimo.altservice.proto.Service.ClientJoinCsReq.class, moe.seikimo.altservice.proto.Service.ClientJoinCsReq.Builder.class);
+                moe.seikimo.altservice.proto.Service.ServiceJoinCsReq.class, moe.seikimo.altservice.proto.Service.ServiceJoinCsReq.Builder.class);
       }
 
-      // Construct using moe.seikimo.altservice.proto.Service.ClientJoinCsReq.newBuilder()
+      // Construct using moe.seikimo.altservice.proto.Service.ServiceJoinCsReq.newBuilder()
       private Builder() {
 
       }
@@ -484,17 +484,17 @@ public final class Service {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return moe.seikimo.altservice.proto.Service.internal_static_ClientJoinCsReq_descriptor;
+        return moe.seikimo.altservice.proto.Service.internal_static_ServiceJoinCsReq_descriptor;
       }
 
       @java.lang.Override
-      public moe.seikimo.altservice.proto.Service.ClientJoinCsReq getDefaultInstanceForType() {
-        return moe.seikimo.altservice.proto.Service.ClientJoinCsReq.getDefaultInstance();
+      public moe.seikimo.altservice.proto.Service.ServiceJoinCsReq getDefaultInstanceForType() {
+        return moe.seikimo.altservice.proto.Service.ServiceJoinCsReq.getDefaultInstance();
       }
 
       @java.lang.Override
-      public moe.seikimo.altservice.proto.Service.ClientJoinCsReq build() {
-        moe.seikimo.altservice.proto.Service.ClientJoinCsReq result = buildPartial();
+      public moe.seikimo.altservice.proto.Service.ServiceJoinCsReq build() {
+        moe.seikimo.altservice.proto.Service.ServiceJoinCsReq result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -502,14 +502,14 @@ public final class Service {
       }
 
       @java.lang.Override
-      public moe.seikimo.altservice.proto.Service.ClientJoinCsReq buildPartial() {
-        moe.seikimo.altservice.proto.Service.ClientJoinCsReq result = new moe.seikimo.altservice.proto.Service.ClientJoinCsReq(this);
+      public moe.seikimo.altservice.proto.Service.ServiceJoinCsReq buildPartial() {
+        moe.seikimo.altservice.proto.Service.ServiceJoinCsReq result = new moe.seikimo.altservice.proto.Service.ServiceJoinCsReq(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(moe.seikimo.altservice.proto.Service.ClientJoinCsReq result) {
+      private void buildPartial0(moe.seikimo.altservice.proto.Service.ServiceJoinCsReq result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.serverAddress_ = serverAddress_;
@@ -553,16 +553,16 @@ public final class Service {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof moe.seikimo.altservice.proto.Service.ClientJoinCsReq) {
-          return mergeFrom((moe.seikimo.altservice.proto.Service.ClientJoinCsReq)other);
+        if (other instanceof moe.seikimo.altservice.proto.Service.ServiceJoinCsReq) {
+          return mergeFrom((moe.seikimo.altservice.proto.Service.ServiceJoinCsReq)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(moe.seikimo.altservice.proto.Service.ClientJoinCsReq other) {
-        if (other == moe.seikimo.altservice.proto.Service.ClientJoinCsReq.getDefaultInstance()) return this;
+      public Builder mergeFrom(moe.seikimo.altservice.proto.Service.ServiceJoinCsReq other) {
+        if (other == moe.seikimo.altservice.proto.Service.ServiceJoinCsReq.getDefaultInstance()) return this;
         if (!other.getServerAddress().isEmpty()) {
           serverAddress_ = other.serverAddress_;
           bitField0_ |= 0x00000001;
@@ -740,23 +740,23 @@ public final class Service {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:ClientJoinCsReq)
+      // @@protoc_insertion_point(builder_scope:ServiceJoinCsReq)
     }
 
-    // @@protoc_insertion_point(class_scope:ClientJoinCsReq)
-    private static final moe.seikimo.altservice.proto.Service.ClientJoinCsReq DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:ServiceJoinCsReq)
+    private static final moe.seikimo.altservice.proto.Service.ServiceJoinCsReq DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new moe.seikimo.altservice.proto.Service.ClientJoinCsReq();
+      DEFAULT_INSTANCE = new moe.seikimo.altservice.proto.Service.ServiceJoinCsReq();
     }
 
-    public static moe.seikimo.altservice.proto.Service.ClientJoinCsReq getDefaultInstance() {
+    public static moe.seikimo.altservice.proto.Service.ServiceJoinCsReq getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ClientJoinCsReq>
-        PARSER = new com.google.protobuf.AbstractParser<ClientJoinCsReq>() {
+    private static final com.google.protobuf.Parser<ServiceJoinCsReq>
+        PARSER = new com.google.protobuf.AbstractParser<ServiceJoinCsReq>() {
       @java.lang.Override
-      public ClientJoinCsReq parsePartialFrom(
+      public ServiceJoinCsReq parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
@@ -775,17 +775,17 @@ public final class Service {
       }
     };
 
-    public static com.google.protobuf.Parser<ClientJoinCsReq> parser() {
+    public static com.google.protobuf.Parser<ServiceJoinCsReq> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<ClientJoinCsReq> getParserForType() {
+    public com.google.protobuf.Parser<ServiceJoinCsReq> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public moe.seikimo.altservice.proto.Service.ClientJoinCsReq getDefaultInstanceForType() {
+    public moe.seikimo.altservice.proto.Service.ServiceJoinCsReq getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -3544,10 +3544,10 @@ public final class Service {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ClientJoinCsReq_descriptor;
+    internal_static_ServiceJoinCsReq_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ClientJoinCsReq_fieldAccessorTable;
+      internal_static_ServiceJoinCsReq_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_GetAllSessionsCsRsp_descriptor;
   private static final 
@@ -3577,31 +3577,31 @@ public final class Service {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rService.proto\032\020Structures.proto\">\n\017Cli" +
-      "entJoinCsReq\022\026\n\016server_address\030\001 \001(\t\022\023\n\013" +
-      "server_port\030\002 \001(\r\"0\n\023GetAllSessionsCsRsp" +
-      "\022\031\n\010sessions\030\001 \003(\0132\007.Player\"1\n\025CreateSes" +
-      "sionCsNotify\022\030\n\007session\030\001 \001(\0132\007.Player\"#" +
-      "\n\025DeleteSessionCsNotify\022\n\n\002id\030\001 \001(\t\"3\n\026U" +
-      "pdateSessionsCsNotify\022\031\n\010sessions\030\001 \003(\0132" +
-      "\007.Player*\303\001\n\nServiceIds\022\025\n\021_ServiceJoinC" +
-      "sReq\020\000\022\025\n\021_ServiceJoinScRsp\020\001\022\030\n\024_GetAll" +
-      "SessionsScReq\020\002\022\030\n\024_GetAllSessionsCsRsp\020" +
-      "\003\022\032\n\026_CreateSessionCsNotify\020\004\022\032\n\026_Delete" +
-      "SessionCsNotify\020\005\022\033\n\027_UpdateSessionsCsNo" +
-      "tify\020\006B*\n\034moe.seikimo.altservice.protoB\007" +
-      "Service\240\001\001b\006proto3"
+      "\n\rService.proto\032\020Structures.proto\"?\n\020Ser" +
+      "viceJoinCsReq\022\026\n\016server_address\030\001 \001(\t\022\023\n" +
+      "\013server_port\030\002 \001(\r\"0\n\023GetAllSessionsCsRs" +
+      "p\022\031\n\010sessions\030\001 \003(\0132\007.Player\"1\n\025CreateSe" +
+      "ssionCsNotify\022\030\n\007session\030\001 \001(\0132\007.Player\"" +
+      "#\n\025DeleteSessionCsNotify\022\n\n\002id\030\001 \001(\t\"3\n\026" +
+      "UpdateSessionsCsNotify\022\031\n\010sessions\030\001 \003(\013" +
+      "2\007.Player*\303\001\n\nServiceIds\022\025\n\021_ServiceJoin" +
+      "CsReq\020\000\022\025\n\021_ServiceJoinScRsp\020\001\022\030\n\024_GetAl" +
+      "lSessionsScReq\020\002\022\030\n\024_GetAllSessionsCsRsp" +
+      "\020\003\022\032\n\026_CreateSessionCsNotify\020\004\022\032\n\026_Delet" +
+      "eSessionCsNotify\020\005\022\033\n\027_UpdateSessionsCsN" +
+      "otify\020\006B*\n\034moe.seikimo.altservice.protoB" +
+      "\007Service\240\001\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           moe.seikimo.altservice.proto.Structures.getDescriptor(),
         });
-    internal_static_ClientJoinCsReq_descriptor =
+    internal_static_ServiceJoinCsReq_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_ClientJoinCsReq_fieldAccessorTable = new
+    internal_static_ServiceJoinCsReq_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ClientJoinCsReq_descriptor,
+        internal_static_ServiceJoinCsReq_descriptor,
         new java.lang.String[] { "ServerAddress", "ServerPort", });
     internal_static_GetAllSessionsCsRsp_descriptor =
       getDescriptor().getMessageTypes().get(1);
