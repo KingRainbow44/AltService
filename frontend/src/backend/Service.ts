@@ -13,9 +13,9 @@ import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { Player } from "./Structures";
 /**
- * @generated from protobuf message ClientJoinCsReq
+ * @generated from protobuf message ServiceJoinCsReq
  */
-export interface ClientJoinCsReq {
+export interface ServiceJoinCsReq {
     /**
      * @generated from protobuf field: string server_address = 1;
      */
@@ -101,21 +101,21 @@ export enum ServiceIds {
     _UpdateSessionsCsNotify = 6
 }
 // @generated message type with reflection information, may provide speed optimized methods
-class ClientJoinCsReq$Type extends MessageType<ClientJoinCsReq> {
+class ServiceJoinCsReq$Type extends MessageType<ServiceJoinCsReq> {
     constructor() {
-        super("ClientJoinCsReq", [
+        super("ServiceJoinCsReq", [
             { no: 1, name: "server_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "server_port", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
         ]);
     }
-    create(value?: PartialMessage<ClientJoinCsReq>): ClientJoinCsReq {
+    create(value?: PartialMessage<ServiceJoinCsReq>): ServiceJoinCsReq {
         const message = { serverAddress: "", serverPort: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<ClientJoinCsReq>(this, message, value);
+            reflectionMergePartial<ServiceJoinCsReq>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ClientJoinCsReq): ClientJoinCsReq {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ServiceJoinCsReq): ServiceJoinCsReq {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -137,7 +137,7 @@ class ClientJoinCsReq$Type extends MessageType<ClientJoinCsReq> {
         }
         return message;
     }
-    internalBinaryWrite(message: ClientJoinCsReq, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ServiceJoinCsReq, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string server_address = 1; */
         if (message.serverAddress !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.serverAddress);
@@ -151,9 +151,9 @@ class ClientJoinCsReq$Type extends MessageType<ClientJoinCsReq> {
     }
 }
 /**
- * @generated MessageType for protobuf message ClientJoinCsReq
+ * @generated MessageType for protobuf message ServiceJoinCsReq
  */
-export const ClientJoinCsReq = new ClientJoinCsReq$Type();
+export const ServiceJoinCsReq = new ServiceJoinCsReq$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetAllSessionsCsRsp$Type extends MessageType<GetAllSessionsCsRsp> {
     constructor() {
