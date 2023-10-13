@@ -40,6 +40,13 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.jcommander</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.83</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Console reader. -->
         <dependency>
             <groupId>org.jline</groupId>
