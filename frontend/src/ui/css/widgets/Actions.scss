@@ -1,0 +1,46 @@
+.Actions {
+    @apply flex flex-row p-4 gap-[5px];
+
+    width: 492px;
+    height: 162px;
+
+    border-radius: 10px;
+    background: var(--distinct-color);
+
+    text-align: center;
+    font-weight: 600;
+    font-family: Poppins, sans-serif;
+}
+
+.Actions_Column {
+    @apply flex flex-col gap-[5px];
+}
+
+.Actions_Button {
+    @apply flex flex-col justify-center p-1;
+
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+
+    p {
+        @apply text-center;
+        font-size: 24px;
+    }
+}
+
+.Actions_Disconnect {
+    background: #ED1C24;
+}
+
+.Actions_Reconnect {
+    background: #22B14C;
+}
+
+.Actions_Move {
+    background: #3484FC;
+}
+
+.Actions_Target {
+    background: #98D2EB;
+}
