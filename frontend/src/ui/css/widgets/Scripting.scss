@@ -1,0 +1,58 @@
+.Scripting {
+    @apply flex flex-row items-center justify-between p-[10px] gap-[5px];
+
+    border-radius: 10px;
+    background: var(--distinct-color);
+
+    font-family: Poppins, sans-serif;
+}
+
+.Scripting_Title {
+    @apply underline;
+
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.Scripting_Section {
+    @apply flex flex-col justify-between gap-[5px];
+
+    width: 150px;
+}
+
+.Scripting_List {
+    padding: 5px;
+    border-radius: 5px;
+    background: #3A405A;
+}
+
+.Scripting_Actions {
+    @apply flex flex-col gap-[5px] mt-6;
+}
+
+.Scripting_Button {
+    @apply flex flex-col justify-center p-1;
+
+    width: 120px;
+    height: 30px;
+    border-radius: 5px;
+
+    p {
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
+
+.Scripting_Remove {
+    background: #ed1c24;
+}
+
+.Scripting_Add {
+    background: #22b14c;
+}
+
+.Scripting_Edit {
+    background: #3484fc;
+}
