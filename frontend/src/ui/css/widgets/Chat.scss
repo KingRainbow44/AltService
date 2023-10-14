@@ -1,33 +1,33 @@
 .Chat {
-  @apply flex flex-col p-[10px];
+    @apply flex flex-col p-[10px];
 
-  width: 676px;
-  height: 228px;
+    width: 676px;
+    height: 228px;
 
-  border-radius: 10px;
-  background: var(--distinct-color);
+    border-radius: 10px;
+    background: var(--distinct-color);
 
-  font-family: Minecraftia, Poppins, sans-serif;
+    font-family: Minecraftia, Poppins, sans-serif;
 
-  input {
-    @apply pl-2 pr-2 pt-2;
+    input {
+        @apply pl-2 pr-2 pt-2;
 
-    height: 35px;
+        height: 35px;
 
-    border: none;
-    outline: none;
-    color: var(--text-primary);
-    background: rgba(0, 0, 0, 0.50);
-  }
+        border: none;
+        outline: none;
+        color: var(--text-primary);
+        background: rgba(0, 0, 0, 0.50);
+    }
 }
 
 .Chat_Messages {
-  @apply flex flex-col gap-[5px] overflow-y-scroll;
+    @apply flex flex-col gap-[5px] overflow-y-scroll;
 
-  p {
-    @apply text-base m-0 p-0;
+    p {
+        @apply text-base m-0 p-0;
 
-    color: var(--text-primary);
-    font-family: Minecraftia, Poppins, sans-serif;
-  }
+        color: var(--text-primary);
+        font-family: Minecraftia, Poppins, sans-serif;
+    }
 }

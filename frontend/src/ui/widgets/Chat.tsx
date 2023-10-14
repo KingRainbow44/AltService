@@ -60,26 +60,26 @@ class Chat extends Component<IProps, IState> {
                 <div id={"messages"} class={"Chat_Messages"}>
                     {
                         this.state.messages.map((message, index) =>
-                          <p key={index}>{message}</p>
+                            <p key={index}>{message}</p>
                         )
                     }
                 </div>
 
                 <input
-                  type={"text"}
-                  autoCapitalize={"off"}
-                  autocorrect={"off"}
-                  autocomplete={"off"}
-                  placeholder={"Send a message..."}
-                  onKeyPress={(event) => {
-                      if (event.key == "Enter") {
-                          this.setState({
-                              messages: [...this.state.messages, "<KingRainbow44> " + event.currentTarget.value]
-                          });
+                    type={"text"}
+                    autoCapitalize={"off"}
+                    autocorrect={"off"}
+                    autocomplete={"off"}
+                    placeholder={"Send a message..."}
+                    onKeyPress={(event) => {
+                        if (event.key == "Enter") {
+                            this.setState({
+                                messages: [...this.state.messages, "<KingRainbow44> " + event.currentTarget.value]
+                            });
 
-                          event.currentTarget.value = "";
-                      }
-                  }}
+                            event.currentTarget.value = "";
+                        }
+                    }}
                 />
             </div>
         );
