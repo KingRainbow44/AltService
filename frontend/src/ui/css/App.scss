@@ -21,62 +21,62 @@
 }
 
 html {
-  @apply overflow-hidden;
+    @apply overflow-hidden;
 
-  --bg-primary: #3B3561;
-  --bg-secondary: #3A405A;
-  --accent-color: #98D2EB;
-  --distinct-color: #87B37A;
+    --bg-primary: #3B3561;
+    --bg-secondary: #3A405A;
+    --accent-color: #98D2EB;
+    --distinct-color: #87B37A;
 
-  --text-primary: #E1F2FE;
-  --text-secondary: #231C07;
+    --text-primary: #E1F2FE;
+    --text-secondary: #231C07;
 }
 
 body {
-  @apply w-full h-screen m-0 p-0;
+    @apply w-full h-screen m-0 p-0;
 }
 
 p {
-  @apply text-base m-0 p-0;
+    @apply text-base m-0 p-0;
 
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 h1 {
-  @apply text-4xl font-bold m-0 p-0;
+    @apply text-4xl font-bold m-0 p-0;
 
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 h2 {
     @apply text-3xl font-semibold m-0 p-0;
 
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 h3 {
     @apply text-2xl font-medium m-0 p-0;
 
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
+    width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-color);
-  border-radius: 10px;
+    background: var(--accent-color);
+    border-radius: 10px;
 }
 
 .App {
-  @apply flex flex-row w-full h-full p-[28px];
+    @apply flex flex-row w-full h-full p-[28px];
 
-  background-color: var(--bg-primary);
+    background-color: var(--bg-primary);
 }
 
 .App_Title {
@@ -94,7 +94,7 @@ h3 {
 }
 
 .App_Row {
-    @apply flex flex-row justify-between w-full items-end;
+    @apply flex flex-row justify-between w-full;
 }
 
 .App_Header {
@@ -103,6 +103,8 @@ h3 {
     line-height: 85px;
     font-size: 48px;
     font-family: Minecraftia, Poppins, sans-serif;
+
+    user-select: none;
 }
 
 .App_Inventory {
@@ -114,5 +116,13 @@ h3 {
 }
 
 .App_Chat {
-  @apply text-center;
+    @apply text-center;
+}
+
+.App_Actions {
+    @apply text-right mr-[10px] mt-[10px];
+}
+
+.App_Scripting {
+    @apply text-right mr-[10px] mt-[10px];
 }
