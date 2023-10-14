@@ -60,6 +60,19 @@ h3 {
   color: var(--text-primary);
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 10px;
+}
+
 .App {
   @apply flex flex-row w-full h-full p-[28px];
 
@@ -72,16 +85,16 @@ h3 {
 
     color: rgba(255, 255, 255, 0.25);
 
-    font-size: 7.5vw;
+    font-size: 7vw;
     font-family: Minecraftia, Poppins, sans-serif;
 }
 
 .App_Panel {
-    @apply flex flex-col justify-between;
+    @apply flex flex-col justify-between w-full;
 }
 
 .App_Row {
-    @apply flex flex-row;
+    @apply flex flex-row justify-between w-full items-end;
 }
 
 .App_Header {
@@ -98,4 +111,8 @@ h3 {
 
 .App_Statistics {
     @apply ml-[10px] mt-[10px];
+}
+
+.App_Chat {
+  @apply text-center;
 }

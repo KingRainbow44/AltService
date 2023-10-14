@@ -3,6 +3,7 @@ import { Component } from "preact";
 import "@css/App.scss";
 import Inventory from "@ui/widgets/Inventory.tsx";
 import Statistics from "@ui/widgets/Statistics.tsx";
+import Chat from "@ui/widgets/Chat.tsx";
 
 interface IProps {
 
@@ -58,6 +59,11 @@ class App extends Component<IProps, IState> {
                         <div>
                             <p className={"App_Header App_Statistics"}>Statistics</p>
                             <Statistics position={testPosition} statistics={testStatistics} />
+                        </div>
+
+                        <div>
+                            <p className={"App_Header App_Chat"}>Chat</p>
+                            <Chat />
                         </div>
                     </div>
                 </div>
