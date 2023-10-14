@@ -1,11 +1,16 @@
 package moe.seikimo.altservice;
 
 import com.beust.jcommander.JCommander;
+import com.google.gson.Gson;
 import com.google.protobuf.GeneratedMessageV3;
+import io.javalin.Javalin;
+import io.javalin.config.JavalinConfig;
+import io.javalin.plugin.bundled.CorsPluginConfig;
 import lombok.Getter;
 import moe.seikimo.altservice.handlers.PacketHandler;
 import moe.seikimo.altservice.proto.Service;
 import moe.seikimo.altservice.proto.Structures;
+import moe.seikimo.altservice.routers.MojangRouter;
 import moe.seikimo.altservice.services.ServiceManager;
 import moe.seikimo.altservice.utils.BinaryUtils;
 import moe.seikimo.altservice.utils.SocketUtils;
@@ -22,6 +27,13 @@ public final class AltService extends WebSocketServer {
     @Getter
     private static final Logger logger
             = LoggerFactory.getLogger("Alt Service");
+    @Getter
+    private static final Javalin javalin
+            = Javalin.create(AltService::configureJavalin);
+
+    @Getter
+    private static final Gson gson
+            = new Gson();
 
     @Getter private static AltService instance;
 
@@ -45,13 +57,29 @@ public final class AltService extends WebSocketServer {
         // Create an instance of the service.
         AltService.instance = new AltService();
         AltService.getInstance().start();
+
+        // Configure Javalin.
+        var javalin = AltService.getJavalin();
+        MojangRouter.configure(javalin);
+
+        // Start the Javalin instance.
+        javalin.start(Arguments.getInstance().getHttpPort());
+    }
+
+    /**
+     * Configures the Javalin instance.
+     *
+     * @param config The Javalin configuration.
+     */
+    private static void configureJavalin(JavalinConfig config) {
+        config.plugins.enableCors(cfg -> cfg.add(CorsPluginConfig::anyHost));
     }
 
     @Getter private final PacketHandler packetHandler = new PacketHandler();
 
     private AltService() {
         super(new InetSocketAddress(
-                Arguments.getInstance().getPort()));
+                Arguments.getInstance().getWebSocket()));
 
         // Register packet handlers.
         this.getPacketHandler().register(
