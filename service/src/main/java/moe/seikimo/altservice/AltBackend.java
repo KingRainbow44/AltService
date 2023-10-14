@@ -301,13 +301,15 @@ public final class AltBackend extends WebSocketClient {
     public void onClose(int code, String msg, boolean clean) {
         AltBackend.getLogger().info("Disconnected from backend.");
 
-        // Wait 5s before reconnecting.
-        try {
-            Thread.sleep(5000);
-            this.reconnect();
-        } catch (InterruptedException ignored) {
-            AltBackend.getLogger().warn("Unable to reconnect.");
-        }
+        new Thread(() -> {
+            // Wait 5s before reconnecting.
+            try {
+                Thread.sleep(5000);
+                this.reconnect();
+            } catch (InterruptedException ignored) {
+                AltBackend.getLogger().warn("Unable to reconnect.");
+            }
+        }).start();
     }
 
     @Override
