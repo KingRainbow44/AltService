@@ -1,0 +1,11 @@
+.Button :hover {
+    cursor: pointer;
+}
+
+.Button :active {
+    transform: scale(0.98);
+}
+
+.Button_Label {
+    user-select: none;
+}
