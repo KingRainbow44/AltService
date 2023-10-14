@@ -74,8 +74,9 @@ h3 {
 }
 
 .App {
-    @apply flex flex-row w-full h-full p-[28px];
+    @apply flex flex-row w-full h-full justify-between;
 
+    padding-left: 28px;
     background-color: var(--bg-primary);
 }
 
@@ -90,7 +91,9 @@ h3 {
 }
 
 .App_Panel {
-    @apply flex flex-col justify-between w-full;
+    @apply flex flex-col justify-between p-[28px];
+
+    width: 95%;
 }
 
 .App_Row {

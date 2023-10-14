@@ -1,0 +1,11 @@
+.SessionList {
+    @apply flex flex-col w-[10%] gap-[28px] p-3.5 items-center;
+
+    border-left: 5px solid var(--accent-color);
+}
+
+.SessionList_Item {
+    width: 144px;
+    height: 144px;
+    border: 5px solid #000;
+}

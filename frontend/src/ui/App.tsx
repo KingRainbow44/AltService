@@ -6,6 +6,7 @@ import Statistics from "@ui/widgets/Statistics.tsx";
 import Chat from "@ui/widgets/Chat.tsx";
 import Actions from "@ui/widgets/Actions.tsx";
 import Scripting from "@ui/widgets/Scripting.tsx";
+import SessionList from "@ui/widgets/SessionList.tsx";
 
 interface IProps {
 
@@ -80,9 +81,9 @@ class App extends Component<IProps, IState> {
                     </div>
                 </div>
 
-                <div className={"App_Sessions"}>
-
-                </div>
+                <SessionList sessions={[
+                    { name: "EnderMaster9274" }
+                ]} />
             </div>
         );
     }
