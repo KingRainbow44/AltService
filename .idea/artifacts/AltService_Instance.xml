@@ -1,0 +1,79 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AltService Instance">
+    <output-path>$PROJECT_DIR$/out/artifacts/AltService_Instance</output-path>
+    <root id="archive" name="service.jar">
+      <element id="module-output" name="service" />
+      <element id="module-output" name="AltService" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-server/11.0.15/jetty-server-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/math/immutable/2.0-SNAPSHOT/immutable-2.0-20220327.162752-1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/toolchain/jetty-jakarta-servlet-api/5.0.2/jetty-jakarta-servlet-api-5.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/esotericsoftware/reflectasm/1.11.9/reflectasm-1.11.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/jakarta/transaction/jakarta.transaction-api/2.0.0/jakarta.transaction-api-2.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/fastutil/maps/int-object-maps/8.5.13-SNAPSHOT/int-object-maps-8.5.13-20230812.171723-2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bitbucket/b_c/jose4j/0.9.3/jose4j-0.9.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jline/jline-terminal/3.21.0/jline-terminal-3.21.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/ch/qos/logback/logback-classic/1.4.8/logback-classic-1.4.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-servlet/11.0.15/websocket-servlet-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-plus/11.0.15/jetty-plus-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jcommander/jcommander/1.83/jcommander-1.83.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/fastutil/sets/int-sets/8.5.13-SNAPSHOT/int-sets-8.5.13-20230812.171723-2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/airlift/aircompressor/0.25/aircompressor-0.25.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.31/kotlin-stdlib-common-1.5.31.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-jndi/11.0.15/jetty-jndi-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-core-server/11.0.15/websocket-core-server-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/jodah/expiringmap/0.5.10/expiringmap-0.5.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/netty/netty-resolver/4.1.89.Final/netty-resolver-4.1.89.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jline/jline/3.21.0/jline-3.21.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/netty/netty-common/4.1.96.Final/netty-common-4.1.96.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/fastutil/sets/long-sets/8.5.13-SNAPSHOT/long-sets-8.5.13-20230812.171723-2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/squareup/okio/okio-jvm/3.0.0/okio-jvm-3.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-webapp/11.0.15/jetty-webapp-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-jetty-common/11.0.15/websocket-jetty-common-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/protocol/bedrock-connection/3.0.0.Beta1-SNAPSHOT/bedrock-connection-3.0.0.Beta1-20230908.171156-105.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/javalin/javalin/5.6.1/javalin-5.6.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-core-common/11.0.15/websocket-core-common-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-annotations/11.0.15/jetty-annotations-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/2.0.7/slf4j-api-2.0.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/24.0.1/annotations-24.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.23.0/protobuf-java-3.23.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/socket/engine.io-server/6.2.1/engine.io-server-6.2.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/fastutil/maps/object-int-maps/8.5.13-SNAPSHOT/object-int-maps-8.5.13-20230812.171723-2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/netty/netty-codec/4.1.89.Final/netty-codec-4.1.89.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/luaj/luaj-jse/3.0.1/luaj-jse-3.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/fastutil/maps/long-object-maps/8.5.13-SNAPSHOT/long-object-maps-8.5.13-20230812.171723-2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-xml/11.0.15/jetty-xml-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.21/kotlin-stdlib-jdk8-1.8.21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/fastutil/core/8.5.13-SNAPSHOT/core-8.5.13-20230812.171723-2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-security/11.0.15/jetty-security-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/fastutil/commons/object-common/8.5.13-SNAPSHOT/object-common-8.5.13-20230812.171723-2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/fastutil/commons/long-common/8.5.13-SNAPSHOT/long-common-8.5.13-20230812.171723-2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-jetty-server/11.0.15/websocket-jetty-server-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-http/11.0.15/jetty-http-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/squareup/okhttp3/okhttp/4.10.0/okhttp-4.10.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/fastutil/sets/object-sets/8.5.13-SNAPSHOT/object-sets-8.5.13-20230812.171723-2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/java-websocket/Java-WebSocket/1.5.4/Java-WebSocket-1.5.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/nukkitx/natives/1.0.3/natives-1.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/ow2/asm/asm/9.5/asm-9.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/java/dev/jna/jna/5.10.0/jna-5.10.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/fastutil/commons/int-common/8.5.13-SNAPSHOT/int-common-8.5.13-20230812.171723-2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/protocol/bedrock-codec/3.0.0.Beta1-SNAPSHOT/bedrock-codec-3.0.0.Beta1-20230908.171156-106.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/ow2/asm/asm-commons/9.5/asm-commons-9.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/ow2/asm/asm-tree/9.5/asm-tree-9.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/netty/netty-transport/4.1.89.Final/netty-transport-4.1.89.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-io/11.0.15/jetty-io-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/netty/netty-transport-raknet/1.0.0.CR1-SNAPSHOT/netty-transport-raknet-1.0.0.CR1-20230807.120747-10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jline/jline-terminal-jna/3.21.0/jline-terminal-jna-3.21.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-util/11.0.15/jetty-util-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-servlet/11.0.15/jetty-servlet-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.21/kotlin-stdlib-jdk7-1.8.21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/ch/qos/logback/logback-core/1.4.8/logback-core-1.4.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib/1.6.20/kotlin-stdlib-1.6.20.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/netty/netty-buffer/4.1.96.Final/netty-buffer-4.1.96.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/nbt/3.0.2.Final/nbt-3.0.2.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-jetty-api/11.0.15/websocket-jetty-api-11.0.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/cloudburstmc/protocol/common/3.0.0.Beta1-SNAPSHOT/common-3.0.0.Beta1-20230908.171156-105.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

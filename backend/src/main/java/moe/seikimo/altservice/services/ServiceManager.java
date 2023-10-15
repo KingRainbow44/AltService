@@ -1,7 +1,6 @@
 package moe.seikimo.altservice.services;
 
 import moe.seikimo.altservice.AltService;
-import moe.seikimo.altservice.proto.Service;
 import moe.seikimo.altservice.proto.Service.ServiceIds;
 import moe.seikimo.altservice.proto.Service.ServiceJoinCsReq;
 import org.java_websocket.WebSocket;
@@ -22,6 +21,7 @@ public final class ServiceManager {
         var address = request.getServerAddress();
         var port = (short) request.getServerPort();
         var combined = address + ":" + port;
+        socket.setAttachment(combined);
 
         // Check if the service is already registered.
         if (instances.containsKey(combined)) {
@@ -35,7 +35,22 @@ public final class ServiceManager {
 
         // Send back the response packet.
         AltService.send(socket, ServiceIds._ServiceJoinScRsp, null);
+        // Additionally request all sessions.
+        AltService.send(socket, ServiceIds._GetAllSessionsScReq, null);
 
         AltService.getLogger().info("Registered service: {}.", instance.getServer());
+    }
+
+    /**
+     * Fetches a service by the socket.
+     *
+     * @param socket The socket.
+     * @return The service instance.
+     */
+    public static ServiceInstance getService(WebSocket socket) {
+        var address = socket.getAttachment();
+        if (address == null) return null;
+
+        return address instanceof String s ? instances.get(s) : null;
     }
 }

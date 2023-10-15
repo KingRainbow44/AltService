@@ -1,4 +1,4 @@
-<Configuration>
+<configuration>
     <variable name="LOG_LEVEL" value="${LOG_LEVEL:-INFO}"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -28,4 +28,4 @@
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>
-</Configuration>
+</configuration>

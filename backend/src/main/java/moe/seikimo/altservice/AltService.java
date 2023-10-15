@@ -8,9 +8,11 @@ import io.javalin.config.JavalinConfig;
 import io.javalin.plugin.bundled.CorsPluginConfig;
 import lombok.Getter;
 import moe.seikimo.altservice.handlers.PacketHandler;
+import moe.seikimo.altservice.handlers.SessionHandlers;
 import moe.seikimo.altservice.proto.Service;
 import moe.seikimo.altservice.proto.Structures;
 import moe.seikimo.altservice.routers.MojangRouter;
+import moe.seikimo.altservice.routers.PanelRouter;
 import moe.seikimo.altservice.services.ServiceManager;
 import moe.seikimo.altservice.utils.BinaryUtils;
 import moe.seikimo.altservice.utils.SocketUtils;
@@ -24,6 +26,8 @@ import java.net.InetSocketAddress;
 import java.util.Objects;
 
 public final class AltService extends WebSocketServer {
+    private static final long startTime = System.currentTimeMillis();
+
     @Getter
     private static final Logger logger
             = LoggerFactory.getLogger("Alt Service");
@@ -61,9 +65,15 @@ public final class AltService extends WebSocketServer {
         // Configure Javalin.
         var javalin = AltService.getJavalin();
         MojangRouter.configure(javalin);
+        PanelRouter.configure(javalin);
 
         // Start the Javalin instance.
         javalin.start(Arguments.getInstance().getHttpPort());
+
+        // Log the startup time.
+        var startupTime = System.currentTimeMillis() - startTime;
+        AltService.getLogger().info("Started Alt Service in {}ms.",
+                startupTime);
     }
 
     /**
@@ -88,6 +98,7 @@ public final class AltService extends WebSocketServer {
                         ServiceManager.onServiceJoin(socket, packet),
                 Service.ServiceJoinCsReq::parseFrom
         );
+        SessionHandlers.register(this.getPacketHandler());
 
         // Disable the default connection timeout.
         this.setConnectionLostTimeout(0);
@@ -132,10 +143,7 @@ public final class AltService extends WebSocketServer {
 
     @Override
     public void onOpen(WebSocket socket, ClientHandshake handshake) {
-        // Set the socket attachment to the address.
         var address = SocketUtils.getAddress(socket);
-        socket.setAttachment(address);
-
         AltService.getLogger().info("Opened connection to {}.", address);
     }
 
@@ -147,7 +155,6 @@ public final class AltService extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket socket, String data) {
-        var identifier = socket.getAttachment();
         try {
             var bytes = BinaryUtils.base64Decode(data);
             var packet = BinaryUtils.decodeFromProto(bytes, Structures.Packet.class);
@@ -160,7 +167,7 @@ public final class AltService extends WebSocketServer {
             this.getPacketHandler().invokeHandler(socket, packetId, packetData);
         } catch (Exception ignored) {
             AltService.getLogger().warn("Received invalid packet from {}.",
-                    identifier);
+                    SocketUtils.getAddress(socket));
         }
     }
 
