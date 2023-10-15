@@ -18,14 +18,9 @@ message Player {
   string id = 1;
   string name = 2;
   Vector3 position = 3;
-  Vector2 rotation = 4;
+  Vector3 rotation = 4;
   Attributes attributes = 5;
   Inventory inventory = 6;
-}
-
-message Vector2 {
-  float x = 1;
-  float y = 2;
 }
 
 message Vector3 {

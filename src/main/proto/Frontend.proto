@@ -43,7 +43,7 @@ message SessionActionCsNotify {
 
 message MoveAction {
   Vector3 position = 1;
-  Vector2 direction = 2;
+  Vector3 direction = 2;
 }
 
 message TargetAction {

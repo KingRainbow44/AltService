@@ -1,5 +1,10 @@
 package moe.seikimo.altservice.player;
 
+import moe.seikimo.altservice.AltBackend;
+import moe.seikimo.altservice.proto.Service;
+import moe.seikimo.altservice.proto.Service.CreateSessionCsNotify;
+import moe.seikimo.altservice.proto.Service.ServiceIds;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,8 +32,21 @@ public final class PlayerManager {
      * @return The player instance.
      */
     public static Player createPlayer(String username, long lifetime) {
-        return PlayerManager.players.computeIfAbsent(username,
-                k -> new Player(username, lifetime));
+        if (!PlayerManager.isPlayerOnline(username)) {
+            var player = new Player(username, lifetime);
+            PlayerManager.players.put(username, player);
+
+            // Send the session creation packet.
+            AltBackend.getInstance().send(
+                    ServiceIds._CreateSessionCsNotify,
+                    CreateSessionCsNotify.newBuilder()
+                            .setSession(player.toProto())
+            );
+
+            return player;
+        }
+
+        return PlayerManager.players.get(username);
     }
 
     /**

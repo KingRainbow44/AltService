@@ -2,6 +2,7 @@ package moe.seikimo.altservice.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import moe.seikimo.altservice.proto.Structures;
 import moe.seikimo.altservice.utils.enums.AlgorithmType;
 import org.cloudburstmc.math.vector.Vector3f;
 import org.cloudburstmc.math.vector.Vector3i;
@@ -212,5 +213,55 @@ public interface EncodingUtils {
         table.set("damage", item.getDamage());
 
         return table;
+    }
+
+    /**
+     * Converts a Vector3f to a protobuf Vector3.
+     *
+     * @param vector3 The Vector3f.
+     * @return The protobuf Vector3.
+     */
+    static Structures.Vector3 convert(Vector3f vector3) {
+        return Structures.Vector3.newBuilder()
+                .setX(vector3.getX())
+                .setY(vector3.getY())
+                .setZ(vector3.getZ())
+                .build();
+    }
+
+    /**
+     * Converts a Vector3i to a protobuf Vector3.
+     *
+     * @param vector3 The Vector3i.
+     * @return The protobuf Vector3.
+     */
+    static Structures.Vector3 convert(Vector3i vector3) {
+        return Structures.Vector3.newBuilder()
+                .setX(vector3.getX())
+                .setY(vector3.getY())
+                .setZ(vector3.getZ())
+                .build();
+    }
+
+    /**
+     * Converts an ItemData instance to a protobuf Item.
+     *
+     * @param item The item.
+     * @return The protobuf Item.
+     */
+    static Structures.Item convert(ItemData item) {
+        if (item == null) {
+            return Structures.Item.newBuilder()
+                    .setItemId("minecraft:air")
+                    .setDurability(0)
+                    .setQuantity(0)
+                    .build();
+        }
+
+        return Structures.Item.newBuilder()
+                .setItemId(item.getDefinition().getIdentifier())
+                .setDurability(item.getDamage())
+                .setQuantity(item.getCount())
+                .build();
     }
 }

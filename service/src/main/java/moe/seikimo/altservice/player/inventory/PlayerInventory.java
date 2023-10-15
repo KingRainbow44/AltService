@@ -2,6 +2,8 @@ package moe.seikimo.altservice.player.inventory;
 
 import lombok.Data;
 import moe.seikimo.altservice.player.Player;
+import moe.seikimo.altservice.proto.Structures;
+import moe.seikimo.altservice.utils.EncodingUtils;
 import moe.seikimo.altservice.utils.RandomUtils;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerSlotType;
@@ -134,5 +136,33 @@ import java.util.List;
 
         // Close the inventory if it wasn't open before.
         if (!startedOpen) this.closeInventory();
+    }
+
+    /**
+     * @return The inventory as a protobuf structure.
+     */
+    public Structures.Inventory toProto() {
+        // Check the lists.
+        if (this.getArmor().isEmpty()) {
+            this.getArmor().addAll(List.of(
+                    ItemData.AIR, ItemData.AIR,
+                    ItemData.AIR, ItemData.AIR
+            ));
+        }
+
+        var armor = this.getArmor().stream()
+                .map(EncodingUtils::convert)
+                .toList();
+        var items = this.getItems().stream()
+                .map(EncodingUtils::convert)
+                .toList();
+
+        return Structures.Inventory.newBuilder()
+                .setHelmet(armor.get(0))
+                .setChestplate(armor.get(1))
+                .setLeggings(armor.get(2))
+                .setBoots(armor.get(3))
+                .addAllItems(items)
+                .build();
     }
 }

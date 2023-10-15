@@ -4,6 +4,7 @@ import com.google.protobuf.GeneratedMessageV3;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import lombok.Getter;
+import moe.seikimo.altservice.backend.PacketHandlers;
 import moe.seikimo.altservice.command.SimpleCommandMap;
 import moe.seikimo.altservice.command.player.DisconnectCommand;
 import moe.seikimo.altservice.command.player.RequestCommand;
@@ -237,6 +238,7 @@ public final class AltBackend extends WebSocketClient {
                 (packet) -> AltBackend.getLogger().info("Backend accepted connection."),
                 null
         );
+        PacketHandlers.register(this.getPacketHandler());
     }
 
     /**

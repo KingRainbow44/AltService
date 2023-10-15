@@ -8,7 +8,9 @@ import moe.seikimo.altservice.player.inventory.PlayerInventory;
 import moe.seikimo.altservice.player.server.ServerBlock;
 import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
+import moe.seikimo.altservice.proto.Structures;
 import moe.seikimo.altservice.script.ScriptManager;
+import moe.seikimo.altservice.utils.EncodingUtils;
 import moe.seikimo.altservice.utils.ThreadUtils;
 import moe.seikimo.altservice.utils.objects.ConnectionDetails;
 import moe.seikimo.altservice.utils.objects.Location;
@@ -544,6 +546,20 @@ import java.util.UUID;
 
         if (this.ticks % 20 == 0)
             this.getScriptBackend().tickBehaviors();
+    }
+
+    /**
+     * @return The player serialized as a protobuf.
+     */
+    public Structures.Player toProto() {
+        return Structures.Player.newBuilder()
+                .setId(this.getUsername())
+                .setName(this.getUsername())
+                .setPosition(EncodingUtils.convert(this.getPosition()))
+                .setRotation(EncodingUtils.convert(this.getRotation()))
+                .setAttributes(Structures.Attributes.newBuilder())
+                .setInventory(this.getInventory().toProto())
+                .build();
     }
 
     @Override
