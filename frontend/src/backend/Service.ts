@@ -68,6 +68,19 @@ export interface UpdateSessionsCsNotify {
     sessions: Player[];
 }
 /**
+ * @generated from protobuf message RequestSessionScNotify
+ */
+export interface RequestSessionScNotify {
+    /**
+     * @generated from protobuf field: string username = 1;
+     */
+    username: string;
+    /**
+     * @generated from protobuf field: int64 lifetime = 2;
+     */
+    lifetime: bigint;
+}
+/**
  * @generated from protobuf enum ServiceIds
  */
 export enum ServiceIds {
@@ -98,7 +111,11 @@ export enum ServiceIds {
     /**
      * @generated from protobuf enum value: _UpdateSessionsCsNotify = 6;
      */
-    _UpdateSessionsCsNotify = 6
+    _UpdateSessionsCsNotify = 6,
+    /**
+     * @generated from protobuf enum value: _RequestSessionScNotify = 7;
+     */
+    _RequestSessionScNotify = 7
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ServiceJoinCsReq$Type extends MessageType<ServiceJoinCsReq> {
@@ -342,3 +359,57 @@ class UpdateSessionsCsNotify$Type extends MessageType<UpdateSessionsCsNotify> {
  * @generated MessageType for protobuf message UpdateSessionsCsNotify
  */
 export const UpdateSessionsCsNotify = new UpdateSessionsCsNotify$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RequestSessionScNotify$Type extends MessageType<RequestSessionScNotify> {
+    constructor() {
+        super("RequestSessionScNotify", [
+            { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "lifetime", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ }
+        ]);
+    }
+    create(value?: PartialMessage<RequestSessionScNotify>): RequestSessionScNotify {
+        const message = { username: "", lifetime: 0n };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<RequestSessionScNotify>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RequestSessionScNotify): RequestSessionScNotify {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string username */ 1:
+                    message.username = reader.string();
+                    break;
+                case /* int64 lifetime */ 2:
+                    message.lifetime = reader.int64().toBigInt();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RequestSessionScNotify, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string username = 1; */
+        if (message.username !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.username);
+        /* int64 lifetime = 2; */
+        if (message.lifetime !== 0n)
+            writer.tag(2, WireType.Varint).int64(message.lifetime);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message RequestSessionScNotify
+ */
+export const RequestSessionScNotify = new RequestSessionScNotify$Type();

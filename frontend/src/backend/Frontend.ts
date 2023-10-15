@@ -11,7 +11,6 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { Vector2 } from "./Structures";
 import { Vector3 } from "./Structures";
 import { Player } from "./Structures";
 /**
@@ -74,9 +73,9 @@ export interface MoveAction {
      */
     position?: Vector3;
     /**
-     * @generated from protobuf field: Vector2 direction = 2;
+     * @generated from protobuf field: Vector3 direction = 2;
      */
-    direction?: Vector2;
+    direction?: Vector3;
 }
 /**
  * @generated from protobuf message TargetAction
@@ -333,7 +332,7 @@ class MoveAction$Type extends MessageType<MoveAction> {
     constructor() {
         super("MoveAction", [
             { no: 1, name: "position", kind: "message", T: () => Vector3 },
-            { no: 2, name: "direction", kind: "message", T: () => Vector2 }
+            { no: 2, name: "direction", kind: "message", T: () => Vector3 }
         ]);
     }
     create(value?: PartialMessage<MoveAction>): MoveAction {
@@ -351,8 +350,8 @@ class MoveAction$Type extends MessageType<MoveAction> {
                 case /* Vector3 position */ 1:
                     message.position = Vector3.internalBinaryRead(reader, reader.uint32(), options, message.position);
                     break;
-                case /* Vector2 direction */ 2:
-                    message.direction = Vector2.internalBinaryRead(reader, reader.uint32(), options, message.direction);
+                case /* Vector3 direction */ 2:
+                    message.direction = Vector3.internalBinaryRead(reader, reader.uint32(), options, message.direction);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -369,9 +368,9 @@ class MoveAction$Type extends MessageType<MoveAction> {
         /* Vector3 position = 1; */
         if (message.position)
             Vector3.internalBinaryWrite(message.position, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* Vector2 direction = 2; */
+        /* Vector3 direction = 2; */
         if (message.direction)
-            Vector2.internalBinaryWrite(message.direction, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            Vector3.internalBinaryWrite(message.direction, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -54,9 +54,9 @@ export interface Player {
      */
     position?: Vector3;
     /**
-     * @generated from protobuf field: Vector2 rotation = 4;
+     * @generated from protobuf field: Vector3 rotation = 4;
      */
-    rotation?: Vector2;
+    rotation?: Vector3;
     /**
      * @generated from protobuf field: Attributes attributes = 5;
      */
@@ -65,19 +65,6 @@ export interface Player {
      * @generated from protobuf field: Inventory inventory = 6;
      */
     inventory?: Inventory;
-}
-/**
- * @generated from protobuf message Vector2
- */
-export interface Vector2 {
-    /**
-     * @generated from protobuf field: float x = 1;
-     */
-    x: number;
-    /**
-     * @generated from protobuf field: float y = 2;
-     */
-    y: number;
 }
 /**
  * @generated from protobuf message Vector3
@@ -320,7 +307,7 @@ class Player$Type extends MessageType<Player> {
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "position", kind: "message", T: () => Vector3 },
-            { no: 4, name: "rotation", kind: "message", T: () => Vector2 },
+            { no: 4, name: "rotation", kind: "message", T: () => Vector3 },
             { no: 5, name: "attributes", kind: "message", T: () => Attributes },
             { no: 6, name: "inventory", kind: "message", T: () => Inventory }
         ]);
@@ -346,8 +333,8 @@ class Player$Type extends MessageType<Player> {
                 case /* Vector3 position */ 3:
                     message.position = Vector3.internalBinaryRead(reader, reader.uint32(), options, message.position);
                     break;
-                case /* Vector2 rotation */ 4:
-                    message.rotation = Vector2.internalBinaryRead(reader, reader.uint32(), options, message.rotation);
+                case /* Vector3 rotation */ 4:
+                    message.rotation = Vector3.internalBinaryRead(reader, reader.uint32(), options, message.rotation);
                     break;
                 case /* Attributes attributes */ 5:
                     message.attributes = Attributes.internalBinaryRead(reader, reader.uint32(), options, message.attributes);
@@ -376,9 +363,9 @@ class Player$Type extends MessageType<Player> {
         /* Vector3 position = 3; */
         if (message.position)
             Vector3.internalBinaryWrite(message.position, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* Vector2 rotation = 4; */
+        /* Vector3 rotation = 4; */
         if (message.rotation)
-            Vector2.internalBinaryWrite(message.rotation, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+            Vector3.internalBinaryWrite(message.rotation, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         /* Attributes attributes = 5; */
         if (message.attributes)
             Attributes.internalBinaryWrite(message.attributes, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
@@ -395,60 +382,6 @@ class Player$Type extends MessageType<Player> {
  * @generated MessageType for protobuf message Player
  */
 export const Player = new Player$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class Vector2$Type extends MessageType<Vector2> {
-    constructor() {
-        super("Vector2", [
-            { no: 1, name: "x", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
-            { no: 2, name: "y", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
-        ]);
-    }
-    create(value?: PartialMessage<Vector2>): Vector2 {
-        const message = { x: 0, y: 0 };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<Vector2>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Vector2): Vector2 {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* float x */ 1:
-                    message.x = reader.float();
-                    break;
-                case /* float y */ 2:
-                    message.y = reader.float();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Vector2, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* float x = 1; */
-        if (message.x !== 0)
-            writer.tag(1, WireType.Bit32).float(message.x);
-        /* float y = 2; */
-        if (message.y !== 0)
-            writer.tag(2, WireType.Bit32).float(message.y);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message Vector2
- */
-export const Vector2 = new Vector2$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Vector3$Type extends MessageType<Vector3> {
     constructor() {
