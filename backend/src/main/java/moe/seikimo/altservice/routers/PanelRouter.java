@@ -3,6 +3,9 @@ package moe.seikimo.altservice.routers;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.websocket.*;
+import moe.seikimo.altservice.handlers.PacketHandler;
+import moe.seikimo.altservice.proto.Structures.Packet;
+import moe.seikimo.altservice.utils.EncodingUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +13,7 @@ import java.time.Duration;
 
 public interface PanelRouter {
     Logger LOGGER = LoggerFactory.getLogger("Web Panel");
+    PacketHandler HANDLER = new PacketHandler();
 
     /**
      * Configures the Javalin router.
@@ -23,6 +27,8 @@ public interface PanelRouter {
             cfg.directory = "panel";
         });
         javalin.ws("/socket", PanelRouter::setupSocket);
+
+        // Configure the packet handler.
     }
 
     /**
@@ -75,6 +81,12 @@ public interface PanelRouter {
      * @param ctx The WebSocket context.
      */
     static void onMessage(WsMessageContext ctx) {
-        LOGGER.info("Received message from {}.", ctx.session.getRemoteAddress());
+        try {
+            var packet = Packet.parseFrom(EncodingUtils.base64Decode(ctx.message()));
+        } catch (Exception exception) {
+            ctx.closeSession();
+            LOGGER.warn("Received invalid packet from {}.",
+                    ctx.session.getRemoteAddress(), exception);
+        }
     }
 }

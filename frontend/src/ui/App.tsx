@@ -1,14 +1,13 @@
 import { Component } from "preact";
 
-import "@css/App.scss";
 import Inventory from "@ui/widgets/Inventory.tsx";
 import Statistics from "@ui/widgets/Statistics.tsx";
 import Chat from "@ui/widgets/Chat.tsx";
 import Actions from "@ui/widgets/Actions.tsx";
 import Scripting from "@ui/widgets/Scripting.tsx";
 import SessionList from "@ui/widgets/SessionList.tsx";
-import Button from "@components/Button.tsx";
-import { test } from "@backend/socket.ts";
+
+import "@css/App.scss";
 
 interface IProps {
 
@@ -51,7 +50,6 @@ class App extends Component<IProps, IState> {
         return (
             <div className={"App"}>
                 <h1 className={"App_Title"}>Alt Service</h1>
-                <Button label={"test"} onClick={() => test()} />
 
                 <div className={"App_Panel"}>
                     <div className={"App_Row items-start"}>

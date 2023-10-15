@@ -69,6 +69,8 @@ public final class AltService extends WebSocketServer {
 
         // Start the Javalin instance.
         javalin.start(Arguments.getInstance().getHttpPort());
+        AltService.getLogger().info("Started Javalin on port {}.",
+                Arguments.getInstance().getHttpPort());
 
         // Log the startup time.
         var startupTime = System.currentTimeMillis() - startTime;
@@ -137,7 +139,7 @@ public final class AltService extends WebSocketServer {
 
     @Override
     public void onStart() {
-        AltService.getLogger().info("Started Alt Service on port {}.",
+        AltService.getLogger().info("Started service on port {}.",
                 this.getAddress().getPort());
     }
 
