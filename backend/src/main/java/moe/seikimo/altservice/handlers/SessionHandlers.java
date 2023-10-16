@@ -14,7 +14,7 @@ public interface SessionHandlers {
      *
      * @param handler The packet handler.
      */
-    static void register(PacketHandler handler) {
+    static void register(PacketHandler<?> handler) {
         handler.register(
                 ServiceIds._CreateSessionCsNotify,
                 (WebSocket socket, CreateSessionCsNotify packet) ->
