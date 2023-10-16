@@ -87,7 +87,7 @@ public final class AltService extends WebSocketServer {
         config.plugins.enableCors(cfg -> cfg.add(CorsPluginConfig::anyHost));
     }
 
-    @Getter private final PacketHandler packetHandler = new PacketHandler();
+    @Getter private final PacketHandler<?> packetHandler = new PacketHandler<>();
 
     private AltService() {
         super(new InetSocketAddress(

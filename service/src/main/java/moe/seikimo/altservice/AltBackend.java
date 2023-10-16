@@ -227,7 +227,7 @@ public final class AltBackend extends WebSocketClient {
         playerCommands.addCommand(new DropCommand());
     }
 
-    @Getter private final PacketHandler packetHandler = new PacketHandler();
+    @Getter private final PacketHandler<?> packetHandler = new PacketHandler<>();
 
     private AltBackend() {
         super(URI.create("ws://" + Configuration.get().backend.pair()));
