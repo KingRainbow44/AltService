@@ -7,6 +7,9 @@ import Actions from "@ui/widgets/Actions.tsx";
 import Scripting from "@ui/widgets/Scripting.tsx";
 import SessionList from "@ui/widgets/SessionList.tsx";
 
+import * as socket from "@backend/socket.ts";
+import { FrontendIds } from "@backend/Frontend.ts";
+
 import "@css/App.scss";
 
 interface IProps {
@@ -44,6 +47,15 @@ class App extends Component<IProps, IState> {
         super(props);
 
         this.state = {};
+    }
+
+    componentDidMount() {
+        // Attempt to handshake with the server.
+        socket.handshake();
+
+        window.addEventListener(`socket:${FrontendIds._FrontendJoinScRsp}`, () => {
+            console.debug("Received join response from server.");
+        });
     }
 
     render() {
