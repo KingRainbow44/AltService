@@ -1,6 +1,9 @@
 package moe.seikimo.altservice.services;
 
 import lombok.Data;
+import moe.seikimo.altservice.client.PanelClient;
+import moe.seikimo.altservice.proto.Frontend.FrontendIds;
+import moe.seikimo.altservice.proto.Frontend.UpdateSessionsScNotify;
 import moe.seikimo.altservice.proto.Structures.Player;
 
 import java.util.List;
@@ -30,6 +33,9 @@ public final class ServiceInstance {
     public void onCreateSession(Player session) {
         this.sessions.put(session.getId(),
                 new Session(session.getId(), session));
+
+        // Broadcast to all clients.
+        this.updateAllSessions();
     }
 
     /**
@@ -57,5 +63,19 @@ public final class ServiceInstance {
                 handle.updateSession(session);
             }
         });
+    }
+
+    /**
+     * Sends a session update packet.
+     */
+    public void updateAllSessions() {
+        var sessions = this.getSessions().values()
+                .stream().map(Session::getHandle).toList();
+
+        PanelClient.broadcast(
+                FrontendIds._UpdateSessionsScNotify,
+                UpdateSessionsScNotify.newBuilder()
+                        .addAllSessions(sessions)
+        );
     }
 }

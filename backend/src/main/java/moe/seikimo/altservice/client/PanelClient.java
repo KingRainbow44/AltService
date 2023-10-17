@@ -48,6 +48,16 @@ public final class PanelClient implements MessageReceiver {
         return clients.get(ctx.getSessionId());
     }
 
+    /**
+     * Broadcasts a packet to all clients.
+     *
+     * @param id The packet ID.
+     * @param builder The packet builder.
+     */
+    public static void broadcast(Object id, GeneratedMessageV3.Builder<?> builder) {
+        clients.values().forEach(client -> client.send(id, builder));
+    }
+
     private final Session session;
 
     /**
