@@ -14,6 +14,788 @@ public final class Structures {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
+  public interface UnionCmdNotifyOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:UnionCmdNotify)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .Packet packets = 1;</code>
+     */
+    java.util.List<moe.seikimo.altservice.proto.Structures.Packet> 
+        getPacketsList();
+    /**
+     * <code>repeated .Packet packets = 1;</code>
+     */
+    moe.seikimo.altservice.proto.Structures.Packet getPackets(int index);
+    /**
+     * <code>repeated .Packet packets = 1;</code>
+     */
+    int getPacketsCount();
+    /**
+     * <code>repeated .Packet packets = 1;</code>
+     */
+    java.util.List<? extends moe.seikimo.altservice.proto.Structures.PacketOrBuilder> 
+        getPacketsOrBuilderList();
+    /**
+     * <code>repeated .Packet packets = 1;</code>
+     */
+    moe.seikimo.altservice.proto.Structures.PacketOrBuilder getPacketsOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code UnionCmdNotify}
+   */
+  public static final class UnionCmdNotify extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:UnionCmdNotify)
+      UnionCmdNotifyOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UnionCmdNotify.newBuilder() to construct.
+    private UnionCmdNotify(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UnionCmdNotify() {
+      packets_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UnionCmdNotify();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return moe.seikimo.altservice.proto.Structures.internal_static_UnionCmdNotify_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return moe.seikimo.altservice.proto.Structures.internal_static_UnionCmdNotify_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              moe.seikimo.altservice.proto.Structures.UnionCmdNotify.class, moe.seikimo.altservice.proto.Structures.UnionCmdNotify.Builder.class);
+    }
+
+    public static final int PACKETS_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private java.util.List<moe.seikimo.altservice.proto.Structures.Packet> packets_;
+    /**
+     * <code>repeated .Packet packets = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<moe.seikimo.altservice.proto.Structures.Packet> getPacketsList() {
+      return packets_;
+    }
+    /**
+     * <code>repeated .Packet packets = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends moe.seikimo.altservice.proto.Structures.PacketOrBuilder> 
+        getPacketsOrBuilderList() {
+      return packets_;
+    }
+    /**
+     * <code>repeated .Packet packets = 1;</code>
+     */
+    @java.lang.Override
+    public int getPacketsCount() {
+      return packets_.size();
+    }
+    /**
+     * <code>repeated .Packet packets = 1;</code>
+     */
+    @java.lang.Override
+    public moe.seikimo.altservice.proto.Structures.Packet getPackets(int index) {
+      return packets_.get(index);
+    }
+    /**
+     * <code>repeated .Packet packets = 1;</code>
+     */
+    @java.lang.Override
+    public moe.seikimo.altservice.proto.Structures.PacketOrBuilder getPacketsOrBuilder(
+        int index) {
+      return packets_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < packets_.size(); i++) {
+        output.writeMessage(1, packets_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < packets_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, packets_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof moe.seikimo.altservice.proto.Structures.UnionCmdNotify)) {
+        return super.equals(obj);
+      }
+      moe.seikimo.altservice.proto.Structures.UnionCmdNotify other = (moe.seikimo.altservice.proto.Structures.UnionCmdNotify) obj;
+
+      if (!getPacketsList()
+          .equals(other.getPacketsList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getPacketsCount() > 0) {
+        hash = (37 * hash) + PACKETS_FIELD_NUMBER;
+        hash = (53 * hash) + getPacketsList().hashCode();
+      }
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(moe.seikimo.altservice.proto.Structures.UnionCmdNotify prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code UnionCmdNotify}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:UnionCmdNotify)
+        moe.seikimo.altservice.proto.Structures.UnionCmdNotifyOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return moe.seikimo.altservice.proto.Structures.internal_static_UnionCmdNotify_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return moe.seikimo.altservice.proto.Structures.internal_static_UnionCmdNotify_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                moe.seikimo.altservice.proto.Structures.UnionCmdNotify.class, moe.seikimo.altservice.proto.Structures.UnionCmdNotify.Builder.class);
+      }
+
+      // Construct using moe.seikimo.altservice.proto.Structures.UnionCmdNotify.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        if (packetsBuilder_ == null) {
+          packets_ = java.util.Collections.emptyList();
+        } else {
+          packets_ = null;
+          packetsBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return moe.seikimo.altservice.proto.Structures.internal_static_UnionCmdNotify_descriptor;
+      }
+
+      @java.lang.Override
+      public moe.seikimo.altservice.proto.Structures.UnionCmdNotify getDefaultInstanceForType() {
+        return moe.seikimo.altservice.proto.Structures.UnionCmdNotify.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public moe.seikimo.altservice.proto.Structures.UnionCmdNotify build() {
+        moe.seikimo.altservice.proto.Structures.UnionCmdNotify result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public moe.seikimo.altservice.proto.Structures.UnionCmdNotify buildPartial() {
+        moe.seikimo.altservice.proto.Structures.UnionCmdNotify result = new moe.seikimo.altservice.proto.Structures.UnionCmdNotify(this);
+        buildPartialRepeatedFields(result);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartialRepeatedFields(moe.seikimo.altservice.proto.Structures.UnionCmdNotify result) {
+        if (packetsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            packets_ = java.util.Collections.unmodifiableList(packets_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.packets_ = packets_;
+        } else {
+          result.packets_ = packetsBuilder_.build();
+        }
+      }
+
+      private void buildPartial0(moe.seikimo.altservice.proto.Structures.UnionCmdNotify result) {
+        int from_bitField0_ = bitField0_;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof moe.seikimo.altservice.proto.Structures.UnionCmdNotify) {
+          return mergeFrom((moe.seikimo.altservice.proto.Structures.UnionCmdNotify)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(moe.seikimo.altservice.proto.Structures.UnionCmdNotify other) {
+        if (other == moe.seikimo.altservice.proto.Structures.UnionCmdNotify.getDefaultInstance()) return this;
+        if (packetsBuilder_ == null) {
+          if (!other.packets_.isEmpty()) {
+            if (packets_.isEmpty()) {
+              packets_ = other.packets_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensurePacketsIsMutable();
+              packets_.addAll(other.packets_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.packets_.isEmpty()) {
+            if (packetsBuilder_.isEmpty()) {
+              packetsBuilder_.dispose();
+              packetsBuilder_ = null;
+              packets_ = other.packets_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              packetsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPacketsFieldBuilder() : null;
+            } else {
+              packetsBuilder_.addAllMessages(other.packets_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                moe.seikimo.altservice.proto.Structures.Packet m =
+                    input.readMessage(
+                        moe.seikimo.altservice.proto.Structures.Packet.parser(),
+                        extensionRegistry);
+                if (packetsBuilder_ == null) {
+                  ensurePacketsIsMutable();
+                  packets_.add(m);
+                } else {
+                  packetsBuilder_.addMessage(m);
+                }
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<moe.seikimo.altservice.proto.Structures.Packet> packets_ =
+        java.util.Collections.emptyList();
+      private void ensurePacketsIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          packets_ = new java.util.ArrayList<moe.seikimo.altservice.proto.Structures.Packet>(packets_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          moe.seikimo.altservice.proto.Structures.Packet, moe.seikimo.altservice.proto.Structures.Packet.Builder, moe.seikimo.altservice.proto.Structures.PacketOrBuilder> packetsBuilder_;
+
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public java.util.List<moe.seikimo.altservice.proto.Structures.Packet> getPacketsList() {
+        if (packetsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(packets_);
+        } else {
+          return packetsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public int getPacketsCount() {
+        if (packetsBuilder_ == null) {
+          return packets_.size();
+        } else {
+          return packetsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public moe.seikimo.altservice.proto.Structures.Packet getPackets(int index) {
+        if (packetsBuilder_ == null) {
+          return packets_.get(index);
+        } else {
+          return packetsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public Builder setPackets(
+          int index, moe.seikimo.altservice.proto.Structures.Packet value) {
+        if (packetsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePacketsIsMutable();
+          packets_.set(index, value);
+          onChanged();
+        } else {
+          packetsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public Builder setPackets(
+          int index, moe.seikimo.altservice.proto.Structures.Packet.Builder builderForValue) {
+        if (packetsBuilder_ == null) {
+          ensurePacketsIsMutable();
+          packets_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          packetsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public Builder addPackets(moe.seikimo.altservice.proto.Structures.Packet value) {
+        if (packetsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePacketsIsMutable();
+          packets_.add(value);
+          onChanged();
+        } else {
+          packetsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public Builder addPackets(
+          int index, moe.seikimo.altservice.proto.Structures.Packet value) {
+        if (packetsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePacketsIsMutable();
+          packets_.add(index, value);
+          onChanged();
+        } else {
+          packetsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public Builder addPackets(
+          moe.seikimo.altservice.proto.Structures.Packet.Builder builderForValue) {
+        if (packetsBuilder_ == null) {
+          ensurePacketsIsMutable();
+          packets_.add(builderForValue.build());
+          onChanged();
+        } else {
+          packetsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public Builder addPackets(
+          int index, moe.seikimo.altservice.proto.Structures.Packet.Builder builderForValue) {
+        if (packetsBuilder_ == null) {
+          ensurePacketsIsMutable();
+          packets_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          packetsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public Builder addAllPackets(
+          java.lang.Iterable<? extends moe.seikimo.altservice.proto.Structures.Packet> values) {
+        if (packetsBuilder_ == null) {
+          ensurePacketsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, packets_);
+          onChanged();
+        } else {
+          packetsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public Builder clearPackets() {
+        if (packetsBuilder_ == null) {
+          packets_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          packetsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public Builder removePackets(int index) {
+        if (packetsBuilder_ == null) {
+          ensurePacketsIsMutable();
+          packets_.remove(index);
+          onChanged();
+        } else {
+          packetsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public moe.seikimo.altservice.proto.Structures.Packet.Builder getPacketsBuilder(
+          int index) {
+        return getPacketsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public moe.seikimo.altservice.proto.Structures.PacketOrBuilder getPacketsOrBuilder(
+          int index) {
+        if (packetsBuilder_ == null) {
+          return packets_.get(index);  } else {
+          return packetsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public java.util.List<? extends moe.seikimo.altservice.proto.Structures.PacketOrBuilder> 
+           getPacketsOrBuilderList() {
+        if (packetsBuilder_ != null) {
+          return packetsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(packets_);
+        }
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public moe.seikimo.altservice.proto.Structures.Packet.Builder addPacketsBuilder() {
+        return getPacketsFieldBuilder().addBuilder(
+            moe.seikimo.altservice.proto.Structures.Packet.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public moe.seikimo.altservice.proto.Structures.Packet.Builder addPacketsBuilder(
+          int index) {
+        return getPacketsFieldBuilder().addBuilder(
+            index, moe.seikimo.altservice.proto.Structures.Packet.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Packet packets = 1;</code>
+       */
+      public java.util.List<moe.seikimo.altservice.proto.Structures.Packet.Builder> 
+           getPacketsBuilderList() {
+        return getPacketsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          moe.seikimo.altservice.proto.Structures.Packet, moe.seikimo.altservice.proto.Structures.Packet.Builder, moe.seikimo.altservice.proto.Structures.PacketOrBuilder> 
+          getPacketsFieldBuilder() {
+        if (packetsBuilder_ == null) {
+          packetsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              moe.seikimo.altservice.proto.Structures.Packet, moe.seikimo.altservice.proto.Structures.Packet.Builder, moe.seikimo.altservice.proto.Structures.PacketOrBuilder>(
+                  packets_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          packets_ = null;
+        }
+        return packetsBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:UnionCmdNotify)
+    }
+
+    // @@protoc_insertion_point(class_scope:UnionCmdNotify)
+    private static final moe.seikimo.altservice.proto.Structures.UnionCmdNotify DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new moe.seikimo.altservice.proto.Structures.UnionCmdNotify();
+    }
+
+    public static moe.seikimo.altservice.proto.Structures.UnionCmdNotify getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UnionCmdNotify>
+        PARSER = new com.google.protobuf.AbstractParser<UnionCmdNotify>() {
+      @java.lang.Override
+      public UnionCmdNotify parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<UnionCmdNotify> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UnionCmdNotify> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public moe.seikimo.altservice.proto.Structures.UnionCmdNotify getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface PacketOrBuilder extends
       // @@protoc_insertion_point(interface_extends:Packet)
       com.google.protobuf.MessageOrBuilder {
@@ -8974,6 +9756,11 @@ public final class Structures {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_UnionCmdNotify_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_UnionCmdNotify_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Packet_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -9027,82 +9814,89 @@ public final class Structures {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\020Structures.proto\"\"\n\006Packet\022\n\n\002id\030\001 \001(\r" +
-      "\022\014\n\004data\030\002 \001(\014\"9\n\005World\022\030\n\007players\030\001 \003(\013" +
-      "2\007.Player\022\026\n\006chunks\030\002 \003(\0132\006.Chunk\"\232\001\n\006Pl" +
-      "ayer\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\032\n\010positi" +
-      "on\030\003 \001(\0132\010.Vector3\022\032\n\010rotation\030\004 \001(\0132\010.V" +
-      "ector3\022\037\n\nattributes\030\005 \001(\0132\013.Attributes\022" +
-      "\035\n\tinventory\030\006 \001(\0132\n.Inventory\"*\n\007Vector" +
-      "3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\"b\n\nAt" +
-      "tributes\022\016\n\006health\030\001 \001(\r\022\016\n\006hunger\030\002 \001(\r" +
-      "\022\r\n\005armor\030\003 \001(\r\022\020\n\010xp_level\030\004 \001(\r\022\023\n\013xp_" +
-      "progress\030\005 \001(\r\"=\n\004Item\022\017\n\007item_id\030\001 \001(\t\022" +
-      "\020\n\010quantity\030\002 \001(\r\022\022\n\ndurability\030\003 \001(\r\"\231\001" +
-      "\n\tInventory\022\024\n\005items\030\001 \003(\0132\005.Item\022\025\n\006hot" +
-      "bar\030\002 \003(\0132\005.Item\022\025\n\006helmet\030\003 \001(\0132\005.Item\022" +
-      "\031\n\nchestplate\030\004 \001(\0132\005.Item\022\027\n\010leggings\030\005" +
-      " \001(\0132\005.Item\022\024\n\005boots\030\006 \001(\0132\005.Item\":\n\005Blo" +
-      "ck\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\022\020\n\010b" +
-      "lock_id\030\004 \001(\t\"5\n\005Chunk\022\t\n\001x\030\001 \001(\005\022\t\n\001z\030\002" +
-      " \001(\005\022\026\n\006blocks\030\003 \003(\0132\006.BlockB-\n\034moe.seik" +
-      "imo.altservice.protoB\nStructures\240\001\001b\006pro" +
-      "to3"
+      "\n\020Structures.proto\"*\n\016UnionCmdNotify\022\030\n\007" +
+      "packets\030\001 \003(\0132\007.Packet\"\"\n\006Packet\022\n\n\002id\030\001" +
+      " \001(\r\022\014\n\004data\030\002 \001(\014\"9\n\005World\022\030\n\007players\030\001" +
+      " \003(\0132\007.Player\022\026\n\006chunks\030\002 \003(\0132\006.Chunk\"\232\001" +
+      "\n\006Player\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\032\n\010po" +
+      "sition\030\003 \001(\0132\010.Vector3\022\032\n\010rotation\030\004 \001(\013" +
+      "2\010.Vector3\022\037\n\nattributes\030\005 \001(\0132\013.Attribu" +
+      "tes\022\035\n\tinventory\030\006 \001(\0132\n.Inventory\"*\n\007Ve" +
+      "ctor3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\"b" +
+      "\n\nAttributes\022\016\n\006health\030\001 \001(\r\022\016\n\006hunger\030\002" +
+      " \001(\r\022\r\n\005armor\030\003 \001(\r\022\020\n\010xp_level\030\004 \001(\r\022\023\n" +
+      "\013xp_progress\030\005 \001(\r\"=\n\004Item\022\017\n\007item_id\030\001 " +
+      "\001(\t\022\020\n\010quantity\030\002 \001(\r\022\022\n\ndurability\030\003 \001(" +
+      "\r\"\231\001\n\tInventory\022\024\n\005items\030\001 \003(\0132\005.Item\022\025\n" +
+      "\006hotbar\030\002 \003(\0132\005.Item\022\025\n\006helmet\030\003 \001(\0132\005.I" +
+      "tem\022\031\n\nchestplate\030\004 \001(\0132\005.Item\022\027\n\010leggin" +
+      "gs\030\005 \001(\0132\005.Item\022\024\n\005boots\030\006 \001(\0132\005.Item\":\n" +
+      "\005Block\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\022" +
+      "\020\n\010block_id\030\004 \001(\t\"5\n\005Chunk\022\t\n\001x\030\001 \001(\005\022\t\n" +
+      "\001z\030\002 \001(\005\022\026\n\006blocks\030\003 \003(\0132\006.BlockB-\n\034moe." +
+      "seikimo.altservice.protoB\nStructures\240\001\001b" +
+      "\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_Packet_descriptor =
+    internal_static_UnionCmdNotify_descriptor =
       getDescriptor().getMessageTypes().get(0);
+    internal_static_UnionCmdNotify_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_UnionCmdNotify_descriptor,
+        new java.lang.String[] { "Packets", });
+    internal_static_Packet_descriptor =
+      getDescriptor().getMessageTypes().get(1);
     internal_static_Packet_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Packet_descriptor,
         new java.lang.String[] { "Id", "Data", });
     internal_static_World_descriptor =
-      getDescriptor().getMessageTypes().get(1);
+      getDescriptor().getMessageTypes().get(2);
     internal_static_World_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_World_descriptor,
         new java.lang.String[] { "Players", "Chunks", });
     internal_static_Player_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_Player_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Player_descriptor,
         new java.lang.String[] { "Id", "Name", "Position", "Rotation", "Attributes", "Inventory", });
     internal_static_Vector3_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_Vector3_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Vector3_descriptor,
         new java.lang.String[] { "X", "Y", "Z", });
     internal_static_Attributes_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_Attributes_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Attributes_descriptor,
         new java.lang.String[] { "Health", "Hunger", "Armor", "XpLevel", "XpProgress", });
     internal_static_Item_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_Item_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Item_descriptor,
         new java.lang.String[] { "ItemId", "Quantity", "Durability", });
     internal_static_Inventory_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_Inventory_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Inventory_descriptor,
         new java.lang.String[] { "Items", "Hotbar", "Helmet", "Chestplate", "Leggings", "Boots", });
     internal_static_Block_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_Block_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Block_descriptor,
         new java.lang.String[] { "X", "Y", "Z", "BlockId", });
     internal_static_Chunk_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_Chunk_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Chunk_descriptor,

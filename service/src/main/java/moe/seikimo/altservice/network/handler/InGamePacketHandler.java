@@ -6,6 +6,10 @@ import moe.seikimo.altservice.player.inventory.Inventory;
 import moe.seikimo.altservice.player.server.ServerBlock;
 import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
+import moe.seikimo.altservice.proto.Frontend;
+import moe.seikimo.altservice.proto.Frontend.ChatMessageNotify;
+import moe.seikimo.altservice.proto.Frontend.FrontendIds;
+import moe.seikimo.altservice.proto.Service;
 import moe.seikimo.altservice.script.event.EventType;
 import moe.seikimo.altservice.script.event.ScriptArgs;
 import moe.seikimo.altservice.utils.objects.Location;
@@ -80,6 +84,13 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
             // Invoke the command.
             AltBackend.getPlayerCommands().invoke(this.getPlayer(), sender, input);
         }
+
+        // Send a chat packet to the backend.
+        AltBackend.getInstance().forward(
+                FrontendIds._ChatMessageNotify,
+                ChatMessageNotify.newBuilder()
+                        .setMessage(message)
+        );
 
         return PacketSignal.HANDLED;
     }

@@ -136,7 +136,11 @@ export enum FrontendIds {
     /**
      * @generated from protobuf enum value: _ChatMessageNotify = 6;
      */
-    _ChatMessageNotify = 6
+    _ChatMessageNotify = 6,
+    /**
+     * @generated from protobuf enum value: _FrontendCmdNotify = -1;
+     */
+    _FrontendCmdNotify = -1
 }
 /**
  * @generated from protobuf enum Action

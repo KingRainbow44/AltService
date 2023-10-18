@@ -17,9 +17,11 @@ import moe.seikimo.altservice.player.PlayerTickThread;
 import moe.seikimo.altservice.player.command.PlayerCommandMap;
 import moe.seikimo.altservice.player.command.action.*;
 import moe.seikimo.altservice.player.command.util.*;
+import moe.seikimo.altservice.proto.Frontend.FrontendIds;
 import moe.seikimo.altservice.proto.Service.ServiceIds;
 import moe.seikimo.altservice.proto.Service.ServiceJoinCsReq;
 import moe.seikimo.altservice.proto.Structures.Packet;
+import moe.seikimo.altservice.proto.Structures.UnionCmdNotify;
 import moe.seikimo.altservice.script.ScriptLoader;
 import moe.seikimo.altservice.utils.BinaryUtils;
 import moe.seikimo.altservice.utils.LoggerUtils;
@@ -255,6 +257,19 @@ public final class AltBackend extends WebSocketClient {
             builder.setData(packet.build().toByteString());
 
         this.send(builder.build());
+    }
+
+    public void forward(FrontendIds packetId, GeneratedMessageV3.Builder<?> packet) {
+        // Build the packet.
+        var builder = Packet.newBuilder()
+                .setId(packetId.getNumber());
+        if (packet != null)
+            builder.setData(packet.build().toByteString());
+
+        // Prepare a union command.
+        var union = UnionCmdNotify.newBuilder()
+                .addPackets(builder.build());
+        this.send(ServiceIds._ServiceCmdNotify, union);
     }
 
     /**

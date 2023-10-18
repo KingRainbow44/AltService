@@ -5,13 +5,16 @@ import moe.seikimo.altservice.client.PanelClient;
 import moe.seikimo.altservice.proto.Frontend.FrontendIds;
 import moe.seikimo.altservice.proto.Frontend.UpdateSessionsScNotify;
 import moe.seikimo.altservice.proto.Structures.Player;
+import org.java_websocket.WebSocket;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Data
 public final class ServiceInstance {
+    private final WebSocket session;
     private final String serverAddress;
     private final short serverPort;
 
@@ -32,7 +35,7 @@ public final class ServiceInstance {
      */
     public void onCreateSession(Player session) {
         this.sessions.put(session.getId(),
-                new Session(session.getId(), session));
+                new Session(this, session.getId(), session));
 
         // Broadcast to all clients.
         this.updateAllSessions();
@@ -45,6 +48,9 @@ public final class ServiceInstance {
      */
     public void onDeleteSession(String sessionId) {
         this.sessions.remove(sessionId);
+
+        // Broadcast to all clients.
+        this.updateAllSessions();
     }
 
     /**
@@ -63,15 +69,24 @@ public final class ServiceInstance {
                 handle.updateSession(session);
             }
         });
+
+        this.updateAllSessions(sessions);
     }
 
     /**
-     * Sends a session update packet.
+     * Updates all sessions.
      */
     public void updateAllSessions() {
         var sessions = this.getSessions().values()
                 .stream().map(Session::getHandle).toList();
 
+        this.updateAllSessions(sessions);
+    }
+
+    /**
+     * Sends a session update packet.
+     */
+    public void updateAllSessions(Collection<Player> sessions) {
         PanelClient.broadcast(
                 FrontendIds._UpdateSessionsScNotify,
                 UpdateSessionsScNotify.newBuilder()

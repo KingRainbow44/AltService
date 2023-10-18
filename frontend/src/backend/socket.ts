@@ -1,6 +1,6 @@
 import { getBaseUrl } from "@app/utils.ts";
 import { base64decode, base64encode, MessageType } from "@protobuf-ts/runtime";
-import { Packet } from "@backend/Structures.ts";
+import { Packet, UnionCmdNotify } from "@backend/Structures.ts";
 import {
     ChatMessageNotify,
     FrontendIds,
@@ -37,6 +37,28 @@ export function send(
     } else {
         socket.send(encodedMessage);
     }
+}
+
+/**
+ * Forwards a packet to the service instance.
+ *
+ * @param id The packet ID.
+ * @param data The packet data.
+ */
+export function broadcast(
+    id: number,
+    data: Uint8Array | null
+): void {
+    // Encode the packet.
+    const encoded = Packet.create({ id });
+    data && (encoded.data = data);
+
+    // Wrap the packet in a union packet.
+    const union = UnionCmdNotify.create({ packets: [encoded] });
+    const message = UnionCmdNotify.toBinary(union);
+
+    // Send the packet.
+    send(FrontendIds._FrontendCmdNotify, message);
 }
 
 /**

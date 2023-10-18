@@ -1,13 +1,20 @@
 package moe.seikimo.altservice.player;
 
 import lombok.Data;
+import moe.seikimo.altservice.AltBackend;
 import moe.seikimo.altservice.Configuration;
+import moe.seikimo.altservice.MessageReceiver;
+import moe.seikimo.altservice.handlers.PacketHandler;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
 import moe.seikimo.altservice.player.inventory.Inventory;
 import moe.seikimo.altservice.player.inventory.PlayerInventory;
 import moe.seikimo.altservice.player.server.ServerBlock;
 import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
+import moe.seikimo.altservice.proto.Frontend.ChatMessageNotify;
+import moe.seikimo.altservice.proto.Frontend.FrontendIds;
+import moe.seikimo.altservice.proto.Service.ServiceIds;
+import moe.seikimo.altservice.proto.Service.UpdateSessionsCsNotify;
 import moe.seikimo.altservice.proto.Structures;
 import moe.seikimo.altservice.script.ScriptManager;
 import moe.seikimo.altservice.utils.EncodingUtils;
@@ -23,7 +30,6 @@ import org.cloudburstmc.protocol.bedrock.data.ClientPlayMode;
 import org.cloudburstmc.protocol.bedrock.data.InputMode;
 import org.cloudburstmc.protocol.bedrock.data.PlayerActionType;
 import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData;
-import org.cloudburstmc.protocol.bedrock.data.entity.EntityLinkData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryActionData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventorySource;
@@ -33,15 +39,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 /** Represents a Minecraft player instance. */
-@Data public final class Player {
+@Data public final class Player implements MessageReceiver {
     private final long creationTime
             = System.currentTimeMillis();
     private final PlayerActions actions
             = new PlayerActions();
+    private final PacketHandler<?> handler
+            = new PacketHandler<>();
 
     private final Map<UUID, ServerPlayer> peers
             = new HashMap<>();
@@ -67,6 +74,24 @@ import java.util.UUID;
 
     private ServerPlayer target = null;
     private ServerEntity riding = null;
+
+    /**
+     * Creates a new player instance.
+     *
+     * @param username The username of the player.
+     * @param lifetime The lifetime of the player.
+     */
+    public Player(String username, long lifetime) {
+        this.username = username;
+        this.lifetime = lifetime;
+
+        this.getHandler().register(
+                FrontendIds._ChatMessageNotify,
+                (ChatMessageNotify packet) ->
+                        this.sendMessage(packet.getMessage()),
+                ChatMessageNotify::parseFrom
+        );
+    }
 
     /**
      * Attempts to log in to the configured server.
@@ -108,6 +133,17 @@ import java.util.UUID;
 
         this.getSession().getLogger().info("Disconnected from server.");
         this.session = null;
+    }
+
+    /**
+     * Sends an update packet to the backend.
+     */
+    public void sendUpdate() {
+        AltBackend.getInstance().send(
+                ServiceIds._UpdateSessionsCsNotify,
+                UpdateSessionsCsNotify.newBuilder()
+                        .addSessions(this.toProto())
+        );
     }
 
     /**
@@ -158,6 +194,8 @@ import java.util.UUID;
     public void setPosition(Vector3f position) {
         if (this.getSession() == null) return;
         this.getLocation().setPosition(position);
+
+        this.sendUpdate();
     }
 
     /**
@@ -168,6 +206,8 @@ import java.util.UUID;
     public void setRotation(Vector3f rotation) {
         if (this.getSession() == null) return;
         this.getLocation().setRotation(rotation);
+
+        this.sendUpdate();
     }
 
     /**

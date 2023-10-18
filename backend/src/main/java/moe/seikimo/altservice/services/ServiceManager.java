@@ -30,7 +30,7 @@ public final class ServiceManager {
         }
 
         // Create a new service instance.
-        var instance = new ServiceInstance(address, port);
+        var instance = new ServiceInstance(socket, address, port);
         instances.put(combined, instance);
 
         // Send back the response packet.

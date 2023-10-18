@@ -4,6 +4,10 @@ option java_package = "moe.seikimo.altservice.proto";
 option java_outer_classname = "Structures";
 option java_generate_equals_and_hash = true;
 
+message UnionCmdNotify {
+  repeated Packet packets = 1;
+}
+
 message Packet {
   uint32 id = 1;
   bytes data = 2;

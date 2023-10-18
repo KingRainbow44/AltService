@@ -47,6 +47,10 @@ public final class Frontend {
      * <code>_ChatMessageNotify = 6;</code>
      */
     _ChatMessageNotify(6),
+    /**
+     * <code>_FrontendCmdNotify = -1;</code>
+     */
+    _FrontendCmdNotify(-1),
     UNRECOGNIZED(-1),
     ;
 
@@ -78,6 +82,10 @@ public final class Frontend {
      * <code>_ChatMessageNotify = 6;</code>
      */
     public static final int _ChatMessageNotify_VALUE = 6;
+    /**
+     * <code>_FrontendCmdNotify = -1;</code>
+     */
+    public static final int _FrontendCmdNotify_VALUE = -1;
 
 
     public final int getNumber() {
@@ -111,6 +119,7 @@ public final class Frontend {
         case 4: return _UpdateSessionsScNotify;
         case 5: return _SessionActionCsNotify;
         case 6: return _ChatMessageNotify;
+        case -1: return _FrontendCmdNotify;
         default: return null;
       }
     }
@@ -5201,15 +5210,15 @@ public final class Frontend {
       "\022\033\n\tdirection\030\002 \001(\0132\010.Vector3\"A\n\014TargetA" +
       "ction\022\022\n\nnew_target\030\001 \001(\t\022\r\n\005guard\030\002 \001(\010" +
       "\022\016\n\006follow\030\003 \001(\010\"$\n\021ChatMessageNotify\022\017\n" +
-      "\007message\030\001 \001(\t*\302\001\n\013FrontendIds\022\026\n\022_Front" +
+      "\007message\030\001 \001(\t*\343\001\n\013FrontendIds\022\026\n\022_Front" +
       "endJoinCsReq\020\000\022\026\n\022_FrontendJoinScRsp\020\001\022\030" +
       "\n\024_GetAllSessionsCsReq\020\002\022\030\n\024_GetAllSessi" +
       "onsScRsp\020\003\022\033\n\027_UpdateSessionsScNotify\020\004\022" +
       "\032\n\026_SessionActionCsNotify\020\005\022\026\n\022_ChatMess" +
-      "ageNotify\020\006*=\n\006Action\022\r\n\tReconnect\020\000\022\016\n\n" +
-      "Disconnect\020\001\022\010\n\004Move\020\002\022\n\n\006Target\020\003B+\n\034mo" +
-      "e.seikimo.altservice.protoB\010Frontend\240\001\001b" +
-      "\006proto3"
+      "ageNotify\020\006\022\037\n\022_FrontendCmdNotify\020\377\377\377\377\377\377" +
+      "\377\377\377\001*=\n\006Action\022\r\n\tReconnect\020\000\022\016\n\nDisconn" +
+      "ect\020\001\022\010\n\004Move\020\002\022\n\n\006Target\020\003B+\n\034moe.seiki" +
+      "mo.altservice.protoB\010Frontend\240\001\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

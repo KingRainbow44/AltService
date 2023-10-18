@@ -7,10 +7,13 @@ import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.plugin.bundled.CorsPluginConfig;
 import lombok.Getter;
+import moe.seikimo.altservice.client.PanelClient;
 import moe.seikimo.altservice.handlers.PacketHandler;
 import moe.seikimo.altservice.handlers.SessionHandlers;
-import moe.seikimo.altservice.proto.Service;
+import moe.seikimo.altservice.proto.Service.ServiceIds;
+import moe.seikimo.altservice.proto.Service.ServiceJoinCsReq;
 import moe.seikimo.altservice.proto.Structures;
+import moe.seikimo.altservice.proto.Structures.UnionCmdNotify;
 import moe.seikimo.altservice.routers.MojangRouter;
 import moe.seikimo.altservice.routers.PanelRouter;
 import moe.seikimo.altservice.services.ServiceManager;
@@ -95,10 +98,16 @@ public final class AltService extends WebSocketServer {
 
         // Register packet handlers.
         this.getPacketHandler().register(
-                Service.ServiceIds._ServiceJoinCsReq,
-                (WebSocket socket, Service.ServiceJoinCsReq packet) ->
+                ServiceIds._ServiceJoinCsReq,
+                (WebSocket socket, ServiceJoinCsReq packet) ->
                         ServiceManager.onServiceJoin(socket, packet),
-                Service.ServiceJoinCsReq::parseFrom
+                ServiceJoinCsReq::parseFrom
+        );
+        this.getPacketHandler().register(
+                ServiceIds._ServiceCmdNotify,
+                (WebSocket socket, UnionCmdNotify packet) ->
+                        PanelClient.broadcast(packet),
+                UnionCmdNotify::parseFrom
         );
         SessionHandlers.register(this.getPacketHandler());
 
@@ -115,7 +124,7 @@ public final class AltService extends WebSocketServer {
      */
     public static void send(
             WebSocket socket,
-            Service.ServiceIds packetId,
+            ServiceIds packetId,
             GeneratedMessageV3.Builder<?> packet
     ) {
         // Build the packet.

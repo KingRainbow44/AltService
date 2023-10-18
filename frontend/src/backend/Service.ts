@@ -11,6 +11,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Packet } from "./Structures";
 import { Player } from "./Structures";
 /**
  * @generated from protobuf message ServiceJoinCsReq
@@ -81,6 +82,19 @@ export interface RequestSessionScNotify {
     lifetime: bigint;
 }
 /**
+ * @generated from protobuf message ServiceCmdNotify
+ */
+export interface ServiceCmdNotify {
+    /**
+     * @generated from protobuf field: Player target = 1;
+     */
+    target?: Player;
+    /**
+     * @generated from protobuf field: Packet packet = 2;
+     */
+    packet?: Packet;
+}
+/**
  * @generated from protobuf enum ServiceIds
  */
 export enum ServiceIds {
@@ -115,7 +129,11 @@ export enum ServiceIds {
     /**
      * @generated from protobuf enum value: _RequestSessionScNotify = 7;
      */
-    _RequestSessionScNotify = 7
+    _RequestSessionScNotify = 7,
+    /**
+     * @generated from protobuf enum value: _ServiceCmdNotify = -1;
+     */
+    _ServiceCmdNotify = -1
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ServiceJoinCsReq$Type extends MessageType<ServiceJoinCsReq> {
@@ -413,3 +431,57 @@ class RequestSessionScNotify$Type extends MessageType<RequestSessionScNotify> {
  * @generated MessageType for protobuf message RequestSessionScNotify
  */
 export const RequestSessionScNotify = new RequestSessionScNotify$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ServiceCmdNotify$Type extends MessageType<ServiceCmdNotify> {
+    constructor() {
+        super("ServiceCmdNotify", [
+            { no: 1, name: "target", kind: "message", T: () => Player },
+            { no: 2, name: "packet", kind: "message", T: () => Packet }
+        ]);
+    }
+    create(value?: PartialMessage<ServiceCmdNotify>): ServiceCmdNotify {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ServiceCmdNotify>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ServiceCmdNotify): ServiceCmdNotify {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* Player target */ 1:
+                    message.target = Player.internalBinaryRead(reader, reader.uint32(), options, message.target);
+                    break;
+                case /* Packet packet */ 2:
+                    message.packet = Packet.internalBinaryRead(reader, reader.uint32(), options, message.packet);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ServiceCmdNotify, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* Player target = 1; */
+        if (message.target)
+            Player.internalBinaryWrite(message.target, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* Packet packet = 2; */
+        if (message.packet)
+            Packet.internalBinaryWrite(message.packet, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ServiceCmdNotify
+ */
+export const ServiceCmdNotify = new ServiceCmdNotify$Type();

@@ -14,6 +14,8 @@ enum FrontendIds {
   _UpdateSessionsScNotify = 4;
   _SessionActionCsNotify = 5;
   _ChatMessageNotify = 6;
+
+  _FrontendCmdNotify = -1;
 }
 
 enum Action {

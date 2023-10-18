@@ -15,6 +15,8 @@ enum ServiceIds {
   _DeleteSessionCsNotify = 5;
   _UpdateSessionsCsNotify = 6;
   _RequestSessionScNotify = 7;
+
+  _ServiceCmdNotify = -1;
 }
 
 message ServiceJoinCsReq {
@@ -44,4 +46,9 @@ message UpdateSessionsCsNotify {
 message RequestSessionScNotify {
   string username = 1;
   int64 lifetime = 2;
+}
+
+message ServiceCmdNotify {
+  Player target = 1;
+  Packet packet = 2;
 }
