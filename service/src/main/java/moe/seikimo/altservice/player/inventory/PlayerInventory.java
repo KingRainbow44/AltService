@@ -150,6 +150,13 @@ import java.util.List;
                     ItemData.AIR, ItemData.AIR
             ));
         }
+        if (this.getItems().size() < 36) {
+            // Fill the inventory until it has 36 items.
+            var diff = 36 - this.getItems().size();
+            for (var i = 0; i < diff; i++) {
+                this.getItems().add(ItemData.AIR);
+            }
+        }
 
         var armor = this.getArmor().stream()
                 .map(EncodingUtils::convert)
@@ -157,7 +164,7 @@ import java.util.List;
         var hotbar = this.getItems().subList(0, 9).stream()
                 .map(EncodingUtils::convert)
                 .toList();
-        var items = this.getItems().subList(9, 37).stream()
+        var items = this.getItems().subList(9, 36).stream()
                 .map(EncodingUtils::convert)
                 .toList();
 
