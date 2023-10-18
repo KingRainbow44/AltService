@@ -16,20 +16,19 @@ import moe.seikimo.altservice.proto.Frontend.FrontendIds;
 import moe.seikimo.altservice.proto.Service.ServiceIds;
 import moe.seikimo.altservice.proto.Service.UpdateSessionsCsNotify;
 import moe.seikimo.altservice.proto.Structures;
+import moe.seikimo.altservice.proto.Structures.Attributes;
 import moe.seikimo.altservice.script.ScriptManager;
 import moe.seikimo.altservice.utils.EncodingUtils;
 import moe.seikimo.altservice.utils.ThreadUtils;
 import moe.seikimo.altservice.utils.objects.ConnectionDetails;
 import moe.seikimo.altservice.utils.objects.Location;
 import moe.seikimo.altservice.utils.objects.absolute.GameConstants;
+import moe.seikimo.altservice.utils.objects.game.Attributable;
 import moe.seikimo.altservice.utils.objects.player.SessionData;
 import org.cloudburstmc.math.vector.Vector2f;
 import org.cloudburstmc.math.vector.Vector3f;
 import org.cloudburstmc.math.vector.Vector3i;
-import org.cloudburstmc.protocol.bedrock.data.ClientPlayMode;
-import org.cloudburstmc.protocol.bedrock.data.InputMode;
-import org.cloudburstmc.protocol.bedrock.data.PlayerActionType;
-import org.cloudburstmc.protocol.bedrock.data.PlayerAuthInputData;
+import org.cloudburstmc.protocol.bedrock.data.*;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryActionData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventorySource;
@@ -42,7 +41,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /** Represents a Minecraft player instance. */
-@Data public final class Player implements MessageReceiver {
+@Data public final class Player implements Attributable, MessageReceiver {
     private final long creationTime
             = System.currentTimeMillis();
     private final PlayerActions actions
@@ -57,6 +56,8 @@ import java.util.UUID;
     private final Map<Vector3i, ServerBlock> blocks
             = new HashMap<>();
     private final Map<Integer, Inventory> inventories
+            = new HashMap<>();
+    private final Map<String, AttributeData> attributes
             = new HashMap<>();
 
     private final PlayerInventory inventory
@@ -597,7 +598,10 @@ import java.util.UUID;
                 .setName(this.getUsername())
                 .setPosition(EncodingUtils.convert(this.getPosition()))
                 .setRotation(EncodingUtils.convert(this.getRotation()))
-                .setAttributes(Structures.Attributes.newBuilder())
+                .setAttributes(Attributes.newBuilder()
+                        .setHealth(this.getAttributeValue("minecraft:health", 20f))
+                        .setHunger(this.getAttributeValue("minecraft:player.hunger", 20f))
+                        .setArmor(this.getInventory().computeArmor()))
                 .setInventory(this.getInventory().toProto())
                 .build();
     }

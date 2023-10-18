@@ -240,6 +240,9 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
             }
         }
 
+        // Update the player.
+        this.getPlayer().sendUpdate();
+
         return PacketSignal.HANDLED;
     }
 
@@ -256,6 +259,9 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
             case ContainerId.UI -> { /* Do nothing. This is the UI container. */ }
             default -> this.getLogger().debug("Received inventory slot packet for container {}.", packet.getContainerId());
         }
+
+        // Update the player.
+        this.getPlayer().sendUpdate();
 
         return PacketSignal.HANDLED;
     }
@@ -300,6 +306,29 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
     public PacketSignal handle(SetEntityDataPacket packet) {
         var entity = this.getPlayer().getEntityById(packet.getRuntimeEntityId());
         if (entity != null) entity.setProperties(packet.getProperties());
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(UpdateAttributesPacket packet) {
+        var runtimeId = packet.getRuntimeEntityId();
+        var attributes = packet.getAttributes();
+
+        // Check if the runtime ID matches the player.
+        if (runtimeId == this.getPlayer().getEntityId()) {
+            // Update the player's attributes.
+            this.getPlayer().updateAttributes(attributes);
+
+            // Update the player.
+            this.getPlayer().sendUpdate();
+        } else {
+            // Update the entity's attributes.
+            var entity = this.getPlayer().getEntityById(runtimeId);
+            if (entity != null) {
+                entity.updateAttributes(attributes);
+            }
+        }
 
         return PacketSignal.HANDLED;
     }

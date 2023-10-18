@@ -4640,28 +4640,28 @@ public final class Structures {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>uint32 health = 1;</code>
+     * <code>float health = 1;</code>
      * @return The health.
      */
-    int getHealth();
+    float getHealth();
 
     /**
-     * <code>uint32 hunger = 2;</code>
+     * <code>float hunger = 2;</code>
      * @return The hunger.
      */
-    int getHunger();
+    float getHunger();
 
     /**
-     * <code>uint32 armor = 3;</code>
+     * <code>float armor = 3;</code>
      * @return The armor.
      */
-    int getArmor();
+    float getArmor();
 
     /**
-     * <code>uint32 xp_level = 4;</code>
+     * <code>float xp_level = 4;</code>
      * @return The xpLevel.
      */
-    int getXpLevel();
+    float getXpLevel();
 
     /**
      * <code>uint32 xp_progress = 5;</code>
@@ -4705,46 +4705,46 @@ public final class Structures {
     }
 
     public static final int HEALTH_FIELD_NUMBER = 1;
-    private int health_ = 0;
+    private float health_ = 0F;
     /**
-     * <code>uint32 health = 1;</code>
+     * <code>float health = 1;</code>
      * @return The health.
      */
     @java.lang.Override
-    public int getHealth() {
+    public float getHealth() {
       return health_;
     }
 
     public static final int HUNGER_FIELD_NUMBER = 2;
-    private int hunger_ = 0;
+    private float hunger_ = 0F;
     /**
-     * <code>uint32 hunger = 2;</code>
+     * <code>float hunger = 2;</code>
      * @return The hunger.
      */
     @java.lang.Override
-    public int getHunger() {
+    public float getHunger() {
       return hunger_;
     }
 
     public static final int ARMOR_FIELD_NUMBER = 3;
-    private int armor_ = 0;
+    private float armor_ = 0F;
     /**
-     * <code>uint32 armor = 3;</code>
+     * <code>float armor = 3;</code>
      * @return The armor.
      */
     @java.lang.Override
-    public int getArmor() {
+    public float getArmor() {
       return armor_;
     }
 
     public static final int XP_LEVEL_FIELD_NUMBER = 4;
-    private int xpLevel_ = 0;
+    private float xpLevel_ = 0F;
     /**
-     * <code>uint32 xp_level = 4;</code>
+     * <code>float xp_level = 4;</code>
      * @return The xpLevel.
      */
     @java.lang.Override
-    public int getXpLevel() {
+    public float getXpLevel() {
       return xpLevel_;
     }
 
@@ -4773,17 +4773,17 @@ public final class Structures {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (health_ != 0) {
-        output.writeUInt32(1, health_);
+      if (java.lang.Float.floatToRawIntBits(health_) != 0) {
+        output.writeFloat(1, health_);
       }
-      if (hunger_ != 0) {
-        output.writeUInt32(2, hunger_);
+      if (java.lang.Float.floatToRawIntBits(hunger_) != 0) {
+        output.writeFloat(2, hunger_);
       }
-      if (armor_ != 0) {
-        output.writeUInt32(3, armor_);
+      if (java.lang.Float.floatToRawIntBits(armor_) != 0) {
+        output.writeFloat(3, armor_);
       }
-      if (xpLevel_ != 0) {
-        output.writeUInt32(4, xpLevel_);
+      if (java.lang.Float.floatToRawIntBits(xpLevel_) != 0) {
+        output.writeFloat(4, xpLevel_);
       }
       if (xpProgress_ != 0) {
         output.writeUInt32(5, xpProgress_);
@@ -4797,21 +4797,21 @@ public final class Structures {
       if (size != -1) return size;
 
       size = 0;
-      if (health_ != 0) {
+      if (java.lang.Float.floatToRawIntBits(health_) != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, health_);
+          .computeFloatSize(1, health_);
       }
-      if (hunger_ != 0) {
+      if (java.lang.Float.floatToRawIntBits(hunger_) != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(2, hunger_);
+          .computeFloatSize(2, hunger_);
       }
-      if (armor_ != 0) {
+      if (java.lang.Float.floatToRawIntBits(armor_) != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(3, armor_);
+          .computeFloatSize(3, armor_);
       }
-      if (xpLevel_ != 0) {
+      if (java.lang.Float.floatToRawIntBits(xpLevel_) != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(4, xpLevel_);
+          .computeFloatSize(4, xpLevel_);
       }
       if (xpProgress_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -4832,14 +4832,18 @@ public final class Structures {
       }
       moe.seikimo.altservice.proto.Structures.Attributes other = (moe.seikimo.altservice.proto.Structures.Attributes) obj;
 
-      if (getHealth()
-          != other.getHealth()) return false;
-      if (getHunger()
-          != other.getHunger()) return false;
-      if (getArmor()
-          != other.getArmor()) return false;
-      if (getXpLevel()
-          != other.getXpLevel()) return false;
+      if (java.lang.Float.floatToIntBits(getHealth())
+          != java.lang.Float.floatToIntBits(
+              other.getHealth())) return false;
+      if (java.lang.Float.floatToIntBits(getHunger())
+          != java.lang.Float.floatToIntBits(
+              other.getHunger())) return false;
+      if (java.lang.Float.floatToIntBits(getArmor())
+          != java.lang.Float.floatToIntBits(
+              other.getArmor())) return false;
+      if (java.lang.Float.floatToIntBits(getXpLevel())
+          != java.lang.Float.floatToIntBits(
+              other.getXpLevel())) return false;
       if (getXpProgress()
           != other.getXpProgress()) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -4854,13 +4858,17 @@ public final class Structures {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + HEALTH_FIELD_NUMBER;
-      hash = (53 * hash) + getHealth();
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getHealth());
       hash = (37 * hash) + HUNGER_FIELD_NUMBER;
-      hash = (53 * hash) + getHunger();
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getHunger());
       hash = (37 * hash) + ARMOR_FIELD_NUMBER;
-      hash = (53 * hash) + getArmor();
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getArmor());
       hash = (37 * hash) + XP_LEVEL_FIELD_NUMBER;
-      hash = (53 * hash) + getXpLevel();
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getXpLevel());
       hash = (37 * hash) + XP_PROGRESS_FIELD_NUMBER;
       hash = (53 * hash) + getXpProgress();
       hash = (29 * hash) + getUnknownFields().hashCode();
@@ -4994,10 +5002,10 @@ public final class Structures {
       public Builder clear() {
         super.clear();
         bitField0_ = 0;
-        health_ = 0;
-        hunger_ = 0;
-        armor_ = 0;
-        xpLevel_ = 0;
+        health_ = 0F;
+        hunger_ = 0F;
+        armor_ = 0F;
+        xpLevel_ = 0F;
         xpProgress_ = 0;
         return this;
       }
@@ -5093,16 +5101,16 @@ public final class Structures {
 
       public Builder mergeFrom(moe.seikimo.altservice.proto.Structures.Attributes other) {
         if (other == moe.seikimo.altservice.proto.Structures.Attributes.getDefaultInstance()) return this;
-        if (other.getHealth() != 0) {
+        if (other.getHealth() != 0F) {
           setHealth(other.getHealth());
         }
-        if (other.getHunger() != 0) {
+        if (other.getHunger() != 0F) {
           setHunger(other.getHunger());
         }
-        if (other.getArmor() != 0) {
+        if (other.getArmor() != 0F) {
           setArmor(other.getArmor());
         }
-        if (other.getXpLevel() != 0) {
+        if (other.getXpLevel() != 0F) {
           setXpLevel(other.getXpLevel());
         }
         if (other.getXpProgress() != 0) {
@@ -5134,26 +5142,26 @@ public final class Structures {
               case 0:
                 done = true;
                 break;
-              case 8: {
-                health_ = input.readUInt32();
+              case 13: {
+                health_ = input.readFloat();
                 bitField0_ |= 0x00000001;
                 break;
-              } // case 8
-              case 16: {
-                hunger_ = input.readUInt32();
+              } // case 13
+              case 21: {
+                hunger_ = input.readFloat();
                 bitField0_ |= 0x00000002;
                 break;
-              } // case 16
-              case 24: {
-                armor_ = input.readUInt32();
+              } // case 21
+              case 29: {
+                armor_ = input.readFloat();
                 bitField0_ |= 0x00000004;
                 break;
-              } // case 24
-              case 32: {
-                xpLevel_ = input.readUInt32();
+              } // case 29
+              case 37: {
+                xpLevel_ = input.readFloat();
                 bitField0_ |= 0x00000008;
                 break;
-              } // case 32
+              } // case 37
               case 40: {
                 xpProgress_ = input.readUInt32();
                 bitField0_ |= 0x00000010;
@@ -5176,21 +5184,21 @@ public final class Structures {
       }
       private int bitField0_;
 
-      private int health_ ;
+      private float health_ ;
       /**
-       * <code>uint32 health = 1;</code>
+       * <code>float health = 1;</code>
        * @return The health.
        */
       @java.lang.Override
-      public int getHealth() {
+      public float getHealth() {
         return health_;
       }
       /**
-       * <code>uint32 health = 1;</code>
+       * <code>float health = 1;</code>
        * @param value The health to set.
        * @return This builder for chaining.
        */
-      public Builder setHealth(int value) {
+      public Builder setHealth(float value) {
 
         health_ = value;
         bitField0_ |= 0x00000001;
@@ -5198,31 +5206,31 @@ public final class Structures {
         return this;
       }
       /**
-       * <code>uint32 health = 1;</code>
+       * <code>float health = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearHealth() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        health_ = 0;
+        health_ = 0F;
         onChanged();
         return this;
       }
 
-      private int hunger_ ;
+      private float hunger_ ;
       /**
-       * <code>uint32 hunger = 2;</code>
+       * <code>float hunger = 2;</code>
        * @return The hunger.
        */
       @java.lang.Override
-      public int getHunger() {
+      public float getHunger() {
         return hunger_;
       }
       /**
-       * <code>uint32 hunger = 2;</code>
+       * <code>float hunger = 2;</code>
        * @param value The hunger to set.
        * @return This builder for chaining.
        */
-      public Builder setHunger(int value) {
+      public Builder setHunger(float value) {
 
         hunger_ = value;
         bitField0_ |= 0x00000002;
@@ -5230,31 +5238,31 @@ public final class Structures {
         return this;
       }
       /**
-       * <code>uint32 hunger = 2;</code>
+       * <code>float hunger = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearHunger() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        hunger_ = 0;
+        hunger_ = 0F;
         onChanged();
         return this;
       }
 
-      private int armor_ ;
+      private float armor_ ;
       /**
-       * <code>uint32 armor = 3;</code>
+       * <code>float armor = 3;</code>
        * @return The armor.
        */
       @java.lang.Override
-      public int getArmor() {
+      public float getArmor() {
         return armor_;
       }
       /**
-       * <code>uint32 armor = 3;</code>
+       * <code>float armor = 3;</code>
        * @param value The armor to set.
        * @return This builder for chaining.
        */
-      public Builder setArmor(int value) {
+      public Builder setArmor(float value) {
 
         armor_ = value;
         bitField0_ |= 0x00000004;
@@ -5262,31 +5270,31 @@ public final class Structures {
         return this;
       }
       /**
-       * <code>uint32 armor = 3;</code>
+       * <code>float armor = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearArmor() {
         bitField0_ = (bitField0_ & ~0x00000004);
-        armor_ = 0;
+        armor_ = 0F;
         onChanged();
         return this;
       }
 
-      private int xpLevel_ ;
+      private float xpLevel_ ;
       /**
-       * <code>uint32 xp_level = 4;</code>
+       * <code>float xp_level = 4;</code>
        * @return The xpLevel.
        */
       @java.lang.Override
-      public int getXpLevel() {
+      public float getXpLevel() {
         return xpLevel_;
       }
       /**
-       * <code>uint32 xp_level = 4;</code>
+       * <code>float xp_level = 4;</code>
        * @param value The xpLevel to set.
        * @return This builder for chaining.
        */
-      public Builder setXpLevel(int value) {
+      public Builder setXpLevel(float value) {
 
         xpLevel_ = value;
         bitField0_ |= 0x00000008;
@@ -5294,12 +5302,12 @@ public final class Structures {
         return this;
       }
       /**
-       * <code>uint32 xp_level = 4;</code>
+       * <code>float xp_level = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearXpLevel() {
         bitField0_ = (bitField0_ & ~0x00000008);
-        xpLevel_ = 0;
+        xpLevel_ = 0F;
         onChanged();
         return this;
       }
@@ -9823,8 +9831,8 @@ public final class Structures {
       "2\010.Vector3\022\037\n\nattributes\030\005 \001(\0132\013.Attribu" +
       "tes\022\035\n\tinventory\030\006 \001(\0132\n.Inventory\"*\n\007Ve" +
       "ctor3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\"b" +
-      "\n\nAttributes\022\016\n\006health\030\001 \001(\r\022\016\n\006hunger\030\002" +
-      " \001(\r\022\r\n\005armor\030\003 \001(\r\022\020\n\010xp_level\030\004 \001(\r\022\023\n" +
+      "\n\nAttributes\022\016\n\006health\030\001 \001(\002\022\016\n\006hunger\030\002" +
+      " \001(\002\022\r\n\005armor\030\003 \001(\002\022\020\n\010xp_level\030\004 \001(\002\022\023\n" +
       "\013xp_progress\030\005 \001(\r\"=\n\004Item\022\017\n\007item_id\030\001 " +
       "\001(\t\022\020\n\010quantity\030\002 \001(\r\022\022\n\ndurability\030\003 \001(" +
       "\r\"\231\001\n\tInventory\022\024\n\005items\030\001 \003(\0132\005.Item\022\025\n" +

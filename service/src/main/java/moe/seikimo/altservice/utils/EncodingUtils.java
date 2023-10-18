@@ -13,6 +13,7 @@ import java.io.Reader;
 import java.math.BigInteger;
 import java.security.SignatureException;
 import java.util.Base64;
+import java.util.Objects;
 
 public interface EncodingUtils {
     Gson JSON = new GsonBuilder()
@@ -258,8 +259,13 @@ public interface EncodingUtils {
                     .build();
         }
 
+        var identifier = item.getDefinition().getIdentifier();
+        if (Objects.equals(identifier, "")) {
+            identifier = "minecraft:air";
+        }
+
         return Structures.Item.newBuilder()
-                .setItemId(item.getDefinition().getIdentifier())
+                .setItemId(identifier)
                 .setDurability(item.getDamage())
                 .setQuantity(item.getCount())
                 .build();

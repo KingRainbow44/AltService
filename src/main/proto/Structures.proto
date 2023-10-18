@@ -34,10 +34,10 @@ message Vector3 {
 }
 
 message Attributes {
-  uint32 health = 1;
-  uint32 hunger = 2;
-  uint32 armor = 3;
-  uint32 xp_level = 4;
+  float health = 1;
+  float hunger = 2;
+  float armor = 3;
+  float xp_level = 4;
   uint32 xp_progress = 5;
 }
 

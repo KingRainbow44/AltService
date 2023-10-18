@@ -70,4 +70,23 @@ public interface GameConstants {
             AltBackend.getLogger().warn("Failed to load block palette!");
         }
     }
+
+    /**
+     * Gets the armor points of an item.
+     *
+     * @param itemId The identifier of the item.
+     * @return The armor points.
+     */
+    static float getArmorPoints(String itemId) {
+        return switch (itemId) {
+            default -> 0.0f;
+            case "minecraft:leather_helmet", "minecraft:leather_boots", "minecraft:chainmail_boots", "minecraft:golden_boots" -> 1.0f;
+            case "minecraft:leather_chestplate", "minecraft:netherite_boots", "minecraft:netherite_helmet", "minecraft:diamond_boots", "minecraft:diamond_helmet", "minecraft:golden_leggings" -> 3.0f;
+            case "minecraft:leather_leggings", "minecraft:iron_boots", "minecraft:iron_helmet", "minecraft:chainmail_helmet", "minecraft:golden_helmet" -> 2.0f;
+            case "minecraft:golden_chestplate", "minecraft:iron_leggings", "minecraft:chainmail_chestplate" -> 5.0f;
+            case "minecraft:chainmail_leggings" -> 4.0f;
+            case "minecraft:iron_chestplate", "minecraft:netherite_leggings", "minecraft:diamond_leggings" -> 6.0f;
+            case "minecraft:diamond_chestplate", "minecraft:netherite_chestplate" -> 8.0f;
+        };
+    }
 }

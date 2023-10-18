@@ -5,6 +5,7 @@ import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.proto.Structures;
 import moe.seikimo.altservice.utils.EncodingUtils;
 import moe.seikimo.altservice.utils.RandomUtils;
+import moe.seikimo.altservice.utils.objects.absolute.GameConstants;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerSlotType;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
@@ -164,5 +165,19 @@ import java.util.List;
                 .setBoots(armor.get(3))
                 .addAllItems(items)
                 .build();
+    }
+
+    /**
+     * @return The armor value of the player.
+     */
+    public float computeArmor() {
+        var armor = 0.0f;
+        for (var item : this.getArmor()) {
+            if (item == null) continue;
+
+            armor += GameConstants.getArmorPoints(
+                    item.getDefinition().getIdentifier());
+        }
+        return armor;
     }
 }

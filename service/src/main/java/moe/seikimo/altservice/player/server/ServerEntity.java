@@ -2,15 +2,19 @@ package moe.seikimo.altservice.player.server;
 
 import lombok.Data;
 import moe.seikimo.altservice.utils.objects.Location;
+import moe.seikimo.altservice.utils.objects.game.Attributable;
 import org.cloudburstmc.math.vector.Vector3f;
+import org.cloudburstmc.protocol.bedrock.data.AttributeData;
 import org.cloudburstmc.protocol.bedrock.data.entity.EntityProperties;
 import org.cloudburstmc.protocol.bedrock.packet.AddEntityPacket;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-@Data public class ServerEntity {
+@Data public class ServerEntity implements Attributable {
     /**
      * Creates a new server entity from the specified packet.
      *
@@ -36,6 +40,8 @@ import java.util.Set;
     private final String identifier;
 
     private EntityProperties properties = new EntityProperties();
+    private final Map<String, AttributeData> attributes = new HashMap<>();
+
     private Location location = Location.ZERO();
 
     @Nullable private ServerEntity riding;
