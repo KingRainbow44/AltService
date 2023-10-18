@@ -601,6 +601,9 @@ import java.util.UUID;
                 .setAttributes(Attributes.newBuilder()
                         .setHealth(this.getAttributeValue("minecraft:health", 20f))
                         .setHunger(this.getAttributeValue("minecraft:player.hunger", 20f))
+                        .setXpLevel(this.getAttributeValue("minecraft:player.level", 0f))
+                        .setXpProgress(Math.round(this.getAttributeValue(
+                                "minecraft:player.experience", 0f) * 100))
                         .setArmor(this.getInventory().computeArmor()))
                 .setInventory(this.getInventory().toProto())
                 .build();
