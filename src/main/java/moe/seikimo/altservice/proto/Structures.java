@@ -801,7 +801,7 @@ public final class Structures {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>uint32 id = 1;</code>
+     * <code>int32 id = 1;</code>
      * @return The id.
      */
     int getId();
@@ -851,7 +851,7 @@ public final class Structures {
     public static final int ID_FIELD_NUMBER = 1;
     private int id_ = 0;
     /**
-     * <code>uint32 id = 1;</code>
+     * <code>int32 id = 1;</code>
      * @return The id.
      */
     @java.lang.Override
@@ -885,7 +885,7 @@ public final class Structures {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0) {
-        output.writeUInt32(1, id_);
+        output.writeInt32(1, id_);
       }
       if (!data_.isEmpty()) {
         output.writeBytes(2, data_);
@@ -901,7 +901,7 @@ public final class Structures {
       size = 0;
       if (id_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, id_);
+          .computeInt32Size(1, id_);
       }
       if (!data_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
@@ -1192,7 +1192,7 @@ public final class Structures {
                 done = true;
                 break;
               case 8: {
-                id_ = input.readUInt32();
+                id_ = input.readInt32();
                 bitField0_ |= 0x00000001;
                 break;
               } // case 8
@@ -1220,7 +1220,7 @@ public final class Structures {
 
       private int id_ ;
       /**
-       * <code>uint32 id = 1;</code>
+       * <code>int32 id = 1;</code>
        * @return The id.
        */
       @java.lang.Override
@@ -1228,7 +1228,7 @@ public final class Structures {
         return id_;
       }
       /**
-       * <code>uint32 id = 1;</code>
+       * <code>int32 id = 1;</code>
        * @param value The id to set.
        * @return This builder for chaining.
        */
@@ -1240,7 +1240,7 @@ public final class Structures {
         return this;
       }
       /**
-       * <code>uint32 id = 1;</code>
+       * <code>int32 id = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearId() {
@@ -10024,7 +10024,7 @@ public final class Structures {
     java.lang.String[] descriptorData = {
       "\n\020Structures.proto\"*\n\016UnionCmdNotify\022\030\n\007" +
       "packets\030\001 \003(\0132\007.Packet\"\"\n\006Packet\022\n\n\002id\030\001" +
-      " \001(\r\022\014\n\004data\030\002 \001(\014\"9\n\005World\022\030\n\007players\030\001" +
+      " \001(\005\022\014\n\004data\030\002 \001(\014\"9\n\005World\022\030\n\007players\030\001" +
       " \003(\0132\007.Player\022\026\n\006chunks\030\002 \003(\0132\006.Chunk\"\232\001" +
       "\n\006Player\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\032\n\010po" +
       "sition\030\003 \001(\0132\010.Vector3\022\032\n\010rotation\030\004 \001(\013" +

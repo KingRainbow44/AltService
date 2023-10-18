@@ -25,7 +25,7 @@ export interface UnionCmdNotify {
  */
 export interface Packet {
     /**
-     * @generated from protobuf field: uint32 id = 1;
+     * @generated from protobuf field: int32 id = 1;
      */
     id: number;
     /**
@@ -256,7 +256,7 @@ export const UnionCmdNotify = new UnionCmdNotify$Type();
 class Packet$Type extends MessageType<Packet> {
     constructor() {
         super("Packet", [
-            { no: 1, name: "id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 1, name: "id", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "data", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
@@ -272,8 +272,8 @@ class Packet$Type extends MessageType<Packet> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* uint32 id */ 1:
-                    message.id = reader.uint32();
+                case /* int32 id */ 1:
+                    message.id = reader.int32();
                     break;
                 case /* bytes data */ 2:
                     message.data = reader.bytes();
@@ -290,9 +290,9 @@ class Packet$Type extends MessageType<Packet> {
         return message;
     }
     internalBinaryWrite(message: Packet, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint32 id = 1; */
+        /* int32 id = 1; */
         if (message.id !== 0)
-            writer.tag(1, WireType.Varint).uint32(message.id);
+            writer.tag(1, WireType.Varint).int32(message.id);
         /* bytes data = 2; */
         if (message.data.length)
             writer.tag(2, WireType.LengthDelimited).bytes(message.data);
