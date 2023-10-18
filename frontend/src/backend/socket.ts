@@ -1,4 +1,4 @@
-import { getBaseUrl } from "@app/utils.ts";
+import { getBaseUrl } from "@app/utils.tsx";
 import { base64decode, base64encode, MessageType } from "@protobuf-ts/runtime";
 import { Packet, UnionCmdNotify } from "@backend/Structures.ts";
 import {

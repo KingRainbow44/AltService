@@ -3,6 +3,7 @@ import { Component } from "preact";
 import "@css/widgets/Chat.scss";
 import SocketEvent, * as socket from "@backend/socket.ts";
 import { ChatMessageNotify, FrontendIds } from "@backend/Frontend.ts";
+import { textToHtml } from "@app/utils.tsx";
 
 interface IProps {
 
@@ -76,8 +77,8 @@ class Chat extends Component<IProps, IState> {
             <div className={"Chat"}>
                 <div id={"messages"} class={"Chat_Messages"}>
                     {
-                        this.state.messages.map((message, index) =>
-                            <p key={index}>{message}</p>
+                        this.state.messages.map((message) =>
+                            <>{textToHtml(message)}</>
                         )
                     }
                 </div>

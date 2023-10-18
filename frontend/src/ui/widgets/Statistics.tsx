@@ -2,7 +2,7 @@ import { Component } from "preact";
 
 import { Attributes, Vector3 } from "@backend/Structures.ts";
 
-import { toArray } from "@app/utils.ts";
+import { toArray } from "@app/utils.tsx";
 
 import "@css/widgets/Statistics.scss";
 
