@@ -12,6 +12,7 @@ import moe.seikimo.altservice.command.util.ReloadCommand;
 import moe.seikimo.altservice.command.util.RunScriptCommand;
 import moe.seikimo.altservice.command.util.StopCommand;
 import moe.seikimo.altservice.handlers.PacketHandler;
+import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.player.PlayerTickThread;
 import moe.seikimo.altservice.player.command.PlayerCommandMap;
@@ -20,6 +21,7 @@ import moe.seikimo.altservice.player.command.util.*;
 import moe.seikimo.altservice.proto.Frontend.FrontendIds;
 import moe.seikimo.altservice.proto.Service.ServiceIds;
 import moe.seikimo.altservice.proto.Service.ServiceJoinCsReq;
+import moe.seikimo.altservice.proto.Service.UpdateSessionsCsNotify;
 import moe.seikimo.altservice.proto.Structures.Packet;
 import moe.seikimo.altservice.proto.Structures.UnionCmdNotify;
 import moe.seikimo.altservice.script.ScriptLoader;
@@ -237,7 +239,15 @@ public final class AltBackend extends WebSocketClient {
         // Register all packet handlers.
         this.getPacketHandler().register(
                 ServiceIds._ServiceJoinScRsp,
-                (packet) -> AltBackend.getLogger().info("Backend accepted connection."),
+                (packet) -> {
+                    AltBackend.getLogger().info("Backend accepted connection.");
+                    AltBackend.getInstance().send(
+                            ServiceIds._UpdateSessionsCsNotify,
+                            UpdateSessionsCsNotify.newBuilder()
+                                    .addAllSessions(PlayerManager.getPlayers().stream()
+                                            .map(Player::toProto).toList())
+                    );
+                },
                 null
         );
         PacketHandlers.register(this.getPacketHandler());
