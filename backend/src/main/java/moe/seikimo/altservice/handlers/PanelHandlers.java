@@ -3,11 +3,7 @@ package moe.seikimo.altservice.handlers;
 import com.google.protobuf.GeneratedMessageV3;
 import moe.seikimo.altservice.AltService;
 import moe.seikimo.altservice.client.PanelClient;
-import moe.seikimo.altservice.proto.Frontend;
-import moe.seikimo.altservice.proto.Frontend.Action;
-import moe.seikimo.altservice.proto.Frontend.ChatMessageNotify;
-import moe.seikimo.altservice.proto.Frontend.FrontendIds;
-import moe.seikimo.altservice.proto.Frontend.SessionActionCsNotify;
+import moe.seikimo.altservice.proto.Frontend.*;
 import moe.seikimo.altservice.services.ServiceManager;
 
 public interface PanelHandlers {
@@ -21,6 +17,12 @@ public interface PanelHandlers {
                 FrontendIds._FrontendJoinCsReq,
                 (PanelClient client, GeneratedMessageV3 message) ->
                         PanelHandlers.handleJoin(client),
+                null
+        );
+        handler.register(
+                FrontendIds._GetAllSessionsCsReq,
+                (PanelClient client, GeneratedMessageV3 message) ->
+                        PanelHandlers.handleGetAllSessions(client),
                 null
         );
         handler.register(
@@ -45,6 +47,17 @@ public interface PanelHandlers {
     static void handleJoin(PanelClient client) {
         client.send(FrontendIds._FrontendJoinScRsp, null);
         AltService.getLogger().info("Client {} connected.", client.getAddress());
+    }
+
+    /**
+     * Handles a get all sessions request.
+     *
+     * @param client The client.
+     */
+    static void handleGetAllSessions(PanelClient client) {
+        client.send(FrontendIds._GetAllSessionsScRsp,
+                GetAllSessionsScRsp.newBuilder()
+                        .addAllSessions(ServiceManager.getAllSessions()));
     }
 
     /**
