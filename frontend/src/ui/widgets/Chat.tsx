@@ -62,12 +62,12 @@ class Chat extends Component<IProps, IState> {
     }
 
     componentDidUpdate(_a: Readonly<IProps>, previousState: Readonly<IState>, _b: any) {
+        if (!this.messages) return;
+
         // Check if the messages have changed.
         if (previousState.messages.length != this.state.messages.length) {
             // Scroll to the bottom of the messages.
-            if (this.messages) {
-                this.messages.scrollTop = this.messages.scrollHeight;
-            }
+            this.messages.scrollTop = this.messages.scrollHeight;
         }
     }
 
