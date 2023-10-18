@@ -56,6 +56,11 @@ function updateSessions(newSessions: Player[]) {
         sessions[session.id] = session;
     }
 
+    // Update the active session.
+    if (activeSession) {
+        activeSession = sessions[activeSession.id] ?? null;
+    }
+
     emitter.emit("update", sessions);
     console.debug("Updated all sessions.", sessions);
 }
