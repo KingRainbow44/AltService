@@ -88,22 +88,37 @@ class Inventory extends Component<IProps, IState> {
                 <div class={"Inventory_Equipment"}>
                     <InventorySlot
                         placeholder={"helmet"}
+                        itemId={inventory.helmet?.itemId}
+                        count={inventory.helmet?.quantity}
+                        damage={inventory.helmet?.durability}
                     />
 
                     <InventorySlot
                         placeholder={"chestplate"}
+                        itemId={inventory.chestplate?.itemId}
+                        count={inventory.chestplate?.quantity}
+                        damage={inventory.chestplate?.durability}
                     />
 
                     <InventorySlot
                         placeholder={"leggings"}
+                        itemId={inventory.leggings?.itemId}
+                        count={inventory.leggings?.quantity}
+                        damage={inventory.leggings?.durability}
                     />
 
                     <InventorySlot
                         placeholder={"boots"}
+                        itemId={inventory.boots?.itemId}
+                        count={inventory.boots?.quantity}
+                        damage={inventory.boots?.durability}
                     />
 
                     <InventorySlot
                         placeholder={"shield"}
+                        itemId={inventory.offhand?.itemId}
+                        count={inventory.offhand?.quantity}
+                        damage={inventory.offhand?.durability}
                     />
                 </div>
 
