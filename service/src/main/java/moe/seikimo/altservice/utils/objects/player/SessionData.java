@@ -20,5 +20,6 @@ public final class SessionData {
 
     /* Player properties. */
     private boolean grounded = true;
+    private boolean reconnect = false;
     private boolean serverMovement = false;
 }

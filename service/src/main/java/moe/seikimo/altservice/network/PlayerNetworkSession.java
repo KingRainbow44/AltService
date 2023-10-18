@@ -191,6 +191,11 @@ public final class PlayerNetworkSession {
      * @param reason The reason for disconnection.
      */
     public void onDisconnect(String reason) {
+        if (this.getData().isReconnect()) {
+            this.connect(this.getServer());
+            return;
+        }
+
         this.close(reason);
         this.getLogger().info("Disconnected from server for {}.", reason);
 

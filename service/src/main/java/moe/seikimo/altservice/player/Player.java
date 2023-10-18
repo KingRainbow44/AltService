@@ -13,6 +13,7 @@ import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
 import moe.seikimo.altservice.proto.Frontend.ChatMessageNotify;
 import moe.seikimo.altservice.proto.Frontend.FrontendIds;
+import moe.seikimo.altservice.proto.Frontend.SessionActionCsNotify;
 import moe.seikimo.altservice.proto.Service.ServiceIds;
 import moe.seikimo.altservice.proto.Service.UpdateSessionsCsNotify;
 import moe.seikimo.altservice.proto.Structures;
@@ -91,6 +92,12 @@ import java.util.UUID;
                 (ChatMessageNotify packet) ->
                         this.sendMessage(packet.getMessage()),
                 ChatMessageNotify::parseFrom
+        );
+        this.getHandler().register(
+                FrontendIds._SessionActionCsNotify,
+                (SessionActionCsNotify packet) ->
+                        this.onSessionAction(packet),
+                SessionActionCsNotify::parseFrom
         );
     }
 
@@ -283,6 +290,26 @@ import java.util.UUID;
 
             // Move to the entity.
             this.move(target.getPosition(), target.getRotation());
+        }
+    }
+
+    /**
+     * Handles a session action packet.
+     *
+     * @param packet The packet.
+     */
+    public void onSessionAction(SessionActionCsNotify packet) {
+        switch (packet.getAction()) {
+            case Disconnect -> this.disconnect();
+            case Reconnect -> {
+                if (this.getSession() == null) return;
+
+                var sessionData = this.getData();
+                assert sessionData != null;
+
+                // Toggle auto-reconnect.
+                sessionData.setReconnect(!sessionData.isReconnect());
+            }
         }
     }
 
