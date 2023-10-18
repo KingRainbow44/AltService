@@ -3,13 +3,28 @@ package moe.seikimo.altservice.services;
 import moe.seikimo.altservice.AltService;
 import moe.seikimo.altservice.proto.Service.ServiceIds;
 import moe.seikimo.altservice.proto.Service.ServiceJoinCsReq;
+import moe.seikimo.altservice.proto.Structures.Player;
 import org.java_websocket.WebSocket;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class ServiceManager {
     private static final Map<String, ServiceInstance> instances = new HashMap<>();
+
+    /**
+     * Aggregates all sessions from all services.
+     *
+     * @return The sessions.
+     */
+    public static Collection<Player> getAllSessions() {
+        return instances.values().stream()
+                .map(instance -> instance.getSessions().values())
+                .flatMap(Collection::stream)
+                .map(Session::getHandle)
+                .toList();
+    }
 
     /**
      * Invoked when a service requests to connect.
