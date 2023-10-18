@@ -52,9 +52,7 @@ public final class Style {
         var i = 0;
         while (i < input.length()) {
             var c = input.charAt(i);
-            if (c == '&' || c == '§') {
-                var character = c == '&' ? '§' : '&';
-
+            if (c == '§') {
                 // Check if the Minecraft color code is valid
                 if (i + 1 < input.length() && ansi.containsKey(input.charAt(i + 1))) {
                     // Append the ANSI escape code
@@ -64,7 +62,7 @@ public final class Style {
                     i += 2;
 
                     // Find the end of the color code span
-                    var end = input.indexOf(character, i);
+                    var end = input.indexOf(c, i);
                     if (end == -1) {
                         end = input.length();
                     }
