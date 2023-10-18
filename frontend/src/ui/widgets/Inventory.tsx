@@ -14,12 +14,23 @@ interface SlotProps {
     placeholder?: "helmet" | "chestplate" | "leggings" | "boots" | "shield" | undefined;
 }
 
+/**
+ * Checks if the item should be shown.
+ *
+ * @param itemId The item ID.
+ */
+function shouldShow(itemId: string | undefined): boolean {
+    return itemId != undefined && itemId != "" && itemId != "air";
+}
+
 function InventorySlot(props: SlotProps) {
+    const trimmed = props.itemId?.replace("minecraft:", "");
+
     return (
         <div class={"Inventory_Slot"}>
             {
-                props.itemId ?
-                    <MinecraftItem itemId={props.itemId} /> :
+                shouldShow(trimmed) ?
+                    <MinecraftItem itemId={trimmed ?? ""} /> :
                     props.placeholder ? (
                         <img alt={props.placeholder} draggable={false}
                              src={`/resources/item/empty_armor_slot_${props.placeholder}.png`}
