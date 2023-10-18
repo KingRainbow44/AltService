@@ -6214,6 +6214,21 @@ public final class Structures {
      * <code>.Item boots = 6;</code>
      */
     moe.seikimo.altservice.proto.Structures.ItemOrBuilder getBootsOrBuilder();
+
+    /**
+     * <code>.Item offhand = 7;</code>
+     * @return Whether the offhand field is set.
+     */
+    boolean hasOffhand();
+    /**
+     * <code>.Item offhand = 7;</code>
+     * @return The offhand.
+     */
+    moe.seikimo.altservice.proto.Structures.Item getOffhand();
+    /**
+     * <code>.Item offhand = 7;</code>
+     */
+    moe.seikimo.altservice.proto.Structures.ItemOrBuilder getOffhandOrBuilder();
   }
   /**
    * Protobuf type {@code Inventory}
@@ -6439,6 +6454,32 @@ public final class Structures {
       return boots_ == null ? moe.seikimo.altservice.proto.Structures.Item.getDefaultInstance() : boots_;
     }
 
+    public static final int OFFHAND_FIELD_NUMBER = 7;
+    private moe.seikimo.altservice.proto.Structures.Item offhand_;
+    /**
+     * <code>.Item offhand = 7;</code>
+     * @return Whether the offhand field is set.
+     */
+    @java.lang.Override
+    public boolean hasOffhand() {
+      return ((bitField0_ & 0x00000010) != 0);
+    }
+    /**
+     * <code>.Item offhand = 7;</code>
+     * @return The offhand.
+     */
+    @java.lang.Override
+    public moe.seikimo.altservice.proto.Structures.Item getOffhand() {
+      return offhand_ == null ? moe.seikimo.altservice.proto.Structures.Item.getDefaultInstance() : offhand_;
+    }
+    /**
+     * <code>.Item offhand = 7;</code>
+     */
+    @java.lang.Override
+    public moe.seikimo.altservice.proto.Structures.ItemOrBuilder getOffhandOrBuilder() {
+      return offhand_ == null ? moe.seikimo.altservice.proto.Structures.Item.getDefaultInstance() : offhand_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -6470,6 +6511,9 @@ public final class Structures {
       }
       if (((bitField0_ & 0x00000008) != 0)) {
         output.writeMessage(6, getBoots());
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        output.writeMessage(7, getOffhand());
       }
       getUnknownFields().writeTo(output);
     }
@@ -6503,6 +6547,10 @@ public final class Structures {
       if (((bitField0_ & 0x00000008) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(6, getBoots());
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, getOffhand());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -6543,6 +6591,11 @@ public final class Structures {
         if (!getBoots()
             .equals(other.getBoots())) return false;
       }
+      if (hasOffhand() != other.hasOffhand()) return false;
+      if (hasOffhand()) {
+        if (!getOffhand()
+            .equals(other.getOffhand())) return false;
+      }
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -6577,6 +6630,10 @@ public final class Structures {
       if (hasBoots()) {
         hash = (37 * hash) + BOOTS_FIELD_NUMBER;
         hash = (53 * hash) + getBoots().hashCode();
+      }
+      if (hasOffhand()) {
+        hash = (37 * hash) + OFFHAND_FIELD_NUMBER;
+        hash = (53 * hash) + getOffhand().hashCode();
       }
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
@@ -6714,6 +6771,7 @@ public final class Structures {
           getChestplateFieldBuilder();
           getLeggingsFieldBuilder();
           getBootsFieldBuilder();
+          getOffhandFieldBuilder();
         }
       }
       @java.lang.Override
@@ -6753,6 +6811,11 @@ public final class Structures {
         if (bootsBuilder_ != null) {
           bootsBuilder_.dispose();
           bootsBuilder_ = null;
+        }
+        offhand_ = null;
+        if (offhandBuilder_ != null) {
+          offhandBuilder_.dispose();
+          offhandBuilder_ = null;
         }
         return this;
       }
@@ -6833,6 +6896,12 @@ public final class Structures {
               ? boots_
               : bootsBuilder_.build();
           to_bitField0_ |= 0x00000008;
+        }
+        if (((from_bitField0_ & 0x00000040) != 0)) {
+          result.offhand_ = offhandBuilder_ == null
+              ? offhand_
+              : offhandBuilder_.build();
+          to_bitField0_ |= 0x00000010;
         }
         result.bitField0_ |= to_bitField0_;
       }
@@ -6945,6 +7014,9 @@ public final class Structures {
         if (other.hasBoots()) {
           mergeBoots(other.getBoots());
         }
+        if (other.hasOffhand()) {
+          mergeOffhand(other.getOffhand());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -7025,6 +7097,13 @@ public final class Structures {
                 bitField0_ |= 0x00000020;
                 break;
               } // case 50
+              case 58: {
+                input.readMessage(
+                    getOffhandFieldBuilder().getBuilder(),
+                    extensionRegistry);
+                bitField0_ |= 0x00000040;
+                break;
+              } // case 58
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -8004,6 +8083,127 @@ public final class Structures {
           boots_ = null;
         }
         return bootsBuilder_;
+      }
+
+      private moe.seikimo.altservice.proto.Structures.Item offhand_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          moe.seikimo.altservice.proto.Structures.Item, moe.seikimo.altservice.proto.Structures.Item.Builder, moe.seikimo.altservice.proto.Structures.ItemOrBuilder> offhandBuilder_;
+      /**
+       * <code>.Item offhand = 7;</code>
+       * @return Whether the offhand field is set.
+       */
+      public boolean hasOffhand() {
+        return ((bitField0_ & 0x00000040) != 0);
+      }
+      /**
+       * <code>.Item offhand = 7;</code>
+       * @return The offhand.
+       */
+      public moe.seikimo.altservice.proto.Structures.Item getOffhand() {
+        if (offhandBuilder_ == null) {
+          return offhand_ == null ? moe.seikimo.altservice.proto.Structures.Item.getDefaultInstance() : offhand_;
+        } else {
+          return offhandBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.Item offhand = 7;</code>
+       */
+      public Builder setOffhand(moe.seikimo.altservice.proto.Structures.Item value) {
+        if (offhandBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          offhand_ = value;
+        } else {
+          offhandBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000040;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.Item offhand = 7;</code>
+       */
+      public Builder setOffhand(
+          moe.seikimo.altservice.proto.Structures.Item.Builder builderForValue) {
+        if (offhandBuilder_ == null) {
+          offhand_ = builderForValue.build();
+        } else {
+          offhandBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000040;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.Item offhand = 7;</code>
+       */
+      public Builder mergeOffhand(moe.seikimo.altservice.proto.Structures.Item value) {
+        if (offhandBuilder_ == null) {
+          if (((bitField0_ & 0x00000040) != 0) &&
+            offhand_ != null &&
+            offhand_ != moe.seikimo.altservice.proto.Structures.Item.getDefaultInstance()) {
+            getOffhandBuilder().mergeFrom(value);
+          } else {
+            offhand_ = value;
+          }
+        } else {
+          offhandBuilder_.mergeFrom(value);
+        }
+        if (offhand_ != null) {
+          bitField0_ |= 0x00000040;
+          onChanged();
+        }
+        return this;
+      }
+      /**
+       * <code>.Item offhand = 7;</code>
+       */
+      public Builder clearOffhand() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        offhand_ = null;
+        if (offhandBuilder_ != null) {
+          offhandBuilder_.dispose();
+          offhandBuilder_ = null;
+        }
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.Item offhand = 7;</code>
+       */
+      public moe.seikimo.altservice.proto.Structures.Item.Builder getOffhandBuilder() {
+        bitField0_ |= 0x00000040;
+        onChanged();
+        return getOffhandFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.Item offhand = 7;</code>
+       */
+      public moe.seikimo.altservice.proto.Structures.ItemOrBuilder getOffhandOrBuilder() {
+        if (offhandBuilder_ != null) {
+          return offhandBuilder_.getMessageOrBuilder();
+        } else {
+          return offhand_ == null ?
+              moe.seikimo.altservice.proto.Structures.Item.getDefaultInstance() : offhand_;
+        }
+      }
+      /**
+       * <code>.Item offhand = 7;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          moe.seikimo.altservice.proto.Structures.Item, moe.seikimo.altservice.proto.Structures.Item.Builder, moe.seikimo.altservice.proto.Structures.ItemOrBuilder> 
+          getOffhandFieldBuilder() {
+        if (offhandBuilder_ == null) {
+          offhandBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              moe.seikimo.altservice.proto.Structures.Item, moe.seikimo.altservice.proto.Structures.Item.Builder, moe.seikimo.altservice.proto.Structures.ItemOrBuilder>(
+                  getOffhand(),
+                  getParentForChildren(),
+                  isClean());
+          offhand_ = null;
+        }
+        return offhandBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -9835,15 +10035,15 @@ public final class Structures {
       " \001(\002\022\r\n\005armor\030\003 \001(\002\022\020\n\010xp_level\030\004 \001(\002\022\023\n" +
       "\013xp_progress\030\005 \001(\r\"=\n\004Item\022\017\n\007item_id\030\001 " +
       "\001(\t\022\020\n\010quantity\030\002 \001(\r\022\022\n\ndurability\030\003 \001(" +
-      "\r\"\231\001\n\tInventory\022\024\n\005items\030\001 \003(\0132\005.Item\022\025\n" +
+      "\r\"\261\001\n\tInventory\022\024\n\005items\030\001 \003(\0132\005.Item\022\025\n" +
       "\006hotbar\030\002 \003(\0132\005.Item\022\025\n\006helmet\030\003 \001(\0132\005.I" +
       "tem\022\031\n\nchestplate\030\004 \001(\0132\005.Item\022\027\n\010leggin" +
-      "gs\030\005 \001(\0132\005.Item\022\024\n\005boots\030\006 \001(\0132\005.Item\":\n" +
-      "\005Block\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\022" +
-      "\020\n\010block_id\030\004 \001(\t\"5\n\005Chunk\022\t\n\001x\030\001 \001(\005\022\t\n" +
-      "\001z\030\002 \001(\005\022\026\n\006blocks\030\003 \003(\0132\006.BlockB-\n\034moe." +
-      "seikimo.altservice.protoB\nStructures\240\001\001b" +
-      "\006proto3"
+      "gs\030\005 \001(\0132\005.Item\022\024\n\005boots\030\006 \001(\0132\005.Item\022\026\n" +
+      "\007offhand\030\007 \001(\0132\005.Item\":\n\005Block\022\t\n\001x\030\001 \001(" +
+      "\005\022\t\n\001y\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\022\020\n\010block_id\030\004 \001(" +
+      "\t\"5\n\005Chunk\022\t\n\001x\030\001 \001(\005\022\t\n\001z\030\002 \001(\005\022\026\n\006bloc" +
+      "ks\030\003 \003(\0132\006.BlockB-\n\034moe.seikimo.altservi" +
+      "ce.protoB\nStructures\240\001\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -9896,7 +10096,7 @@ public final class Structures {
     internal_static_Inventory_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Inventory_descriptor,
-        new java.lang.String[] { "Items", "Hotbar", "Helmet", "Chestplate", "Leggings", "Boots", });
+        new java.lang.String[] { "Items", "Hotbar", "Helmet", "Chestplate", "Leggings", "Boots", "Offhand", });
     internal_static_Block_descriptor =
       getDescriptor().getMessageTypes().get(8);
     internal_static_Block_fieldAccessorTable = new

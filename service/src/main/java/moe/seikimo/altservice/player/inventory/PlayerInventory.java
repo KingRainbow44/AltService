@@ -173,6 +173,7 @@ import java.util.List;
                 .setChestplate(armor.get(1))
                 .setLeggings(armor.get(2))
                 .setBoots(armor.get(3))
+                .setOffhand(EncodingUtils.convert(this.getOffhand()))
                 .addAllHotbar(hotbar)
                 .addAllItems(items)
                 .build();

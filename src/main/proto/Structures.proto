@@ -54,6 +54,7 @@ message Inventory {
   Item chestplate = 4;
   Item leggings = 5;
   Item boots = 6;
+  Item offhand = 7;
 }
 
 message Block {
