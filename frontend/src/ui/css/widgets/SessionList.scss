@@ -4,8 +4,17 @@
     border-left: 5px solid var(--accent-color);
 }
 
-.SessionList_Item {
+.SessionList_Session {
     width: 144px;
     height: 144px;
-    border: 5px solid #000;
+
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
 }

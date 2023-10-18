@@ -4,8 +4,12 @@ import { useEffect, useState } from "preact/hooks";
 import { Player } from "@backend/Structures.ts";
 
 import "@css/widgets/SessionList.scss";
+import { activeSession, setActiveSession } from "@backend/sessions.ts";
 
-function Session(props: { session: Player }) {
+function Session(props: {
+    active: boolean, session: Player,
+    setSession: () => void
+}) {
     const [playerIcon, setPlayerIcon] = useState("");
 
     useEffect(() => {
@@ -18,7 +22,14 @@ function Session(props: { session: Player }) {
     }, []);
 
     return (
-        <div className={"SessionList_Session"}>
+        <div className={"SessionList_Session"}
+             onClick={props.setSession}
+             style={{
+                 border: `3px solid ${props.active ?
+                     "var(--distinct-color)" :
+                     "var(--accent-color)"}`
+             }}
+        >
             <img
                 alt={props.session.name}
                 className={"SessionList_Session_Icon"}
@@ -35,15 +46,9 @@ interface IProps {
     sessions: Player[];
 }
 
-interface IState {
-
-}
-
-class SessionList extends Component<IProps, IState> {
+class SessionList extends Component<IProps, never> {
     constructor(props: IProps) {
         super(props);
-
-        this.state = {};
     }
 
     render() {
@@ -51,7 +56,15 @@ class SessionList extends Component<IProps, IState> {
             <div className={"SessionList"}>
                 {
                     this.props.sessions.map((session, index) =>
-                        <Session key={index} session={session} />
+                        <Session key={index} session={session}
+                                 active={activeSession == session}
+                                 setSession={() => {
+                                     setActiveSession(
+                                         activeSession == session
+                                             ? null : session);
+                                     this.forceUpdate();
+                                 }}
+                        />
                     )
                 }
             </div>

@@ -22,7 +22,7 @@
 }
 
 .Chat_Messages {
-    @apply flex flex-col gap-[5px] overflow-y-scroll;
+    @apply flex flex-col w-full gap-[5px] overflow-y-scroll;
 
     p {
         @apply text-base m-0 p-0;
