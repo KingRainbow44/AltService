@@ -97,19 +97,19 @@ export interface Vector3 {
  */
 export interface Attributes {
     /**
-     * @generated from protobuf field: uint32 health = 1;
+     * @generated from protobuf field: float health = 1;
      */
     health: number;
     /**
-     * @generated from protobuf field: uint32 hunger = 2;
+     * @generated from protobuf field: float hunger = 2;
      */
     hunger: number;
     /**
-     * @generated from protobuf field: uint32 armor = 3;
+     * @generated from protobuf field: float armor = 3;
      */
     armor: number;
     /**
-     * @generated from protobuf field: uint32 xp_level = 4;
+     * @generated from protobuf field: float xp_level = 4;
      */
     xpLevel: number;
     /**
@@ -503,10 +503,10 @@ export const Vector3 = new Vector3$Type();
 class Attributes$Type extends MessageType<Attributes> {
     constructor() {
         super("Attributes", [
-            { no: 1, name: "health", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 2, name: "hunger", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 3, name: "armor", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 4, name: "xp_level", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 1, name: "health", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 2, name: "hunger", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 3, name: "armor", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 4, name: "xp_level", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
             { no: 5, name: "xp_progress", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
         ]);
     }
@@ -522,17 +522,17 @@ class Attributes$Type extends MessageType<Attributes> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* uint32 health */ 1:
-                    message.health = reader.uint32();
+                case /* float health */ 1:
+                    message.health = reader.float();
                     break;
-                case /* uint32 hunger */ 2:
-                    message.hunger = reader.uint32();
+                case /* float hunger */ 2:
+                    message.hunger = reader.float();
                     break;
-                case /* uint32 armor */ 3:
-                    message.armor = reader.uint32();
+                case /* float armor */ 3:
+                    message.armor = reader.float();
                     break;
-                case /* uint32 xp_level */ 4:
-                    message.xpLevel = reader.uint32();
+                case /* float xp_level */ 4:
+                    message.xpLevel = reader.float();
                     break;
                 case /* uint32 xp_progress */ 5:
                     message.xpProgress = reader.uint32();
@@ -549,18 +549,18 @@ class Attributes$Type extends MessageType<Attributes> {
         return message;
     }
     internalBinaryWrite(message: Attributes, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint32 health = 1; */
+        /* float health = 1; */
         if (message.health !== 0)
-            writer.tag(1, WireType.Varint).uint32(message.health);
-        /* uint32 hunger = 2; */
+            writer.tag(1, WireType.Bit32).float(message.health);
+        /* float hunger = 2; */
         if (message.hunger !== 0)
-            writer.tag(2, WireType.Varint).uint32(message.hunger);
-        /* uint32 armor = 3; */
+            writer.tag(2, WireType.Bit32).float(message.hunger);
+        /* float armor = 3; */
         if (message.armor !== 0)
-            writer.tag(3, WireType.Varint).uint32(message.armor);
-        /* uint32 xp_level = 4; */
+            writer.tag(3, WireType.Bit32).float(message.armor);
+        /* float xp_level = 4; */
         if (message.xpLevel !== 0)
-            writer.tag(4, WireType.Varint).uint32(message.xpLevel);
+            writer.tag(4, WireType.Bit32).float(message.xpLevel);
         /* uint32 xp_progress = 5; */
         if (message.xpProgress !== 0)
             writer.tag(5, WireType.Varint).uint32(message.xpProgress);
