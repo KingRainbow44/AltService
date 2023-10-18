@@ -162,6 +162,10 @@ export interface Inventory {
      * @generated from protobuf field: Item boots = 6;
      */
     boots?: Item;
+    /**
+     * @generated from protobuf field: Item offhand = 7;
+     */
+    offhand?: Item;
 }
 /**
  * @generated from protobuf message Block
@@ -644,7 +648,8 @@ class Inventory$Type extends MessageType<Inventory> {
             { no: 3, name: "helmet", kind: "message", T: () => Item },
             { no: 4, name: "chestplate", kind: "message", T: () => Item },
             { no: 5, name: "leggings", kind: "message", T: () => Item },
-            { no: 6, name: "boots", kind: "message", T: () => Item }
+            { no: 6, name: "boots", kind: "message", T: () => Item },
+            { no: 7, name: "offhand", kind: "message", T: () => Item }
         ]);
     }
     create(value?: PartialMessage<Inventory>): Inventory {
@@ -677,6 +682,9 @@ class Inventory$Type extends MessageType<Inventory> {
                 case /* Item boots */ 6:
                     message.boots = Item.internalBinaryRead(reader, reader.uint32(), options, message.boots);
                     break;
+                case /* Item offhand */ 7:
+                    message.offhand = Item.internalBinaryRead(reader, reader.uint32(), options, message.offhand);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -707,6 +715,9 @@ class Inventory$Type extends MessageType<Inventory> {
         /* Item boots = 6; */
         if (message.boots)
             Item.internalBinaryWrite(message.boots, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* Item offhand = 7; */
+        if (message.offhand)
+            Item.internalBinaryWrite(message.offhand, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
