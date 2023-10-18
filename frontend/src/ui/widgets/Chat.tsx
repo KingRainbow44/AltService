@@ -88,7 +88,6 @@ class Chat extends Component<IProps, IState> {
                     autocorrect={"off"}
                     autocomplete={"off"}
                     placeholder={"Send a message..."}
-                    className={"relative top-[83%]"}
                     onKeyPress={(event) => {
                         if (event.key == "Enter") {
                             const message = event.currentTarget.value;

@@ -22,10 +22,14 @@
 }
 
 .Chat_Messages {
-    @apply flex flex-col w-full gap-[5px] overflow-y-scroll;
+    @apply flex flex-col w-full overflow-y-scroll;
+
+    padding-top: 10px;
+    padding-bottom: -10px;
+    box-sizing: border-box;
 
     p {
-        @apply text-base m-0 p-0;
+        @apply text-base m-0;
 
         color: var(--text-primary);
         font-family: Minecraftia, Poppins, sans-serif;
