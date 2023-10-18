@@ -1,6 +1,9 @@
 package moe.seikimo.altservice.services;
 
 import moe.seikimo.altservice.AltService;
+import moe.seikimo.altservice.client.PanelClient;
+import moe.seikimo.altservice.proto.Frontend.FrontendIds;
+import moe.seikimo.altservice.proto.Frontend.UpdateSessionsScNotify;
 import moe.seikimo.altservice.proto.Service.ServiceIds;
 import moe.seikimo.altservice.proto.Service.ServiceJoinCsReq;
 import moe.seikimo.altservice.proto.Structures.Player;
@@ -67,6 +70,13 @@ public final class ServiceManager {
 
         var instance = instances.remove(address);
         if (instance == null) return;
+
+        // Notify all clients that the service has disconnected.
+        PanelClient.broadcast(
+                FrontendIds._UpdateSessionsScNotify,
+                UpdateSessionsScNotify.newBuilder()
+                        .addAllSessions(ServiceManager.getAllSessions())
+        );
 
         AltService.getLogger().info("Unregistered service: {}.", instance.getServer());
     }
