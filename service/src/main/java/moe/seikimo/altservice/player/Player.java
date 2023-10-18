@@ -300,7 +300,7 @@ import java.util.UUID;
      */
     public void onSessionAction(SessionActionCsNotify packet) {
         switch (packet.getAction()) {
-            case Disconnect -> this.disconnect();
+            case Disconnect -> this.getSession().onDisconnect("Panel request.");
             case Reconnect -> {
                 if (this.getSession() == null) return;
 

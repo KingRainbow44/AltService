@@ -63,7 +63,7 @@ public final class PlayerNetworkSession {
      * @param connectTo The server details.
      */
     public void connect(ConnectionDetails connectTo) {
-        this.getLogger().info("Attempt to connect to {}...",
+        this.getLogger().info("Attempting to connect to {}...",
                 connectTo.toString());
         this.connect0(connectTo).addListener(
                 (Promise<BedrockClientSession> promise)
@@ -126,7 +126,12 @@ public final class PlayerNetworkSession {
     private void initialize(Promise<BedrockClientSession> promise) {
         if (!promise.isSuccess()) {
             this.getLogger().warn("Unable to connect to server.", promise.cause());
-            PlayerManager.destroyPlayer(this.getPlayer());
+
+            if (this.getData().isReconnect()) {
+                this.connect(this.getServer());
+            } else {
+                PlayerManager.destroyPlayer(this.getPlayer());
+            }
         } else {
             this.client = promise.getNow();
             this.onSessionInitialized();
