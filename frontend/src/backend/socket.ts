@@ -10,7 +10,8 @@ import {
 const messageQueue: string[] = [];
 const decoders: { [key: number]: (data: Uint8Array) => any } = {
     [FrontendIds._ChatMessageNotify]: (data: Uint8Array) => ChatMessageNotify.fromBinary(data),
-    [FrontendIds._UpdateSessionsScNotify]: (data: Uint8Array) => UpdateSessionsScNotify.fromBinary(data),
+    [FrontendIds._GetAllSessionsScRsp]: (data: Uint8Array) => UpdateSessionsScNotify.fromBinary(data),
+    [FrontendIds._UpdateSessionsScNotify]: (data: Uint8Array) => UpdateSessionsScNotify.fromBinary(data)
 };
 
 export let socket: WebSocket | null = null;

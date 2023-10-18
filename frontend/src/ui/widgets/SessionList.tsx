@@ -2,9 +2,9 @@ import { Component } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
 import { Player } from "@backend/Structures.ts";
+import { activeSession, setActiveSession } from "@backend/sessions.ts";
 
 import "@css/widgets/SessionList.scss";
-import { activeSession, setActiveSession } from "@backend/sessions.ts";
 
 function Session(props: {
     active: boolean, session: Player,
