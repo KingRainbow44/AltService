@@ -23,6 +23,7 @@ enum Action {
   Disconnect = 1;
   Move = 2;
   Target = 3;
+  Select = 4;
 }
 
 message GetAllSessionsScRsp {

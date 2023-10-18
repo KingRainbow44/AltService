@@ -53,4 +53,17 @@ public final class ServiceManager {
 
         return address instanceof String s ? instances.get(s) : null;
     }
+
+    /**
+     * Fetches a service by the session ID.
+     *
+     * @param sessionId The session ID.
+     * @return The service instance.
+     */
+    public static ServiceInstance getService(String sessionId) {
+        return instances.values().stream()
+                .filter(instance -> instance.hasSession(sessionId) != null)
+                .findFirst()
+                .orElse(null);
+    }
 }

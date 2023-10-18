@@ -1,6 +1,12 @@
 import { Player } from "@backend/Structures.ts";
-import { FrontendIds, GetAllSessionsScRsp, UpdateSessionsScNotify } from "@backend/Frontend.ts";
-import SocketEvent from "@backend/socket.ts";
+import {
+    Action,
+    FrontendIds,
+    GetAllSessionsScRsp,
+    SessionActionCsNotify,
+    UpdateSessionsScNotify,
+} from "@backend/Frontend.ts";
+import SocketEvent, * as socket from "@backend/socket.ts";
 import { EventEmitter } from "events";
 
 const emitter = new EventEmitter();
@@ -29,6 +35,15 @@ window.addEventListener(`socket:${FrontendIds._UpdateSessionsScNotify}`, (event)
 export function setActiveSession(session: Player | null) {
     activeSession = session;
     emitter.emit("active", session);
+
+    socket.send(
+        FrontendIds._SessionActionCsNotify,
+        SessionActionCsNotify.toBinary(
+            SessionActionCsNotify.create({
+                action: Action.Select,
+                sessionId: session?.id ?? ""
+            }))
+    );
 }
 
 /**

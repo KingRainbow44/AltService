@@ -197,6 +197,10 @@ public final class Frontend {
      * <code>Target = 3;</code>
      */
     Target(3),
+    /**
+     * <code>Select = 4;</code>
+     */
+    Select(4),
     UNRECOGNIZED(-1),
     ;
 
@@ -216,6 +220,10 @@ public final class Frontend {
      * <code>Target = 3;</code>
      */
     public static final int Target_VALUE = 3;
+    /**
+     * <code>Select = 4;</code>
+     */
+    public static final int Select_VALUE = 4;
 
 
     public final int getNumber() {
@@ -246,6 +254,7 @@ public final class Frontend {
         case 1: return Disconnect;
         case 2: return Move;
         case 3: return Target;
+        case 4: return Select;
         default: return null;
       }
     }
@@ -5216,9 +5225,10 @@ public final class Frontend {
       "onsScRsp\020\003\022\033\n\027_UpdateSessionsScNotify\020\004\022" +
       "\032\n\026_SessionActionCsNotify\020\005\022\026\n\022_ChatMess" +
       "ageNotify\020\006\022\037\n\022_FrontendCmdNotify\020\377\377\377\377\377\377" +
-      "\377\377\377\001*=\n\006Action\022\r\n\tReconnect\020\000\022\016\n\nDisconn" +
-      "ect\020\001\022\010\n\004Move\020\002\022\n\n\006Target\020\003B+\n\034moe.seiki" +
-      "mo.altservice.protoB\010Frontend\240\001\001b\006proto3"
+      "\377\377\377\001*I\n\006Action\022\r\n\tReconnect\020\000\022\016\n\nDisconn" +
+      "ect\020\001\022\010\n\004Move\020\002\022\n\n\006Target\020\003\022\n\n\006Select\020\004B" +
+      "+\n\034moe.seikimo.altservice.protoB\010Fronten" +
+      "d\240\001\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

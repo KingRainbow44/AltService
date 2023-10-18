@@ -6,6 +6,7 @@ import moe.seikimo.altservice.proto.Frontend.FrontendIds;
 import moe.seikimo.altservice.proto.Frontend.UpdateSessionsScNotify;
 import moe.seikimo.altservice.proto.Structures.Player;
 import org.java_websocket.WebSocket;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.List;
@@ -71,6 +72,17 @@ public final class ServiceInstance {
         });
 
         this.updateAllSessions(sessions);
+    }
+
+    /**
+     * Checks if the service has a session.
+     *
+     * @param sessionId The session ID.
+     * @return Whether the service has the session.
+     */
+    @Nullable
+    public Session hasSession(String sessionId) {
+        return this.sessions.get(sessionId);
     }
 
     /**

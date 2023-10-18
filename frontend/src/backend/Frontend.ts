@@ -161,7 +161,11 @@ export enum Action {
     /**
      * @generated from protobuf enum value: Target = 3;
      */
-    Target = 3
+    Target = 3,
+    /**
+     * @generated from protobuf enum value: Select = 4;
+     */
+    Select = 4
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class GetAllSessionsScRsp$Type extends MessageType<GetAllSessionsScRsp> {
