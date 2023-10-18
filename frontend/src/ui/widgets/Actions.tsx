@@ -100,13 +100,13 @@ class Actions extends Component<IProps, IState> {
                     <Button className={"Actions_Button Actions_Target"}
                             onClick={() => this.flipState("following")}
                             label={this.state.following ? "Disable" : "Follow"}
-                            style={{ background: this.state.following ? "#187d36" : undefined }}
+                            style={{ background: this.state.following ? "#77a4b7" : undefined }}
                     />
 
                     <Button className={"Actions_Button Actions_Target"}
                             onClick={() => this.flipState("guarding")}
                             label={this.state.guarding ? "Disable" : "Guard"}
-                            style={{ background: this.state.guarding ? "#187d36" : undefined }}
+                            style={{ background: this.state.guarding ? "#77a4b7" : undefined }}
                     />
                 </div>
             </div>
