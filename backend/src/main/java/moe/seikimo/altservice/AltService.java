@@ -160,6 +160,9 @@ public final class AltService extends WebSocketServer {
 
     @Override
     public void onClose(WebSocket socket, int code, String message, boolean clean) {
+        // Attempt to remove the service.
+        ServiceManager.removeService(socket);
+
         AltService.getLogger().info("Closed connection to {}.",
                 SocketUtils.getAddress(socket));
     }

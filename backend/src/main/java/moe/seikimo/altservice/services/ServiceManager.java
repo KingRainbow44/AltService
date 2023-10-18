@@ -57,6 +57,21 @@ public final class ServiceManager {
     }
 
     /**
+     * Removes a service from the manager.
+     *
+     * @param socket The socket.
+     */
+    public static void removeService(WebSocket socket) {
+        var address = socket.getAttachment();
+        if (!(address instanceof String)) return;
+
+        var instance = instances.remove(address);
+        if (instance == null) return;
+
+        AltService.getLogger().info("Unregistered service: {}.", instance.getServer());
+    }
+
+    /**
      * Fetches a service by the socket.
      *
      * @param socket The socket.
