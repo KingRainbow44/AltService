@@ -154,7 +154,10 @@ import java.util.List;
         var armor = this.getArmor().stream()
                 .map(EncodingUtils::convert)
                 .toList();
-        var items = this.getItems().stream()
+        var hotbar = this.getItems().subList(0, 9).stream()
+                .map(EncodingUtils::convert)
+                .toList();
+        var items = this.getItems().subList(9, 37).stream()
                 .map(EncodingUtils::convert)
                 .toList();
 
@@ -163,6 +166,7 @@ import java.util.List;
                 .setChestplate(armor.get(1))
                 .setLeggings(armor.get(2))
                 .setBoots(armor.get(3))
+                .addAllHotbar(hotbar)
                 .addAllItems(items)
                 .build();
     }
