@@ -97,7 +97,7 @@ public interface PanelRouter {
 
             // Parse the message.
             var packet = Packet.parseFrom(EncodingUtils.base64Decode(ctx.message()));
-            HANDLER.invokeHandler(client, packet.getId(), packet.toByteArray());
+            HANDLER.invokeHandler(client, packet.getId(), packet.getData().toByteArray());
         } catch (Exception exception) {
             ctx.closeSession();
             LOGGER.warn("Received invalid packet from {}.",
