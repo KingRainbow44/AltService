@@ -58,7 +58,8 @@ public interface PacketHandlers {
             target.getHandler().invokeHandler(message.getId(),
                     message.getData().toByteArray());
         } catch (Exception exception) {
-            AltBackend.getLogger().warn("Unable to handle service command.", exception);
+            AltBackend.getLogger().warn("Unable to handle service command. {}",
+                    exception.getMessage());
         }
     }
 }
