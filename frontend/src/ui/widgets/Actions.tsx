@@ -65,7 +65,7 @@ class Actions extends Component<IProps, IState> {
         }
 
         // Disconnect from the server.
-        socket.broadcast(
+        socket.send(
             FrontendIds._SessionActionCsNotify,
             SessionActionCsNotify.toBinary(
                 SessionActionCsNotify.create({
@@ -92,7 +92,7 @@ class Actions extends Component<IProps, IState> {
                                 this.flipState("reconnect");
 
                                 // Enable auto-reconnect.
-                                socket.broadcast(
+                                socket.send(
                                     FrontendIds._SessionActionCsNotify,
                                     SessionActionCsNotify.toBinary(
                                         SessionActionCsNotify.create({
