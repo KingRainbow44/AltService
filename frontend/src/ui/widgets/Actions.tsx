@@ -1,6 +1,11 @@
 import { Component } from "preact";
 
+import * as socket from "@backend/socket.ts";
+
 import Button from "@components/Button.tsx";
+
+import { activeSession } from "@backend/sessions.ts";
+import { Action, FrontendIds, SessionActionCsNotify } from "@backend/Frontend.ts";
 
 import "@css/widgets/Actions.scss";
 
@@ -59,7 +64,17 @@ class Actions extends Component<IProps, IState> {
             clearTimeout(this.disconnectTimer);
         }
 
-        // TODO: Disconnect from server.
+        // Disconnect from the server.
+        socket.broadcast(
+            FrontendIds._SessionActionCsNotify,
+            SessionActionCsNotify.toBinary(
+                SessionActionCsNotify.create({
+                    action: Action.Disconnect,
+                    sessionId: activeSession?.id
+                })
+            )
+        );
+
         this.flipState("disconnect");
     }
 
@@ -73,7 +88,20 @@ class Actions extends Component<IProps, IState> {
                     />
 
                     <Button className={"Actions_Button Actions_Reconnect"}
-                            onClick={() => this.flipState("reconnect")}
+                            onClick={() => {
+                                this.flipState("reconnect");
+
+                                // Enable auto-reconnect.
+                                socket.broadcast(
+                                    FrontendIds._SessionActionCsNotify,
+                                    SessionActionCsNotify.toBinary(
+                                        SessionActionCsNotify.create({
+                                            action: Action.Reconnect,
+                                            sessionId: activeSession?.id
+                                        })
+                                    )
+                                );
+                            }}
                             label={this.state.reconnect ? "Disable" : "Reconnect"}
                             style={{ background: this.state.reconnect ? "#187d36" : undefined }}
                     />
