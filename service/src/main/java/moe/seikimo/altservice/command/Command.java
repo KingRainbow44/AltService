@@ -34,7 +34,7 @@ public abstract class Command {
      *
      * @param message The message to send.
      */
-    protected void sendMessage(String message) {
-        AltBackend.getLogger().info(message);
+    protected void sendMessage(String message, Object... args) {
+        AltBackend.getLogger().info(message, args);
     }
 }

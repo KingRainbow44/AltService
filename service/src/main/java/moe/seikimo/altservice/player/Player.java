@@ -11,6 +11,7 @@ import moe.seikimo.altservice.player.inventory.PlayerInventory;
 import moe.seikimo.altservice.player.server.ServerBlock;
 import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
+import moe.seikimo.altservice.player.server.ServerWorld;
 import moe.seikimo.altservice.proto.Frontend.ChatMessageNotify;
 import moe.seikimo.altservice.proto.Frontend.FrontendIds;
 import moe.seikimo.altservice.proto.Frontend.SessionActionCsNotify;
@@ -30,6 +31,7 @@ import org.cloudburstmc.math.vector.Vector2f;
 import org.cloudburstmc.math.vector.Vector3f;
 import org.cloudburstmc.math.vector.Vector3i;
 import org.cloudburstmc.protocol.bedrock.data.*;
+import org.cloudburstmc.protocol.bedrock.data.definitions.DimensionDefinition;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryActionData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventorySource;
@@ -53,6 +55,8 @@ import java.util.UUID;
     private final Map<UUID, ServerPlayer> peers
             = new HashMap<>();
     private final Map<Long, ServerEntity> entities
+            = new HashMap<>();
+    private final Map<Integer, ServerWorld> worlds
             = new HashMap<>();
     private final Map<Vector3i, ServerBlock> blocks
             = new HashMap<>();
@@ -192,6 +196,15 @@ import java.util.UUID;
      */
     public Vector3f getRotation() {
         return this.getLocation().getRotation();
+    }
+
+    /**
+     * @return The client's current world.
+     */
+    public ServerWorld getWorld() {
+        var dimension = this.getLocation().getDimension();
+        return this.getWorlds().computeIfAbsent(
+                dimension, k -> new ServerWorld(dimension));
     }
 
     /**

@@ -8,6 +8,7 @@ import moe.seikimo.altservice.backend.PacketHandlers;
 import moe.seikimo.altservice.command.SimpleCommandMap;
 import moe.seikimo.altservice.command.player.DisconnectCommand;
 import moe.seikimo.altservice.command.player.RequestCommand;
+import moe.seikimo.altservice.command.util.PaletteCommand;
 import moe.seikimo.altservice.command.util.ReloadCommand;
 import moe.seikimo.altservice.command.util.RunScriptCommand;
 import moe.seikimo.altservice.command.util.StopCommand;
@@ -215,6 +216,7 @@ public final class AltBackend extends WebSocketClient {
         consoleCommands.addCommand(new ReloadCommand());
         consoleCommands.addCommand(new RunScriptCommand());
         consoleCommands.addCommand(new SayCommand());
+        consoleCommands.addCommand(new PaletteCommand());
 
         // Player Commands
         playerCommands.addCommand(new DisconnectCommand());
@@ -229,6 +231,7 @@ public final class AltBackend extends WebSocketClient {
         playerCommands.addCommand(new GuardCommand());
         playerCommands.addCommand(new BehaviorCommand());
         playerCommands.addCommand(new DropCommand());
+        playerCommands.addCommand(new BlockCommand());
     }
 
     @Getter private final PacketHandler<?> packetHandler = new PacketHandler<>();

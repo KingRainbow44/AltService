@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.cloudburstmc.math.vector.Vector3f;
+import org.cloudburstmc.protocol.bedrock.packet.ChangeDimensionPacket;
 import org.cloudburstmc.protocol.bedrock.packet.MoveEntityAbsolutePacket;
 import org.cloudburstmc.protocol.bedrock.packet.MoveEntityDeltaPacket;
 import org.cloudburstmc.protocol.bedrock.packet.MoveEntityDeltaPacket.Flag;
@@ -63,5 +64,15 @@ public final class Location {
         this.setPosition(packet.getPosition());
         this.setRotation(packet.getRotation());
         this.setGrounded(packet.isOnGround());
+    }
+
+    /**
+     * Updates the location from the specified packet.
+     *
+     * @param packet The packet.
+     */
+    public void update(ChangeDimensionPacket packet) {
+        this.setPosition(packet.getPosition());
+        this.setDimension(packet.getDimension());
     }
 }

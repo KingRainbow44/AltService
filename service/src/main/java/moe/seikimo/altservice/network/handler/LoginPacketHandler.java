@@ -102,7 +102,6 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(ResourcePackStackPacket packet) {
-        super.handle(packet);
         // Create resource pack response.
         var response = new ResourcePackClientResponsePacket();
         response.setStatus(ResourcePackClientResponsePacket.Status.COMPLETED);
@@ -119,13 +118,17 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
                 packet.getAuthoritativeMovementMode() !=
                         AuthoritativeMovementMode.CLIENT);
 
+        // Set the player's dimension.
+        this.getPlayer().getLocation()
+                .setDimension(packet.getDimensionId());
+
         // Mark the player as initialized.
         this.session.getData().setInitialized(true);
         this.session.getData().setRuntimeId(packet.getRuntimeEntityId());
 
         // Request the render distance.
         var distancePacket = new RequestChunkRadiusPacket();
-        distancePacket.setRadius(64);
+        distancePacket.setRadius(16);
         this.session.sendPacket(distancePacket, true);
 
         // Perform client setup.
@@ -144,6 +147,7 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
                         definition.getIdentifier());
         }
         codecHelper.setItemDefinitions(itemRegistry.build());
+        // Set up the block registry.
         codecHelper.setBlockDefinitions(GameConstants.BLOCKS.get());
 
         return PacketSignal.HANDLED;
@@ -151,7 +155,6 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(RespawnPacket packet) {
-        super.handle(packet);
         var position = packet.getPosition();
         var state = packet.getState();
 

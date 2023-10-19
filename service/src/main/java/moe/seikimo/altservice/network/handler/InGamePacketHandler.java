@@ -1,15 +1,14 @@
 package moe.seikimo.altservice.network.handler;
 
+import io.netty.buffer.Unpooled;
 import moe.seikimo.altservice.AltBackend;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
 import moe.seikimo.altservice.player.inventory.Inventory;
 import moe.seikimo.altservice.player.server.ServerBlock;
 import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
-import moe.seikimo.altservice.proto.Frontend;
 import moe.seikimo.altservice.proto.Frontend.ChatMessageNotify;
 import moe.seikimo.altservice.proto.Frontend.FrontendIds;
-import moe.seikimo.altservice.proto.Service;
 import moe.seikimo.altservice.script.event.EventType;
 import moe.seikimo.altservice.script.event.ScriptArgs;
 import moe.seikimo.altservice.utils.objects.Location;
@@ -19,8 +18,6 @@ import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerId;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ContainerType;
 import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.cloudburstmc.protocol.common.PacketSignal;
-
-import static moe.seikimo.altservice.utils.objects.absolute.GameConstants.IGNORE_BLOCKS;
 
 public class InGamePacketHandler extends DisconnectablePacketHandler {
     public InGamePacketHandler(PlayerNetworkSession session) {
@@ -285,6 +282,14 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
     }
 
     @Override
+    public PacketSignal handle(ChangeDimensionPacket packet) {
+        // Update the player's position and dimension.
+        this.getPlayer().getLocation().update(packet);
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
     public PacketSignal handle(AddEntityPacket packet) {
         this.getPlayer().getEntities().put(
                 packet.getRuntimeEntityId(),
@@ -426,6 +431,32 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
                 otherEntity.setRiding(targetEntity);
             }
         }
+
+        return PacketSignal.HANDLED;
+    }
+
+    @Override
+    public PacketSignal handle(LevelChunkPacket packet) {
+        var sectionCount = packet.getSubChunksLength();
+        if (sectionCount < -2) return PacketSignal.HANDLED;
+
+        // Determine the chunk.
+        var world = this.getPlayer().getWorld();
+        var chunkX = packet.getChunkX();
+        var chunkZ = packet.getChunkZ();
+        var chunk = world.getChunkAt(chunkX, chunkZ);
+
+        // Copy the chunk data into a buffer.
+        var chunkData = Unpooled.buffer();
+        chunkData.writeBytes(packet.getData());
+
+        // Decode chunk sections.
+        chunk.decodeFrom(chunkData, sectionCount);
+        this.getLogger().info("Finished decoding chunk ({}, {}) with {} sections.",
+                chunkX, chunkZ, chunk.getSections().size());
+
+        // Release the chunk data.
+        chunkData.release();
 
         return PacketSignal.HANDLED;
     }

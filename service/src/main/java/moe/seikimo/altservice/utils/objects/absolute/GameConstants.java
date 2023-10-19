@@ -1,6 +1,7 @@
 package moe.seikimo.altservice.utils.objects.absolute;
 
 import moe.seikimo.altservice.AltBackend;
+import moe.seikimo.altservice.utils.objects.Pair;
 import org.cloudburstmc.nbt.NBTInputStream;
 import org.cloudburstmc.nbt.NbtList;
 import org.cloudburstmc.nbt.NbtMap;
@@ -10,7 +11,9 @@ import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
 import org.cloudburstmc.protocol.common.SimpleDefinitionRegistry;
 
 import java.io.DataInputStream;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPInputStream;
@@ -19,6 +22,8 @@ public interface GameConstants {
     /* An air block definition. */
     BlockDefinition AIR_BLOCK = new SimpleBlockDefinition("minecraft:air", 0, NbtMap.EMPTY);
     /* The block definitions. */
+    Map<String, Integer> BLOCK_RUNTIME = new HashMap<>();
+    Map<Integer, SimpleBlockDefinition> BLOCK_DEFINITIONS = new HashMap<>();
     AtomicReference<SimpleDefinitionRegistry<BlockDefinition>> BLOCKS = new AtomicReference<>();
 
     /* Identifiers of entities which cannot be attacked. */
@@ -31,6 +36,13 @@ public interface GameConstants {
         this.add("minecraft:redstone_wire");
         this.add("minecraft:unpowered_repeater");
         this.add("minecraft:powered_repeater");
+    }};
+
+    /* Dimension minimum and maximum Y-levels. */
+    Map<Integer, Pair<Integer, Integer>> DIMENSIONS = new HashMap<>() {{
+        this.put(0, new Pair<>(-64, 320));
+        this.put(1, new Pair<>(0, 256));
+        this.put(2, new Pair<>(0, 256));
     }};
 
     /* The offset of a Bedrock position to a Java block. */
@@ -61,8 +73,13 @@ public interface GameConstants {
 
                 // Create the definition.
                 var tag = builder.build();
-                registry.add(new SimpleBlockDefinition(
-                        tag.getString("name"), i, tag));
+                var blockDefinition = new SimpleBlockDefinition(
+                        tag.getString("name"), i, tag);
+
+                // Add the definition to the registry.
+                registry.add(blockDefinition);
+                BLOCK_RUNTIME.put(tag.getString("name"), i);
+                BLOCK_DEFINITIONS.put(i, blockDefinition);
             }
 
             BLOCKS.set(registry.build());
