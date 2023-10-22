@@ -453,8 +453,6 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
 
         // Decode chunk sections.
         chunk.decodeFrom(chunkData, sectionCount);
-        this.getLogger().info("Finished decoding chunk ({}, {}) with {} sections.",
-                chunkX, chunkZ, chunk.getSections().size());
 
         // Release the chunk data.
         chunkData.release();
