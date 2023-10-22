@@ -19,14 +19,36 @@ public final class ServerChunk {
     private final int chunkZ;
 
     /**
-     * Gets the chunk section at the given index.
+     * Sets the block at the given coordinates.
      *
-     * @param index The chunk section index.
-     * @return The chunk section.
+     * @param layer The block layer. 0 = terrain, 1 = liquid.
+     * @param section The section.
+     * @param x The block X coordinate.
+     * @param y The block Y coordinate.
+     * @param z The block Z coordinate.
+     * @param block The block.
+     * @return The block.
      */
-    private ServerChunkSection getSectionByIndex(int index) {
-        return this.getSections().computeIfAbsent(index,
-                k -> new ServerChunkSection(this, k));
+    public ServerBlock setBlockAt(int layer, int section, int x, int y, int z, ServerBlock block) {
+        return this
+                .getSectionByIndex(section)
+                .setBlockAt(layer, x, y, z, block);
+    }
+
+    /**
+     * Gets the block at the given coordinates.
+     *
+     * @param layer The block layer. 0 = terrain, 1 = liquid.
+     * @param section The section.
+     * @param x The block X coordinate.
+     * @param y The block Y coordinate.
+     * @param z The block Z coordinate.
+     * @return The block.
+     */
+    public ServerBlock getBlockAt(int layer, int section, int x, int y, int z) {
+        return this
+                .getSectionByIndex(section)
+                .getBlockAt(layer, x, y, z);
     }
 
     /**
@@ -37,15 +59,9 @@ public final class ServerChunk {
      * @param z The block Z coordinate.
      * @return The block.
      */
-    @Nullable
-    public ServerBlock getBlockAt(int x, int y, int z) {
-        this.getWorld().getLogger().info(
-                "Attempting to read block ({}, {}, {}); reading chunk at ({}, {}); section {}; block ({}, {}, {}).",
-                x, y, z, this.getChunkX(), this.getChunkZ(), y >> 4, x % 16, y % 16, z % 16
-        );
-
+    public int getBlock(int x, int y, int z) {
         return this.getSectionByIndex(y >> 4)
-                .getBlockAt(0, x % 16, y % 16, z % 16);
+                .getBlock(0, x % 16, y % 16, z % 16);
     }
 
     /**
@@ -54,9 +70,8 @@ public final class ServerChunk {
      * @param position The block position.
      * @return The block.
      */
-    @Nullable
-    public ServerBlock getBlockAt(Vector3i position) {
-        return this.getBlockAt(
+    public Integer getBlock(Vector3i position) {
+        return this.getBlock(
                 position.getX(),
                 position.getY(),
                 position.getZ());
@@ -65,14 +80,16 @@ public final class ServerChunk {
     /**
      * Sets the block at the given coordinates.
      *
+     * @param layer The layer. 0 = terrain, 1 = liquid.
      * @param x The block X coordinate.
      * @param y The block Y coordinate.
      * @param z The block Z coordinate.
      * @param runtimeId The block's runtime ID.
      */
-    public void setBlockAt(int x, int y, int z, int runtimeId) {
-        this.getSectionByIndex(y >> 4)
-                .setBlockAt(0, x % 16, y % 16, z % 16, runtimeId);
+    public void setBlock(int layer, int section, int x, int y, int z, int runtimeId) {
+        this
+                .getSectionByIndex(section)
+                .setBlock(layer, x, y, z, runtimeId);
     }
 
     /**
@@ -97,6 +114,17 @@ public final class ServerChunk {
     }
 
     /**
+     * Gets the chunk section at the given index.
+     *
+     * @param index The chunk section index.
+     * @return The chunk section.
+     */
+    private ServerChunkSection getSectionByIndex(int index) {
+        return this.getSections().computeIfAbsent(index,
+                k -> new ServerChunkSection(this, k));
+    }
+
+    /**
      * Decodes version 9 sub-chunk data.
      *
      * @param subChunk The sub-chunk to decode into.
@@ -104,7 +132,7 @@ public final class ServerChunk {
      */
     private void decodeV9(ServerChunkSection subChunk, ByteBuf buffer) {
         var layers = buffer.readByte();
-        var height = buffer.readByte();
+        /* var height = */ buffer.readByte();
         for (var i = 0; i < layers; i++) {
             subChunk.getLayers().add(BlockStorage.decode(buffer));
         }

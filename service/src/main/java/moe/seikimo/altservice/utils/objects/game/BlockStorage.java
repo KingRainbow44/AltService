@@ -2,13 +2,12 @@ package moe.seikimo.altservice.utils.objects.game;
 
 import io.netty.buffer.ByteBuf;
 import lombok.Data;
+import moe.seikimo.altservice.player.server.ServerBlock;
 import moe.seikimo.altservice.utils.ArrayUtils;
 import org.cloudburstmc.protocol.common.util.VarInts;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /** Adapted from JSPrismarine/JSPrismarine. */
 @Data
@@ -67,6 +66,7 @@ public final class BlockStorage {
 
     private final List<Integer> blocks = new ArrayList<>();
     private final List<Integer> palette = new ArrayList<>();
+    private final Map<Integer, ServerBlock> blockMap = new HashMap<>();
 
     private BlockStorage(
             @Nullable Integer[] palette,
@@ -91,9 +91,9 @@ public final class BlockStorage {
             this.getPalette().add(runtimeId);
         }
 
-        this.getBlocks().set(
-                BlockStorage.getIndex(x, y, z),
-                this.getPalette().indexOf(runtimeId));
+        var index = BlockStorage.getIndex(x, y, z);
+        this.getBlocks().set(index, this.getPalette().indexOf(runtimeId));
+        this.getBlockMap().put(index, ServerBlock.from(runtimeId));
     }
 
     /**
@@ -108,5 +108,40 @@ public final class BlockStorage {
         var paletteIndex = this.getBlocks().get(
                 BlockStorage.getIndex(x, y, z));
         return this.getPalette().get(paletteIndex);
+    }
+
+    /**
+     * Sets the block at the given coordinates.
+     *
+     * @param x The X coordinate.
+     * @param y The Y coordinate.
+     * @param z The Z coordinate.
+     * @param block The block.
+     * @return The block.
+     */
+    public ServerBlock setBlockAt(int x, int y, int z, ServerBlock block) {
+        var index = BlockStorage.getIndex(x, y, z);
+        var runtimeId = block.getRuntimeId();
+
+        // Add the block to the palette if it doesn't exist.
+        if (!this.getPalette().contains(runtimeId)) {
+            this.getPalette().add(runtimeId);
+        }
+
+        // Replace the existing block with the new one.
+        this.getBlocks().set(index, this.getPalette().indexOf(runtimeId));
+        return this.getBlockMap().put(index, block);
+    }
+
+    /**
+     * Gets the block data from the storage.
+     *
+     * @param x The X coordinate.
+     * @param y The Y coordinate.
+     * @param z The Z coordinate.
+     * @return The block data. This is read-only.
+     */
+    public ServerBlock getBlockAt(int x, int y, int z) {
+        return this.getBlockMap().get(BlockStorage.getIndex(x, y, z));
     }
 }

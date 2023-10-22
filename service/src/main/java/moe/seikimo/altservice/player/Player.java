@@ -8,7 +8,6 @@ import moe.seikimo.altservice.handlers.PacketHandler;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
 import moe.seikimo.altservice.player.inventory.Inventory;
 import moe.seikimo.altservice.player.inventory.PlayerInventory;
-import moe.seikimo.altservice.player.server.ServerBlock;
 import moe.seikimo.altservice.player.server.ServerEntity;
 import moe.seikimo.altservice.player.server.ServerPlayer;
 import moe.seikimo.altservice.player.server.ServerWorld;
@@ -31,7 +30,6 @@ import org.cloudburstmc.math.vector.Vector2f;
 import org.cloudburstmc.math.vector.Vector3f;
 import org.cloudburstmc.math.vector.Vector3i;
 import org.cloudburstmc.protocol.bedrock.data.*;
-import org.cloudburstmc.protocol.bedrock.data.definitions.DimensionDefinition;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryActionData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventorySource;
@@ -57,8 +55,6 @@ import java.util.UUID;
     private final Map<Long, ServerEntity> entities
             = new HashMap<>();
     private final Map<Integer, ServerWorld> worlds
-            = new HashMap<>();
-    private final Map<Vector3i, ServerBlock> blocks
             = new HashMap<>();
     private final Map<Integer, Inventory> inventories
             = new HashMap<>();

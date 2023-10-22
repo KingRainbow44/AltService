@@ -46,27 +46,58 @@ public final class ServerWorld {
     }
 
     /**
-     * Gets the block at the given coordinates.
+     * Sets the block at the given coordinates.
      *
+     * @param layer The layer. 0 = terrain, 1 = liquid.
      * @param x The block X coordinate.
      * @param y The block Y coordinate.
      * @param z The block Z coordinate.
-     * @return The block.
+     * @param block The block.
      */
-    @Nullable
-    public ServerBlock getBlockAt(int x, int y, int z) {
-        return this.getChunkAt(x >> 4, z >> 4)
-                .getBlockAt(x, y + 64, z);
+    public ServerBlock setBlockAt(int layer, int x, int y, int z, ServerBlock block) {
+        y += 64; // This accounts for the negative sections of the world.
+
+        return this
+                .getChunkAt(x >> 4, z >> 4)
+                .setBlockAt(layer, y >> 4, x % 16, y % 16, z % 16, block);
+    }
+
+    /**
+     * Sets the block at the given coordinates.
+     *
+     * @param layer The layer. 0 = terrain, 1 = liquid.
+     * @param position The block position.
+     * @param block The block.
+     */
+    public ServerBlock setBlockAt(int layer, Vector3i position, ServerBlock block) {
+        return this.setBlockAt(layer, position.getX(), position.getY(), position.getZ(), block);
     }
 
     /**
      * Gets the block at the given coordinates.
      *
+     * @param layer The layer. 0 = terrain, 1 = liquid.
+     * @param x The block X coordinate.
+     * @param y The block Y coordinate.
+     * @param z The block Z coordinate.
+     * @return The block.
+     */
+    public ServerBlock getBlockAt(int layer, int x, int y, int z) {
+        y += 64; // This accounts for the negative sections of the world.
+
+        return this
+                .getChunkAt(x >> 4, z >> 4)
+                .getBlockAt(layer, y >> 4, x % 16, y % 16, z % 16);
+    }
+
+    /**
+     * Gets the block at the given coordinates.
+     *
+     * @param layer The layer. 0 = terrain, 1 = liquid.
      * @param position The block position.
      * @return The block.
      */
-    @Nullable
-    public ServerBlock getBlockAt(Vector3i position) {
-        return this.getBlockAt(position.getX(), position.getY(), position.getZ());
+    public ServerBlock getBlockAt(int layer, Vector3i position) {
+        return this.getBlockAt(layer, position.getX(), position.getY(), position.getZ());
     }
 }

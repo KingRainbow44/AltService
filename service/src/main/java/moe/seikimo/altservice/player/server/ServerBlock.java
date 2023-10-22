@@ -2,7 +2,6 @@ package moe.seikimo.altservice.player.server;
 
 import lombok.Data;
 import moe.seikimo.altservice.utils.objects.absolute.GameConstants;
-import org.cloudburstmc.math.vector.Vector3i;
 import org.cloudburstmc.nbt.NbtMap;
 import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
 
@@ -10,12 +9,11 @@ import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
     /**
      * Creates a new server block.
      *
-     * @param block The block identifier.
      * @param definition The block definition.
      * @return The server block.
      */
-    public static ServerBlock from(Vector3i block, SimpleBlockDefinition definition) {
-        return new ServerBlock(definition.getIdentifier(), block);
+    public static ServerBlock from(SimpleBlockDefinition definition) {
+        return ServerBlock.from(definition.getIdentifier());
     }
 
     /**
@@ -25,23 +23,30 @@ import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
      * @return The server block.
      */
     public static ServerBlock from(NbtMap map) {
-        return new ServerBlock(map.getString("name"), Vector3i.from(0));
+        return ServerBlock.from(map.getString("name"));
     }
 
     /**
      * Creates a new server block.
      *
-     * @param position The block position.
+     * @param identifier The identifier.
+     * @return The server block.
+     */
+    public static ServerBlock from(String identifier) {
+        return new ServerBlock(identifier, GameConstants.BLOCK_RUNTIME.get(identifier));
+    }
+
+    /**
+     * Creates a new server block.
+     *
      * @param runtimeId The runtime ID.
      * @return The server block.
      */
-    public static ServerBlock from(Vector3i position, int runtimeId) {
+    public static ServerBlock from(int runtimeId) {
         var definition = GameConstants.BLOCK_DEFINITIONS.get(runtimeId);
-        if (definition == null) return null;
-
-        return new ServerBlock(definition.getIdentifier(), position);
+        return new ServerBlock(definition.getIdentifier(), runtimeId);
     }
 
     private final String identifier;
-    private final Vector3i position;
+    private final int runtimeId;
 }

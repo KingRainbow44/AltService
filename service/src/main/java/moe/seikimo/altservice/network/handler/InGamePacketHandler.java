@@ -378,13 +378,14 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
 
     @Override
     public PacketSignal handle(UpdateBlockPacket packet) {
-        var blocks = this.getPlayer().getBlocks();
         var position = packet.getBlockPosition();
-
-        // Update blocks on the player.
-        var newBlock = ServerBlock.from(position,
+        var newBlock = ServerBlock.from(
                 (SimpleBlockDefinition) packet.getDefinition());
-        var oldBlock = blocks.put(position, newBlock);
+
+        // Update the block.
+        var oldBlock = this.getPlayer().getWorld()
+                .setBlockAt(packet.getDataLayer(), position, newBlock);
+        // Invoke the script event.
         this.getPlayer().getScriptBackend()
                 .invokeEvent(EventType.BLOCK_CHANGE,
                         ScriptArgs.builder()

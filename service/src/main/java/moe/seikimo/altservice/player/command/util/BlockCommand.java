@@ -30,7 +30,7 @@ public final class BlockCommand extends Command {
 
             this.sendMessage("Looking for block at " + position + "...");
 
-            var block = player.getWorld().getBlockAt(position);
+            var block = player.getWorld().getBlockAt(0, position);
             if (block == null) {
                 player.sendMessage("No block found at " + positionStr + ".");
                 return;
