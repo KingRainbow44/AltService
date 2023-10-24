@@ -2,6 +2,7 @@ package moe.seikimo.altservice.player.server;
 
 import lombok.Data;
 import moe.seikimo.altservice.utils.objects.absolute.GameConstants;
+import org.cloudburstmc.math.vector.Vector3i;
 import org.cloudburstmc.nbt.NbtMap;
 import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
 
@@ -49,4 +50,14 @@ import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
 
     private final String identifier;
     private final int runtimeId;
+
+    private ServerWorld world = null;
+    private Vector3i location = Vector3i.ZERO;
+
+    /**
+     * @return Whether the block is walkable.
+     */
+    public boolean isWalkable() {
+        return GameConstants.WALKABLE_BLOCKS.contains(this.getIdentifier());
+    }
 }

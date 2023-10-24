@@ -4,7 +4,6 @@ import io.netty.buffer.ByteBuf;
 import lombok.Data;
 import moe.seikimo.altservice.utils.objects.game.BlockStorage;
 import org.cloudburstmc.math.vector.Vector3i;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -134,7 +133,10 @@ public final class ServerChunk {
         var layers = buffer.readByte();
         /* var height = */ buffer.readByte();
         for (var i = 0; i < layers; i++) {
-            subChunk.getLayers().add(BlockStorage.decode(buffer));
+            var storage = BlockStorage.decode(buffer);
+            subChunk.getLayers().add(storage);
+
+            this.writeBlockPositions(subChunk, storage);
         }
     }
 
@@ -147,7 +149,33 @@ public final class ServerChunk {
     private void decodeV8(ServerChunkSection subChunk, ByteBuf buffer) {
         var layers = buffer.readByte();
         for (var i = 0; i < layers; i++) {
-            subChunk.getLayers().add(BlockStorage.decode(buffer));
+            var storage = BlockStorage.decode(buffer);
+            subChunk.getLayers().add(storage);
+
+            this.writeBlockPositions(subChunk, storage);
+        }
+    }
+
+    /**
+     * Writes the block positions to the blocks.
+     *
+     * @param subChunk The chunk section.
+     * @param storage The block storage.
+     */
+    private void writeBlockPositions(ServerChunkSection subChunk, BlockStorage storage) {
+        // Write the block positions to the blocks.
+        for (var x = 0; x < 16; x++) {
+            for (var y = 0; y < 16; y++) {
+                for (var z = 0; z < 16; z++) {
+                    var block = storage.getBlockAt(x, y, z);
+                    block.setWorld(this.getWorld());
+                    block.setLocation(Vector3i.from(
+                            x + (this.getChunkX() << 4),
+                            y + (subChunk.getChunkY() << 4),
+                            z + (this.getChunkZ() << 4)
+                    ));
+                }
+            }
         }
     }
 }

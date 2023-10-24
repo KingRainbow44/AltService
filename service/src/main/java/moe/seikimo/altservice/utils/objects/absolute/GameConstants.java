@@ -37,6 +37,11 @@ public interface GameConstants {
         this.add("minecraft:unpowered_repeater");
         this.add("minecraft:powered_repeater");
     }};
+    /* Identifiers of blocks which a player can walk on. */
+    Set<String> WALKABLE_BLOCKS = new HashSet<>() {{
+        this.add("minecraft:air");
+        this.add("minecraft:water");
+    }};
 
     /* Dimension minimum and maximum Y-levels. */
     Map<Integer, Pair<Integer, Integer>> DIMENSIONS = new HashMap<>() {{
