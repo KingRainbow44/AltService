@@ -4,15 +4,10 @@ import lombok.Data;
 import org.cloudburstmc.math.vector.Vector3i;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Data
 public final class Node {
     private final Vector3i position;
     private final boolean walkable;
-
-    private final Set<Node> neighbors = new HashSet<>();
 
     @Nullable private Node parent;
     private float hCost, gCost;
@@ -21,50 +16,45 @@ public final class Node {
         this.parent = parent;
         this.position = position;
         this.walkable = walkable;
-
-        this.gCost = this.costToReach();
     }
 
     /**
      * @return The fCost. f(n) = (gCost + hCost)
      */
-    public float fCost() {
+    public float getFCost() {
         return this.getGCost() + this.getHCost();
     }
 
     /**
-     * Determines the cost to reach this node.
+     * Computes the distance to another node.
      *
-     * @return The cost. (as a distance)
+     * @param other The other node.
+     * @return The distance.
      */
-    public float costToReach() {
-        var cost = 0f;
-        var node = this;
-        while (node.getParent() != null) {
-            cost += node.computeCost(node.getParent());
-            node = node.getParent();
+    public int getDistanceTo(Node other) {
+        var thisPos = this.getPosition();
+        var otherPos = other.getPosition();
+
+        var distanceX = Math.abs(thisPos.getX() - otherPos.getX());
+        var distanceY = Math.abs(thisPos.getY() - otherPos.getY());
+        var distanceZ = Math.abs(thisPos.getZ() - otherPos.getZ());
+
+        if (distanceX > distanceZ) {
+            return 14 * distanceZ + 10 * (distanceX - distanceZ) + 10 * distanceY;
+        } else {
+            return 14 * distanceX + 10 * (distanceZ - distanceX) + 10 * distanceY;
         }
-
-        return cost;
     }
 
     /**
-     * Calculates the cost to the given node.
-     *
-     * @param node The node.
-     * @return The cost. (as a distance)
+     * @param other The other object.
+     * @return Whether the two objects are equal.
      */
-    public float computeCost(Node node) {
-        return this.getPosition().distance(node.getPosition());
-    }
-
-    /**
-     * Calculates the cost to the given position.
-     *
-     * @param position The position.
-     * @return The cost. (as a distance)
-     */
-    public float computeCost(Vector3i position) {
-        return this.getPosition().distance(position);
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Node node &&
+                node.getPosition().getX() == this.getPosition().getX() &&
+                node.getPosition().getY() == this.getPosition().getY() &&
+                node.getPosition().getZ() == this.getPosition().getZ();
     }
 }

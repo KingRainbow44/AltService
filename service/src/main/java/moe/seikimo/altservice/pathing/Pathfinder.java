@@ -5,9 +5,9 @@ import lombok.EqualsAndHashCode;
 import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.player.server.ServerBlock;
 import org.cloudburstmc.math.vector.Vector3i;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -15,14 +15,18 @@ import java.util.*;
 public final class Pathfinder extends Thread {
     private final Player handle;
     private final Vector3i targetPosition;
+    private final Consumer<List<Node>> callback;
 
     private final Map<Vector3i, Node> nodes = new HashMap<>();
 
+    private boolean successful = false;
+
     /**
-     * @return The player's block position.
+     * @return The player's block position. This starts at their feet.
      */
     public Vector3i playerPos() {
-        return this.getHandle().getPosition().toInt();
+        return this.getHandle().getPosition()
+                .toInt().sub(0, 1, 0);
     }
 
     /**
@@ -30,94 +34,134 @@ public final class Pathfinder extends Thread {
      */
     @Override
     public void run() {
-        // Create the initial node.
-        var initialNode = this.createNode(null, this.playerPos(), true);
+        try {
+            // Create the initial node.
+            var initialNode = new Node(null, this.playerPos(), true);
+            this.getNodes().put(initialNode.getPosition(), initialNode);
+            // Create the end node.
+            var targetNode = new Node(null, this.getTargetPosition(), true);
+            this.getNodes().put(targetNode.getPosition(), targetNode);
 
-        var open = new HashSet<>(List.of(initialNode));
-        var closed = new HashSet<Node>();
+            var openSet = new ArrayList<Node>();
+            var closedSet = new HashSet<Node>();
+            openSet.add(initialNode);
 
-        Node targetNode;
-        while (!open.isEmpty()) {
-            // Pick the best node.
-            targetNode = open.stream()
-                    .min(Comparator.comparingDouble(Node::fCost))
-                    .get();
-            open.remove(targetNode);
+            while (!openSet.isEmpty()) {
+                var currentNode = openSet.get(0);
+                for (var i = 1; i < openSet.size(); i++) {
+                    var node = openSet.get(i);
+                    if (node.getFCost() < currentNode.getFCost()
+                            || node.getFCost() == currentNode.getFCost()
+                            && node.getHCost() < currentNode.getHCost()) {
+                        currentNode = openSet.get(i);
+                    }
+                }
 
-            if (targetNode.getPosition() == this.getTargetPosition()) {
-                break;
-            } else {
-                closed.add(targetNode);
+                openSet.remove(currentNode);
+                closedSet.add(currentNode);
 
-                // Compute the neighbors of the node.
-                var neighbors = targetNode.getNeighbors();
-                for (var neighborNode : neighbors) {
-                    if (neighborNode.getGCost() < targetNode.getGCost() && closed.contains(neighborNode)) {
-                        neighborNode.setGCost(neighborNode.computeCost(this.getTargetPosition()));
-                        targetNode.setParent(neighborNode);
-                    } else if (targetNode.getGCost() < neighborNode.getGCost() && open.contains(neighborNode)) {
-                        neighborNode.setGCost(neighborNode.computeCost(this.getTargetPosition()));
-                        neighborNode.setParent(targetNode);
-                    } else if (!open.contains(neighborNode) && !closed.contains(neighborNode)) {
-                        open.add(neighborNode);
-                        neighborNode.setGCost(neighborNode.computeCost(this.getTargetPosition()));
+                if (currentNode.equals(targetNode)) {
+                    this.retracePath(initialNode, targetNode);
+                    break;
+                }
+
+                for (var neighbor : this.getNeighbors(currentNode)) {
+                    if (!neighbor.isWalkable() || closedSet.contains(neighbor)) continue;
+
+                    var costToNeighbor = currentNode.getGCost()
+                            + currentNode.getDistanceTo(neighbor);
+                    if (costToNeighbor < neighbor.getGCost() || !openSet.contains(neighbor)) {
+                        neighbor.setGCost(costToNeighbor);
+                        neighbor.setHCost(neighbor.getDistanceTo(targetNode));
+                        neighbor.setParent(currentNode);
+
+                        if (!openSet.contains(neighbor))
+                            openSet.add(neighbor);
                     }
                 }
             }
+        } catch (Exception exception) {
+            this.getHandle().getSession().getLogger().info("Pathfinder error: " + exception.getMessage());
         }
 
-        this.getHandle().sendMessage("Path found!");
+        this.getHandle().setPathfinder(null);
+        if (!this.isSuccessful()) {
+            this.getCallback().accept(List.of());
+        }
     }
 
     /**
-     * Creates a node at the given position.
+     * Computes the nearby nodes.
      *
-     * @param parent The parent node.
-     * @param position The position.
-     * @return The node.
+     * @param node The node.
+     * @return The nodes.
      */
-    private Node createNode(@Nullable Node parent, Vector3i position, boolean walkable) {
-        var node = new Node(parent, position, walkable);
+    private List<Node> getNeighbors(Node node) {
+        var neighbors = new ArrayList<Node>();
 
-        // Attempt to calculate the hCost.
-        node.setHCost(node.computeCost(this.getTargetPosition()));
-        // Compute the neighbors of the node.
         for (var x = -1; x <= 1; x++) {
             for (var y = -1; y <= 1; y++) {
                 for (var z = -1; z <= 1; z++) {
-                    // Check if the node exists in the world.
-                    var neighborPos = position.add(x, y, z);
-                    if (!this.getNodes().containsKey(neighborPos)) {
-                        // Create a node for the position.
-                        var blockAt = this.getHandle().getWorld().getBlockAt(0, neighborPos);
-                        var neighbor = this.createNode(node, neighborPos, this.isWalkable(blockAt));
-                        this.getNodes().put(neighborPos, neighbor);
-                    }
+                    // Skip the current node.
+                    if (x == 0 && y == 0 && z == 0) continue;
 
-                    node.getNeighbors().add(this.getNodes().get(neighborPos));
+                    // Compute the position.
+                    var checkX = node.getPosition().getX() + x;
+                    var checkY = node.getPosition().getY() + y;
+                    var checkZ = node.getPosition().getZ() + z;
+                    var checkPos = Vector3i.from(checkX, checkY, checkZ);
+
+                    // Get the node, or compute it.
+                    var blockAt = this.getHandle().getWorld().getBlockAt(0, checkPos);
+                    var neighbor = this.getNodes().computeIfAbsent(checkPos, k ->
+                            new Node(node, checkPos, this.isWalkable(blockAt, checkPos)));
+
+                    // Add the node to the neighbors.
+                    neighbors.add(neighbor);
                 }
             }
         }
 
-        return node;
+        return neighbors;
+    }
+
+    /**
+     * Retraces the path from the start node to the end node.
+     *
+     * @param startNode The start node.
+     * @param endNode The end node.
+     */
+    private void retracePath(Node startNode, Node endNode) {
+        var path = new ArrayList<Node>();
+
+        var currentNode = endNode;
+        while (currentNode != null && !currentNode.equals(startNode)) {
+            path.add(currentNode);
+            currentNode = currentNode.getParent();
+        }
+
+        Collections.reverse(path);
+        this.setSuccessful(true);
+
+        this.getCallback().accept(path);
     }
 
     /**
      * Considers the context of a block to determine if it is walkable.
      *
      * @param block The block.
+     * @param position The block's position.
      * @return Whether the block is walkable.
      */
     @SuppressWarnings("RedundantIfStatement")
-    private boolean isWalkable(ServerBlock block) {
+    private boolean isWalkable(ServerBlock block, Vector3i position) {
         if (!block.isWalkable()) return false;
 
         var world = block.getWorld();
-        var position = block.getLocation();
 
         // Check if the block has another block beneath it.
-        var blockBelow = world.getBlockAt(0, position.add(0, -1, 0));
-        if (!blockBelow.isWalkable()) return false;
+        var blockBelow = world.getBlockAt(0, position.sub(0, 1, 0));
+        if (blockBelow.isWalkable()) return false;
 
         // Check if the block has another block above it.
         var blockAbove = world.getBlockAt(0, position.add(0, 1, 0));

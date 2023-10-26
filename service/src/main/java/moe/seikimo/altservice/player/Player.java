@@ -6,6 +6,8 @@ import moe.seikimo.altservice.Configuration;
 import moe.seikimo.altservice.MessageReceiver;
 import moe.seikimo.altservice.handlers.PacketHandler;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
+import moe.seikimo.altservice.pathing.Node;
+import moe.seikimo.altservice.pathing.Pathfinder;
 import moe.seikimo.altservice.player.inventory.Inventory;
 import moe.seikimo.altservice.player.inventory.PlayerInventory;
 import moe.seikimo.altservice.player.server.ServerEntity;
@@ -38,8 +40,10 @@ import org.cloudburstmc.protocol.bedrock.packet.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 /** Represents a Minecraft player instance. */
 @Data public final class Player implements Attributable, MessageReceiver {
@@ -74,6 +78,7 @@ import java.util.UUID;
     private Location location = Location.ZERO();
     private boolean canAttack = true;
 
+    private Pathfinder pathfinder = null;
     private ServerPlayer target = null;
     private ServerEntity riding = null;
 
@@ -320,6 +325,25 @@ import java.util.UUID;
                 sessionData.setReconnect(!sessionData.isReconnect());
             }
         }
+    }
+
+    /**
+     * Pathfinds to the position.
+     *
+     * @param position The position to pathfind to.
+     * @param callback The callback to invoke when the pathfinder finishes.
+     */
+    public void pathfindTo(Vector3f position, Consumer<List<Node>> callback) {
+        if (this.getSession() == null) return;
+        if (this.getPathfinder() != null) return;
+
+        // Create the pathfinder.
+        var pathfinder = new Pathfinder(this, position.toInt(), callback);
+        // Start the pathfinder.
+        pathfinder.start();
+
+        // Set the pathfinder.
+        this.setPathfinder(pathfinder);
     }
 
     /**

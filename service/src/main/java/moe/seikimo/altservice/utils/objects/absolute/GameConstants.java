@@ -41,6 +41,7 @@ public interface GameConstants {
     Set<String> WALKABLE_BLOCKS = new HashSet<>() {{
         this.add("minecraft:air");
         this.add("minecraft:water");
+        this.add("minecraft:tallgrass");
     }};
 
     /* Dimension minimum and maximum Y-levels. */

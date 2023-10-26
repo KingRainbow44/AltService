@@ -242,6 +242,7 @@ public final class AltBackend extends WebSocketClient {
         playerCommands.addCommand(new BehaviorCommand());
         playerCommands.addCommand(new DropCommand());
         playerCommands.addCommand(new BlockCommand());
+        playerCommands.addCommand(new PathCommand());
     }
 
     @Getter private final PacketHandler<?> packetHandler = new PacketHandler<>();
