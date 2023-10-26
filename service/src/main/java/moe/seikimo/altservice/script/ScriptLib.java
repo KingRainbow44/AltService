@@ -1,10 +1,12 @@
 package moe.seikimo.altservice.script;
 
+import lombok.RequiredArgsConstructor;
 import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.player.PlayerManager;
 import moe.seikimo.altservice.utils.EncodingUtils;
 import org.cloudburstmc.math.vector.Vector3i;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
+import org.jetbrains.annotations.Nullable;
 import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
 
@@ -12,8 +14,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@RequiredArgsConstructor
 @SuppressWarnings("unused")
 public final class ScriptLib {
+    @Nullable private final Player player;
     private final Map<String, Integer> globals
             = new ConcurrentHashMap<>();
 
@@ -22,6 +26,11 @@ public final class ScriptLib {
      * @return The player instance.
      */
     private Player getPlayer(String username) {
+        // Check if the player is null.
+        if (username == null && this.player != null) {
+            return this.player;
+        }
+
         return PlayerManager.getPlayer(username);
     }
 
@@ -119,7 +128,7 @@ public final class ScriptLib {
     }
 
     /**
-     * Sends a message to a player.
+     * Sends a message as a player.
      *
      * @param username The username of the player.
      * @param message The message to send.
@@ -226,7 +235,7 @@ public final class ScriptLib {
      * Adds a behavior from a player.
      *
      * @param username The username of the player.
-     * @param behavior The behavior to remove.
+     * @param behavior The behavior to add.
      */
     public void addBehavior(String username, String behavior) {
         // Fetch the player.
@@ -301,13 +310,6 @@ public final class ScriptLib {
         var x2 = pos2.get("x").tofloat();
         var y2 = pos2.get("y").tofloat();
         var z2 = pos2.get("z").tofloat();
-
-        System.out.println(
-                (float) Math.sqrt(
-                        Math.pow(x1 - x2, 2) +
-                                Math.pow(y1 - y2, 2) +
-                                Math.pow(z1 - z2, 2))
-        );
 
         // Calculate the distance.
         return (float) Math.sqrt(

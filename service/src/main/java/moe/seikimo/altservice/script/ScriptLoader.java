@@ -33,7 +33,7 @@ public final class ScriptLoader {
     @Getter private static final ScriptSerializer serializer
             = new ScriptSerializer();
     @Getter private static final ScriptLib scriptLib
-            = new ScriptLib();
+            = new ScriptLib(null);
 
     private static final Map<String, CompiledScript> cache
             = new ConcurrentHashMap<>();

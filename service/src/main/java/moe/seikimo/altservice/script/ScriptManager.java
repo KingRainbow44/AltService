@@ -21,6 +21,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Data public final class ScriptManager {
     private final Player player;
 
+    private final ScriptLib scriptLib
+            = new ScriptLib(this.getPlayer());
     private final List<Bindings> scripts
             = new LinkedList<>();
     private final Map<EventType, List<ScriptEvent>> events
@@ -81,6 +83,10 @@ import java.util.concurrent.ConcurrentHashMap;
      * @param bindings The bindings to register events for.
      */
     public void registerEvents(Bindings bindings) {
+        // Set the 'ScriptLib' variable.
+        bindings.put("ScriptLib",
+                CoerceJavaToLua.coerce(this.getScriptLib()));
+
         // Fetch the event bindings.
         var events = ScriptLoader.getSerializer()
                 .toList(bindings.get("events"), ScriptEvent.class);

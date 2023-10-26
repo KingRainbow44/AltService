@@ -1,6 +1,7 @@
 package moe.seikimo.altservice.script.event;
 
 import lombok.Data;
+import moe.seikimo.altservice.AltBackend;
 import moe.seikimo.altservice.script.ScriptLoader;
 import moe.seikimo.altservice.utils.EncodingUtils;
 import org.cloudburstmc.math.vector.Vector3i;
@@ -57,7 +58,7 @@ import javax.script.Bindings;
 
             return result instanceof LuaBoolean && result.toboolean();
         } catch (Exception exception) {
-            exception.printStackTrace();
+            AltBackend.getLogger().debug("Lua exception when calling condition.", exception);
             return false;
         }
     }
@@ -77,8 +78,8 @@ import javax.script.Bindings;
             function.call(
                     ScriptLoader.scriptLibValue,
                     CoerceJavaToLua.coerce(args));
-        } catch (Exception ignored) {
-            ignored.printStackTrace();
+        } catch (Exception exception) {
+            AltBackend.getLogger().debug("Lua exception when calling action.", exception);
         }
     }
 }
