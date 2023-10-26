@@ -19,6 +19,7 @@ import moe.seikimo.altservice.player.PlayerTickThread;
 import moe.seikimo.altservice.player.command.PlayerCommandMap;
 import moe.seikimo.altservice.player.command.action.*;
 import moe.seikimo.altservice.player.command.util.*;
+import moe.seikimo.altservice.plugin.PluginManager;
 import moe.seikimo.altservice.proto.Frontend.FrontendIds;
 import moe.seikimo.altservice.proto.Service.ServiceIds;
 import moe.seikimo.altservice.proto.Service.ServiceJoinCsReq;
@@ -50,6 +51,8 @@ public final class AltBackend extends WebSocketClient {
             = LoggerFactory.getLogger("Alt Backend");
     @Getter private static final EventLoopGroup eventGroup
             = new NioEventLoopGroup(0, ThreadFactoryBuilder.base());
+    @Getter private static final PluginManager pluginManager
+            = new PluginManager();
 
     @Getter private static String configFile = "config.json";
     @Getter private static AltBackend instance;
@@ -104,6 +107,9 @@ public final class AltBackend extends WebSocketClient {
         // Load the block palette.
         GameConstants.initializeBlocks();
 
+        // Load all plugins.
+        AltBackend.getPluginManager().loadAllPlugins();
+
         // Set the logger in debug mode.
         LoggerUtils.setDebug(AltBackend.getLogger());
 
@@ -116,6 +122,7 @@ public final class AltBackend extends WebSocketClient {
             AltBackend.getPlayerTickThread().shutdown();
             PlayerManager.destroyAll();
             AltBackend.getEventGroup().shutdownGracefully();
+            AltBackend.getPluginManager().disableAllPlugins();
             AltBackend.getLogger().info("Stopping backend...");
         }));
 
@@ -130,6 +137,9 @@ public final class AltBackend extends WebSocketClient {
         // Create & start the backend.
         AltBackend.instance = new AltBackend();
         AltBackend.instance.connect();
+
+        // Enable all plugins.
+        AltBackend.getPluginManager().enableAllPlugins();
 
         AltBackend.getLogger().info("Done! Alt Backend started.");
     }
