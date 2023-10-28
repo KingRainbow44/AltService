@@ -40,9 +40,13 @@ public final class ServerChunkSection {
      * @return The block.
      */
     public ServerBlock getBlockAt(int layer, int x, int y, int z) {
-        return this
-                .getLayers().get(layer)
-                .getBlockAt(x, y, z);
+        try {
+            return this
+                    .getLayers().get(layer)
+                    .getBlockAt(x, y, z);
+        } catch (IndexOutOfBoundsException ignored) {
+            return null;
+        }
     }
 
     /**

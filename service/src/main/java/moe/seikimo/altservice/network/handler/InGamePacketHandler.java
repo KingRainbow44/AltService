@@ -381,6 +381,8 @@ public class InGamePacketHandler extends DisconnectablePacketHandler {
         var position = packet.getBlockPosition();
         var newBlock = ServerBlock.from(
                 (SimpleBlockDefinition) packet.getDefinition());
+        newBlock.setLocation(position)
+                .setWorld(this.getPlayer().getWorld());
 
         // Update the block.
         var oldBlock = this.getPlayer().getWorld()

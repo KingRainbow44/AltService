@@ -85,9 +85,10 @@ public final class ServerWorld {
     public ServerBlock getBlockAt(int layer, int x, int y, int z) {
         y += 64; // This accounts for the negative sections of the world.
 
-        return this
+        var block = this
                 .getChunkAt(x >> 4, z >> 4)
                 .getBlockAt(layer, y >> 4, x % 16, y % 16, z % 16);
+        return block != null ? block : ServerBlock.air(this, Vector3i.from(x, y, z));
     }
 
     /**

@@ -120,7 +120,7 @@ public final class ServerChunk {
      */
     private ServerChunkSection getSectionByIndex(int index) {
         return this.getSections().computeIfAbsent(index,
-                k -> new ServerChunkSection(this, k));
+                k -> new ServerChunkSection(this, index));
     }
 
     /**

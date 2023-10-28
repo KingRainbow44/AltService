@@ -1,12 +1,28 @@
 package moe.seikimo.altservice.player.server;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 import moe.seikimo.altservice.utils.objects.absolute.GameConstants;
 import org.cloudburstmc.math.vector.Vector3i;
 import org.cloudburstmc.nbt.NbtMap;
 import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
 
-@Data public final class ServerBlock {
+@Data
+@Accessors(chain = true)
+public final class ServerBlock {
+    /**
+     * Creates a new air block.
+     *
+     * @param world The world.
+     * @param position The position.
+     * @return The server block.
+     */
+    public static ServerBlock air(ServerWorld world, Vector3i position) {
+        return ServerBlock.from("minecraft:air")
+                .setWorld(world)
+                .setLocation(position);
+    }
+
     /**
      * Creates a new server block.
      *
