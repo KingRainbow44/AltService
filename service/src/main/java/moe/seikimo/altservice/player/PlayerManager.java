@@ -1,7 +1,6 @@
 package moe.seikimo.altservice.player;
 
 import moe.seikimo.altservice.AltBackend;
-import moe.seikimo.altservice.proto.Service;
 import moe.seikimo.altservice.proto.Service.CreateSessionCsNotify;
 import moe.seikimo.altservice.proto.Service.ServiceIds;
 
