@@ -13,7 +13,7 @@ public final class MoveCommand extends Command {
 
     @Override
     public void execute(Player player, ServerPlayer sender, List<String> args) {
-        if (args.size() < 1) {
+        if (args.isEmpty()) {
             player.sendMessage("A direction is required.");
             return;
         }
@@ -24,8 +24,10 @@ public final class MoveCommand extends Command {
             default -> null;
             case "up" -> current.add(0, 0.2, 0);
             case "down" -> current.sub(0, 0.2, 0);
-            case "left" -> current.add(0.2, 0, 0);
-            case "right" -> current.add(0, 0, 0.2);
+            case "west" -> current.sub(0.2, 0, 0);
+            case "east" -> current.add(0.2, 0, 0);
+            case "north" -> current.sub(0, 0, 0.2);
+            case "south" -> current.add(0, 0, 0.2);
         };
 
         if (position == null) {

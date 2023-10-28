@@ -3,8 +3,8 @@ package moe.seikimo.altservice.utils.enums;
 import org.cloudburstmc.math.vector.Vector3i;
 
 public enum PositionType {
-    RELATIVE,
-    EXACT;
+    RELATIVE, FROM,
+    EXACT, AT;
 
     /**
      * Parses a position from a string.
@@ -20,7 +20,7 @@ public enum PositionType {
             String position
     ) {
         return switch (type) {
-            case RELATIVE -> {
+            case RELATIVE, FROM -> {
                 var newPosition = Vector3i.from(basePosition);
 
                 var split = position.split(" ");
@@ -36,7 +36,7 @@ public enum PositionType {
 
                 yield newPosition;
             }
-            case EXACT -> Vector3i.from(
+            case EXACT, AT -> Vector3i.from(
                     Integer.parseInt(position.split(" ")[0]),
                     Integer.parseInt(position.split(" ")[1]),
                     Integer.parseInt(position.split(" ")[2])
