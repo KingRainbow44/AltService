@@ -1,5 +1,6 @@
 package moe.seikimo.altservice.plugin;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.util.Objects;
@@ -11,6 +12,7 @@ public final class PluginConfig {
     private String version = "";
     private String author = "";
 
+    @SerializedName(value = "apiVersion", alternate = "api")
     private int apiVersion = -1;
     private String mainClass = "";
 
@@ -19,7 +21,7 @@ public final class PluginConfig {
      */
     public boolean validPlugin() {
         return !Objects.equals(this.getName(), "") &&
-                Objects.equals(this.getMainClass(), "") &&
+                !Objects.equals(this.getMainClass(), "") &&
                 this.getApiVersion() != -1;
     }
 }
