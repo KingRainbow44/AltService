@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>service</artifactId>
+    <artifactId>altservice-service</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -62,7 +62,7 @@
 
         <dependency>
             <groupId>moe.seikimo</groupId>
-            <artifactId>AltService</artifactId>
+            <artifactId>altservice-common</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
