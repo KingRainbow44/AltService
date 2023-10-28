@@ -1,7 +1,10 @@
 package moe.seikimo.altservice.network.handler;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import moe.seikimo.altservice.event.Event;
+import moe.seikimo.altservice.event.client.ClientJoinEvent;
 import moe.seikimo.altservice.network.PlayerNetworkSession;
+import moe.seikimo.altservice.player.Player;
 import moe.seikimo.altservice.utils.EncodingUtils;
 import moe.seikimo.altservice.utils.ThreadUtils;
 import moe.seikimo.altservice.utils.objects.absolute.GameConstants;
@@ -149,6 +152,10 @@ public class LoginPacketHandler extends DisconnectablePacketHandler {
         codecHelper.setItemDefinitions(itemRegistry.build());
         // Set up the block registry.
         codecHelper.setBlockDefinitions(GameConstants.BLOCKS.get());
+
+        // Call the ClientJoinEvent.
+        Event.make(ClientJoinEvent.class,
+                Player.class, this.getPlayer());
 
         return PacketSignal.HANDLED;
     }
